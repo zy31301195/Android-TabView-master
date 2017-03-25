@@ -70,6 +70,7 @@ public class SettingActivity extends Activity{
             switch (v.getId()) {
                 case R.id.btn_exit:
                     Intent intent=new Intent(SettingActivity.this,LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     break;
                 case R.id.cancel:
