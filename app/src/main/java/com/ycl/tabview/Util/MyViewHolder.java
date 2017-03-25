@@ -26,6 +26,6 @@ public class MyViewHolder extends ViewHolder{
 		hour = (TextView) arg0.findViewById(R.id.hour);
 		minutes= (TextView) arg0.findViewById(R.id.mimute);
 		second = (TextView) arg0.findViewById(R.id.second);
-		prices = (TextView) arg0.findViewById(R.id.price);
+		prices = (TextView) arg0.findViewById(R.id.tv_new_price);
 	}
 }

@@ -47,7 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
         MyViewHolder myholder = (MyViewHolder) holder;
         myholder.tv_dates.setText(this.mData.get(position).exam_date);
         myholder.tv_name.setText(this.mData.get(position).exam_name);
-        myholder.prices.setText(this.mData.get(position).prices);
+        myholder.prices.setText(String.valueOf(this.mData.get(position).prices));
         myholder.hour.setText(this.mData.get(position).hour);
         myholder.minutes.setText(this.mData.get(position).minutes);
         myholder.second.setText(this.mData.get(position).second);
