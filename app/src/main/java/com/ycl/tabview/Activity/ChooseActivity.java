@@ -117,4 +117,8 @@ public class ChooseActivity extends Activity {
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews,contentView );
 
     }
+
+    public void back(View view) {
+        this.finish();
+    }
 }
