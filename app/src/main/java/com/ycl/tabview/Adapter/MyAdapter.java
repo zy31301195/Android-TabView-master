@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ycl.tabview.Bean.MyItemBean;
-import com.ycl.tabview.Fragement.HomeFragment;
 import com.ycl.tabview.R;
 import com.ycl.tabview.Util.MyViewHolder;
 
@@ -21,7 +20,6 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
     private List<MyItemBean> mData;
 
     private OnRecycleItemClick onRecycleitemClick = null;
-    private HomeFragment mOnItemClickListener;
 
     public MyAdapter(List<MyItemBean> data){
         this.mData = data;

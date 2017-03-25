@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -29,7 +31,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/iv_back"
-            android:background="#fafafa" />
+            android:background="#f7f8f9" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -38,25 +40,27 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/view_temp"
-            android:text="设置"
+            android:text="已发布的考试"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-    </RelativeLayout>
 
-    <com.ycl.tabview.View.DropDownMenu
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/dropDownMenu"
-        android:layout_below="@+id/title"
+        <TextView
+            android:id="@+id/add"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="9dp"
+            android:gravity="center"
+            android:text="添加"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <com.ycl.tabview.View.MyRecyclerView
+        android:id="@+id/my_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:dividerColor="@color/ccc"
-        app:maskColor="@color/f5"
-        app:menuBackgroundColor="@color/white"
-        app:menuSelectedIcon="@drawable/ic_img_up"
-        app:menuTextSize="16sp"
-        app:menuUnselectedIcon="@drawable/ic_img_down"
-        app:textSelectedColor="@color/base_red"
-        app:textUnselectedColor="@color/gray_normal"
-        app:underlineColor="@color/ccc" />
+        app:layoutManager="LinearLayoutManager"
+        />
 
-</RelativeLayout>
+</LinearLayout>
