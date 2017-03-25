@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+            <ScrollView
+                android:id="@+id/sv_goods_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#eeeff3"
+                    android:orientation="vertical">
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="44dp"-->
+                        <!--android:background="@color/white"-->
+                        <!--android:clickable="true"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:paddingLeft="12dp"-->
+                        <!--android:paddingRight="12dp">-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="考试详情"-->
+                            <!--android:textColor="#ca0404"-->
+                            <!--android:textSize="20dp" />-->
+
+
+                    <!--</LinearLayout>-->
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1px"-->
+                        <!--android:alpha="0.4"-->
+                        <!--android:background="#dddddd" />-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ffffff"
+                        android:orientation="vertical"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/exam_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="22dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="课程名称："
+                                android:textColor="#9c9999"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/et_exam_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:text="数据库"
+                                android:textColor="#222222"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+                            <TextView
+                                android:id="@+id/exam_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="22dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="考试日期："
+                                android:textColor="#9c9999"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/et_exam_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:text="2017年6月3日"
+                                android:textColor="#222222"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+                            <TextView
+                                android:id="@+id/exam_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="22dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="考试时间："
+                                android:textColor="#9c9999"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/et_exam_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:text="8:30-10:30"
+                                android:textColor="#222222"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="22dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="考试地点："
+                                android:textColor="#9c9999"
+                                android:textSize="20sp"
+                                android:id="@+id/textView" />
+
+                            <TextView
+                                android:id="@+id/et_exam_place"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:text="理四108"
+                                android:textColor="#222222"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:layout_marginTop="15dp"
+                            android:gravity="bottom"
+                            android:minHeight="25dp"
+                            android:orientation="horizontal"
+                            android:paddingRight="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="￥"
+                                android:textColor="#ec0f38"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_new_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:text="599"
+                                android:textColor="#ec0f38"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:gravity="center_vertical"
+                                android:text="￥"
+                                android:textColor="#888888"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/tv_old_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="799"
+                                android:textColor="#888888"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_activity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:descendantFocusability="afterDescendants"
+                            android:orientation="vertical">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:alpha="0.4"
+                                android:background="#dddddd" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginTop="10dp"
+                        android:alpha="0.4"
+                        android:background="#dddddd" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:alpha="0.4"
+                        android:background="#dddddd" />
+
+
+
+                    <!-- 出价 -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:alpha="0.4"
+                        android:background="#dddddd" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:background="@color/white"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="出价详情"
+                                android:textColor="#ca0404"
+                                android:textSize="20dp" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:alpha="0.4"
+                        android:background="#dddddd" />
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </ListView>
+
+                    <LinearLayout
+                        android:id="@+id/ll_empty_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="123dp"
+                        android:background="#ffffff"
+                        android:gravity="center"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="暂无出价"
+                            android:textColor="#888888"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+
+
+</LinearLayout>
