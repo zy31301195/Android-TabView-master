@@ -26,6 +26,7 @@
         <activity android:name=".Activity.UpdateUserActivity"></activity>
         <activity android:name=".Activity.UserInfoActivity"></activity>
         <activity android:name=".Activity.ChooseActivity"></activity>
+        <activity android:name=".Activity.GoodsActivity"></activity>
 
 
     </application>

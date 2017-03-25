@@ -32,7 +32,6 @@
             android:layout_toRightOf="@id/tv_temp_name"
             android:ellipsize="end"
             android:gravity="right"
-            android:singleLine="true"
             android:text="张瑜"
             android:textColor="#AAAAAA"
             android:textSize="14sp" />
@@ -74,7 +73,6 @@
             android:layout_toRightOf="@id/tv_temp_tel"
             android:ellipsize="end"
             android:gravity="right"
-            android:singleLine="true"
             android:text="12345678901"
             android:textColor="#AAAAAA"
             android:textSize="14sp" />
@@ -116,7 +114,6 @@
             android:layout_toRightOf="@id/tv_temp_no"
             android:ellipsize="end"
             android:gravity="right"
-            android:singleLine="true"
             android:text="12345"
             android:textColor="#AAAAAA"
             android:textSize="14sp" />
@@ -158,17 +155,22 @@
             android:layout_toRightOf="@id/tv_temp_address"
             android:ellipsize="end"
             android:gravity="right"
-            android:singleLine="true"
             android:text="计算分院"
             android:textColor="#AAAAAA"
             android:textSize="14sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="#dadada" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/re_sex"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/btn_list_item_bg"
         android:clickable="true" >
 
@@ -193,7 +195,6 @@
             android:layout_toRightOf="@id/tv_temp_sex"
             android:ellipsize="end"
             android:gravity="right"
-            android:singleLine="true"
             android:text="女"
             android:textColor="#AAAAAA"
             android:textSize="14sp" />
@@ -236,7 +237,6 @@
             android:layout_toRightOf="@id/tv_temp_sign"
             android:ellipsize="end"
             android:gravity="right"
-            android:singleLine="true"
             android:text="志存高远，脚踏实地"
             android:textColor="#AAAAAA"
             android:textSize="14sp" />
