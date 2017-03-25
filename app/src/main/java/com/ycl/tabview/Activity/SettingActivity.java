@@ -97,4 +97,8 @@ public class SettingActivity extends Activity{
             return "没有发现版本信息";
         }
     }
+
+    public void back(View view) {
+        this.finish();
+    }
 }

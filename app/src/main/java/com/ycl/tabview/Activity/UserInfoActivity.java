@@ -2,6 +2,7 @@ package com.ycl.tabview.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,5 +52,9 @@ public class UserInfoActivity extends Activity{
 
 
 
+    }
+
+    public void back(View view) {
+        this.finish();
     }
 }
