@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ycl.tabview.Activity.SearchActivity;
 import com.ycl.tabview.Adapter.MyAdapter;
@@ -21,7 +22,7 @@ import com.ycl.tabview.behavior.MyBehavior;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemClick{
     private RecyclerView recyclerView;
     private List<MyItemBean> mData;
     private MyAdapter mAdapter;
@@ -62,6 +63,7 @@ public class HomeFragment extends Fragment{
         this.mAdapter = new MyAdapter(mData);
         this.recyclerView.setAdapter(mAdapter);
 
+        mAdapter.setOnItemClickListener(this);
 
 
 
@@ -77,43 +79,6 @@ public class HomeFragment extends Fragment{
 
 
         });
-
-//        recyclerView.setAdapter(new  RecyclerView.Adapter() {
-//            @Override
-//            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//                return new ViewHolder(getLayoutInflater(savedInstanceState).inflate(R.layout.item, parent, false));
-//            }
-//
-//
-//            @Override
-//            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//                ViewHolder vh = (ViewHolder) holder;
-//
-////                vh.text.setText("  Item " + (position + 1));
-////                vh.text2.setText("  Do one thing at a time, and do well.");
-//            }
-//
-//            @Override
-//            public int getItemCount() {
-//                return 20;
-//            }
-//
-//            class ViewHolder extends RecyclerView.ViewHolder {
-//
-////                TextView text;
-////                TextView text2;
-//                //LinearLayout goods;
-//
-//                public ViewHolder(View itemView) {
-//                    super(itemView);
-//                    //goods= (LinearLayout) itemView.findViewById(R.id.items);
-//
-////                    text = (TextView) itemView.findViewById(R.id.text);
-////                    text2 = (TextView) itemView.findViewById(R.id.text2);
-//                }
-//
-//            }
-//        });
 
         final MyBehavior myBehavior = new MyBehavior(HomeFragment.this);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) recyclerView.getLayoutParams();
@@ -135,6 +100,11 @@ public class HomeFragment extends Fragment{
 
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(View view, Object object) {
+        Toast.makeText(view.getContext(),((MyItemBean)object).exam_name,Toast.LENGTH_LONG).show();
     }
 }
 
