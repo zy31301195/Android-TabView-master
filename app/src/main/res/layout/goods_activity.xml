@@ -26,14 +26,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_goods_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="考试详情"
-                    android:textColor="#222222"
-                    android:textSize="15sp" />
+                <include layout="@layout/fragment_goods_info"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_goods_detail"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="考试详情"-->
+                    <!--android:textColor="#222222"-->
+                    <!--android:textSize="15sp" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -41,14 +42,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_goods_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="发布者信息"
-                    android:textColor="#222222"
-                    android:textSize="15sp" />
+                <include layout="@layout/fragment_goods_user"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_goods_user"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="发布者信息"-->
+                    <!--android:textColor="#222222"-->
+                    <!--android:textSize="15sp" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -56,14 +58,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_goods_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="留言"
-                    android:textColor="#222222"
-                    android:textSize="15sp" />
+                <include layout="@layout/fragment_goods_comment"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_goods_comment"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="留言"-->
+                    <!--android:textColor="#222222"-->
+                    <!--android:textSize="15sp" />-->
             </LinearLayout>
 
         </FrameLayout>

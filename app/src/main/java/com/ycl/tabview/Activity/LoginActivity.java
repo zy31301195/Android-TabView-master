@@ -49,6 +49,8 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
+                mEditor.commit();
                 startActivity(intent);
             }
         });

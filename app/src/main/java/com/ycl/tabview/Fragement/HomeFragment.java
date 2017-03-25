@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.ycl.tabview.Activity.GoodsActivity;
 import com.ycl.tabview.Activity.SearchActivity;
 import com.ycl.tabview.Adapter.MyAdapter;
 import com.ycl.tabview.Bean.MyItemBean;
@@ -104,7 +104,9 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
 
     @Override
     public void onItemClick(View view, Object object) {
-        Toast.makeText(view.getContext(),((MyItemBean)object).exam_name,Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getContext(), GoodsActivity.class);
+        startActivity(intent);
+       // Toast.makeText(view.getContext(),((MyItemBean)object).exam_name,Toast.LENGTH_LONG).show();
     }
 }
 
