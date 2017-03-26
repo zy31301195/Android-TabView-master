@@ -63,7 +63,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="10dp"
                 android:background="@drawable/edittext_login"
                 android:gravity="center_vertical"
                 android:hint="例如：数据库"
@@ -93,7 +92,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="10dp"
                 android:background="@drawable/edittext_login"
                 android:gravity="center_vertical"
                 android:hint="例如：理四324"
@@ -126,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp" >
 
-            <EditText
+            <TextView
                 android:id="@+id/goods_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,7 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp" >
 
-            <EditText
+            <TextView
                 android:id="@+id/goods_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

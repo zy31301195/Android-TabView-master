@@ -28,6 +28,7 @@ public class MyGoodsActivity extends Activity implements MyAdapter.OnRecycleItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mygoods_activivty);
         add = (TextView) findViewById(R.id.add);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

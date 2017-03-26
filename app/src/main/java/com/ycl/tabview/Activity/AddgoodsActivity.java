@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.ycl.tabview.R;
@@ -22,26 +23,21 @@ import java.util.Date;
  */
 
 public class AddgoodsActivity extends Activity {
-    private RelativeLayout dates;
-    private RelativeLayout times;
-    private EditText goods_date;
-    private EditText goods_time;
+    private TextView goods_date;
+    private TextView goods_time;
     private Button button;
     private int year;
     private int month;
     private int day;
     private int hour;
     private int minute;
-    StringBuilder stringBuilder = new StringBuilder("");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addgoods);
-        dates = (RelativeLayout) findViewById(R.id.dates);
-        times = (RelativeLayout) findViewById(R.id.times);
-        goods_date = (EditText) findViewById(R.id.goods_date);
-        goods_time = (EditText) findViewById(R.id.goods_time);
+        goods_date = (TextView) findViewById(R.id.goods_date);
+        goods_time = (TextView) findViewById(R.id.goods_time);
         button = (Button) findViewById(R.id.btn_add);
         Calendar calendar =Calendar.getInstance();
         Date today = new Date();
@@ -52,7 +48,7 @@ public class AddgoodsActivity extends Activity {
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
 
-        dates.setOnClickListener(new View.OnClickListener() {
+        goods_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddgoodsActivity.this,DateListener,year,month,day);
@@ -61,7 +57,7 @@ public class AddgoodsActivity extends Activity {
             }
         });
 
-        times.setOnClickListener(new View.OnClickListener() {
+        goods_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(AddgoodsActivity.this,TimeListener,hour,minute,true);
