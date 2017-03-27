@@ -18,11 +18,15 @@ public class GoodsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_activity);
+        initView();
+
+    }
+
+    private void initView(){
         mTabHost = (TabHost) findViewById(R.id.tabHost);
         mTabHost.setup();// init
         mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("考试详情").setContent(R.id.tab1));
         mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("发布者信息").setContent(R.id.tab2));
         mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("留言").setContent(R.id.tab3));
-
     }
 }

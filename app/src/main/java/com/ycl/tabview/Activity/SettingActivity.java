@@ -26,41 +26,49 @@ public class SettingActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        initView();
+
+    }
+
+    private void initView(){
         logot = (RelativeLayout) findViewById(R.id.logout);
         version = (RelativeLayout) findViewById(R.id.versions);
         update_pwd = (RelativeLayout) findViewById(R.id.update_pwd);
 
-        version.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder version = new AlertDialog.Builder(SettingActivity.this);
-                version.setTitle("版本信息");
-                version.setMessage("版本号:"+getVersion());
-                version.setPositiveButton("OK",null);
-                version.create().show();
-            }
-        });
-        logot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //实例化SelectPicPopupWindow
-                menuWindow = new SelectLogoutWindow(SettingActivity.this, itemsOnClick);
-                //显示窗口
-                menuWindow.showAtLocation(SettingActivity.this.findViewById(R.id.logout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                //设置layout在PopupWindow中显示的位置
-            }
-        });
-
-        update_pwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(SettingActivity.this,UpdateUserActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        version.setOnClickListener(new VersionButtonClickListener());
+        logot.setOnClickListener(new LogoutButtonClickListener());
+        update_pwd.setOnClickListener(new UpdatepwdButtonClickListener());
     }
 
+    private final class VersionButtonClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder version = new AlertDialog.Builder(SettingActivity.this);
+            version.setTitle("版本信息");
+            version.setMessage("版本号:"+getVersion());
+            version.setPositiveButton("OK",null);
+            version.create().show();
+        }
+    }
+
+    private final class LogoutButtonClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            //实例化SelectPicPopupWindow
+            menuWindow = new SelectLogoutWindow(SettingActivity.this, itemsOnClick);
+            //显示窗口
+            menuWindow.showAtLocation(SettingActivity.this.findViewById(R.id.logout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            //设置layout在PopupWindow中显示的位置
+        }
+    }
+
+    private final class UpdatepwdButtonClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(SettingActivity.this,UpdateUserActivity.class);
+            startActivity(intent);
+        }
+    }
 
     //为弹出窗口实现监听类
     private View.OnClickListener itemsOnClick = new View.OnClickListener() {

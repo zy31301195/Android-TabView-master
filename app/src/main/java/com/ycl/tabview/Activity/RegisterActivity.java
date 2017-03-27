@@ -62,8 +62,13 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+        initView();
         mPref =  getSharedPreferences("register", Activity.MODE_PRIVATE);
         mEditor = mPref.edit();
+    }
+
+
+    private void initView(){
         et_username = (EditText) findViewById(R.id.et_usernick);
         et_usertel = (EditText) findViewById(R.id.et_usertel);
         et_password = (EditText) findViewById(R.id.et_password);
@@ -73,7 +78,7 @@ public class RegisterActivity extends Activity {
         iv_hide2 = (ImageView) findViewById(R.id.iv_hide2);
         iv_show2 = (ImageView) findViewById(R.id.iv_show2);
         iv_photo = (ImageView) findViewById(R.id.iv_photo);
-
+        button = (Button) findViewById(R.id.btn_register);
 
         // 监听多个输入框
         et_username.addTextChangedListener(new TextChange());
@@ -81,130 +86,138 @@ public class RegisterActivity extends Activity {
         et_password.addTextChangedListener(new TextChange());
         et_password2.addTextChangedListener(new TextChange());
 
-        button = (Button) findViewById(R.id.btn_register);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(!(et_password.getText().toString()).equals(et_password2.getText().toString())){
-                    Toast.makeText(RegisterActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, et_usertel.getText().toString());
-                    mEditor.commit();
-                    //intent.putExtra("tel",et_usertel.getText().toString());
-                    startActivity(intent);
-                }
-
-            }
-        });
-
-        iv_hide.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                iv_hide.setVisibility(View.GONE);
-                iv_show.setVisibility(View.VISIBLE);
-                et_password
-                        .setTransformationMethod(HideReturnsTransformationMethod
-                                .getInstance());
-                // 切换后将EditText光标置于末尾
-                CharSequence charSequence = et_password.getText();
-                if (charSequence instanceof Spannable) {
-                    Spannable spanText = (Spannable) charSequence;
-                    Selection.setSelection(spanText, charSequence.length());
-                }
-
-            }
-
-        });
-
-        iv_show.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                iv_show.setVisibility(View.GONE);
-                iv_hide.setVisibility(View.VISIBLE);
-                et_password
-                        .setTransformationMethod(PasswordTransformationMethod
-                                .getInstance());
-                // 切换后将EditText光标置于末尾
-                CharSequence charSequence = et_password.getText();
-                if (charSequence instanceof Spannable) {
-                    Spannable spanText = (Spannable) charSequence;
-                    Selection.setSelection(spanText, charSequence.length());
-                }
-            }
-
-        });
-
-        iv_hide2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                iv_hide2.setVisibility(View.GONE);
-                iv_show2.setVisibility(View.VISIBLE);
-                et_password2
-                        .setTransformationMethod(HideReturnsTransformationMethod
-                                .getInstance());
-                // 切换后将EditText光标置于末尾
-                CharSequence charSequence = et_password2.getText();
-                if (charSequence instanceof Spannable) {
-                    Spannable spanText = (Spannable) charSequence;
-                    Selection.setSelection(spanText, charSequence.length());
-                }
-
-            }
-
-        });
-
-        iv_show2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                iv_show2.setVisibility(View.GONE);
-                iv_hide2.setVisibility(View.VISIBLE);
-                et_password2
-                        .setTransformationMethod(PasswordTransformationMethod
-                                .getInstance());
-                // 切换后将EditText光标置于末尾
-                CharSequence charSequence = et_password2.getText();
-                if (charSequence instanceof Spannable) {
-                    Spannable spanText = (Spannable) charSequence;
-                    Selection.setSelection(spanText, charSequence.length());
-                }
-            }
-
-        });
-
-        // 设置图片点击监听
-        iv_photo.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View v) {
-
-                if (ContextCompat.checkSelfPermission(v.getContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-                    ActivityCompat.requestPermissions(RegisterActivity.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-                    return;
-
-                }
-                //实例化SelectPicPopupWindow
-                menuWindow = new SelectPicPopupWindow(RegisterActivity.this, itemsOnClick);
-                //显示窗口
-                menuWindow.showAtLocation(RegisterActivity.this.findViewById(R.id.btn_register), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                //设置layout在PopupWindow中显示的位置
-            }
-
-
-        });
+        button.setOnClickListener(new RegisterButtonClickListener());
+        iv_hide.setOnClickListener(new HideButtonClickListener());
+        iv_show.setOnClickListener(new ShowButtonClickListener());
+        iv_hide2.setOnClickListener(new Hide2ButtonClickListener());
+        iv_show2.setOnClickListener(new Show2ButtonClickListener());
+        iv_photo.setOnClickListener(new PhotoButtonClickListener());
     }
+
+
+    private final class RegisterButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if(!(et_password.getText().toString()).equals(et_password2.getText().toString())){
+                Toast.makeText(RegisterActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, et_usertel.getText().toString());
+                mEditor.commit();
+                startActivity(intent);
+            }
+
+        }
+    }
+
+
+    private final class HideButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            iv_hide.setVisibility(View.GONE);
+            iv_show.setVisibility(View.VISIBLE);
+            et_password
+                    .setTransformationMethod(HideReturnsTransformationMethod
+                            .getInstance());
+            // 切换后将EditText光标置于末尾
+            CharSequence charSequence = et_password.getText();
+            if (charSequence instanceof Spannable) {
+                Spannable spanText = (Spannable) charSequence;
+                Selection.setSelection(spanText, charSequence.length());
+            }
+
+        }
+
+    }
+
+    private final class ShowButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            iv_show.setVisibility(View.GONE);
+            iv_hide.setVisibility(View.VISIBLE);
+            et_password
+                    .setTransformationMethod(PasswordTransformationMethod
+                            .getInstance());
+            // 切换后将EditText光标置于末尾
+            CharSequence charSequence = et_password.getText();
+            if (charSequence instanceof Spannable) {
+                Spannable spanText = (Spannable) charSequence;
+                Selection.setSelection(spanText, charSequence.length());
+            }
+        }
+
+    }
+
+    private final class Hide2ButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            iv_hide2.setVisibility(View.GONE);
+            iv_show2.setVisibility(View.VISIBLE);
+            et_password2
+                    .setTransformationMethod(HideReturnsTransformationMethod
+                            .getInstance());
+            // 切换后将EditText光标置于末尾
+            CharSequence charSequence = et_password2.getText();
+            if (charSequence instanceof Spannable) {
+                Spannable spanText = (Spannable) charSequence;
+                Selection.setSelection(spanText, charSequence.length());
+            }
+
+        }
+
+    }
+
+    private final class Show2ButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            iv_show2.setVisibility(View.GONE);
+            iv_hide2.setVisibility(View.VISIBLE);
+            et_password2
+                    .setTransformationMethod(PasswordTransformationMethod
+                            .getInstance());
+            // 切换后将EditText光标置于末尾
+            CharSequence charSequence = et_password2.getText();
+            if (charSequence instanceof Spannable) {
+                Spannable spanText = (Spannable) charSequence;
+                Selection.setSelection(spanText, charSequence.length());
+            }
+        }
+
+    }
+
+    // 设置图片点击监听
+    private final class PhotoButtonClickListener implements View.OnClickListener {
+
+
+        @Override
+        public void onClick(View v) {
+
+            if (ContextCompat.checkSelfPermission(v.getContext(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(RegisterActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                return;
+
+            }
+            //实例化SelectPicPopupWindow
+            menuWindow = new SelectPicPopupWindow(RegisterActivity.this, itemsOnClick);
+            //显示窗口
+            menuWindow.showAtLocation(RegisterActivity.this.findViewById(R.id.btn_register), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            //设置layout在PopupWindow中显示的位置
+        }
+
+
+    }
+
 
     //为弹出窗口实现监听类
     private View.OnClickListener itemsOnClick = new View.OnClickListener() {

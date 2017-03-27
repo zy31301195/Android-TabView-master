@@ -33,7 +33,11 @@ public class UserInfoActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myinfo);
+        initView();
 
+    }
+
+    private void  initView(){
         re_avatar = (RelativeLayout) this.findViewById(R.id.re_avatar);
         re_name = (RelativeLayout) this.findViewById(R.id.re_name);
         re_tel = (RelativeLayout) this.findViewById(R.id.re_tel);
@@ -49,9 +53,6 @@ public class UserInfoActivity extends Activity{
         tv_sign = (TextView) this.findViewById(R.id.tv_sign);//签名
         tv_no = (TextView) this.findViewById(R.id.tv_no);//职工号
         tv_address = (TextView) this.findViewById(R.id.tv_address);//所在分院
-
-
-
     }
 
     public void back(View view) {

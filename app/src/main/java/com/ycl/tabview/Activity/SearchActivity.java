@@ -34,7 +34,6 @@ public class SearchActivity extends Activity implements View.OnClickListener {
 	private EditText mKeywordEt;
 	private TextView mOperationTv;
 
-
 	private ArrayAdapter<String> mArrAdapter;
 	private SharedPreferences mPref;
 	private Editor mEditor;

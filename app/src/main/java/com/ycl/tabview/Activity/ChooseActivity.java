@@ -67,7 +67,6 @@ public class ChooseActivity extends Activity {
         listView2.setDividerHeight(0);
         listView3.setDividerHeight(0);
 
-        //mMenuAdapter1 = new MenuListAdapter(ChooseActivity.this, Arrays.asList(citys));
         mMenuAdapter2 = new MenuListAdapter(ChooseActivity.this, Arrays.asList(times));
         mMenuAdapter3 = new MenuListAdapter(ChooseActivity.this, Arrays.asList(price));
 
@@ -79,14 +78,6 @@ public class ChooseActivity extends Activity {
         popupViews.add(listView2);
         popupViews.add(listView3);
 
-//        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//
-//                mDropDownMenu.setTabText(citys[position]);
-//                mDropDownMenu.closeMenu();
-//            }
-//        });
 
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

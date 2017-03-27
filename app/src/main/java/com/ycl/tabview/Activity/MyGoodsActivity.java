@@ -27,27 +27,40 @@ public class MyGoodsActivity extends Activity implements MyAdapter.OnRecycleItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mygoods_activivty);
+        initView();
+        initData();
+
+        this.mAdapter = new MyAdapter(mData);
+        this.mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
+    }
+
+    private void initView(){
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview);
         add = (TextView) findViewById(R.id.add);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyGoodsActivity.this, AddgoodsActivity.class);
-                startActivity(intent);
-            }
-        });
+
+        add.setOnClickListener(new AddButtonClickListener());
+
+    }
+
+    private void initData(){
         this.mData = new ArrayList<MyItemBean>();
         for(int i=0;i<2;i++){
             MyItemBean bean = new MyItemBean();
             bean.exam_name = "Xmy"+i;
-
             mData.add(bean);
         }
-        this.mAdapter = new MyAdapter(mData);
-        this.mRecyclerView.setAdapter(mAdapter);
-
-        mAdapter.setOnItemClickListener(this);
     }
+
+    private final class AddButtonClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MyGoodsActivity.this, AddgoodsActivity.class);
+            startActivity(intent);
+        }
+    }
+
 
     public void back(View view) {
         this.finish();

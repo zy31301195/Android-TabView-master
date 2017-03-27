@@ -32,35 +32,45 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        initView();
         mPref =  getSharedPreferences("register", Activity.MODE_PRIVATE);
         mEditor = mPref.edit();
-        pwd = (EditText) findViewById(R.id.et_password);
-        btn_login = (Button) findViewById(R.id.btn_login);
-        btn_register1 = (TextView) findViewById(R.id.register);
-        tel = (EditText) findViewById(R.id.et_usertel);
-        pwd = (EditText) findViewById(R.id.et_password);
         String history = mPref.getString(KEY_SEARCH_HISTORY_KEYWORD,"");
         if (!TextUtils.isEmpty(history)){
             tel.setText(history);
         }
 
-        btn_login.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
-                mEditor.commit();
-                startActivity(intent);
-            }
-        });
-
-        btn_register1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
     }
+
+    private void initView(){
+        btn_login = (Button) findViewById(R.id.btn_login);
+        btn_register1 = (TextView) findViewById(R.id.register);
+        tel = (EditText) findViewById(R.id.et_usertel);
+        pwd = (EditText) findViewById(R.id.et_password);
+
+        btn_login.setOnClickListener(new LoginButtonClickListener());
+        btn_register1.setOnClickListener(new RegisterButtonCickListener());
+    }
+
+    private final class LoginButtonClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            String user = tel.getText().toString();
+            String pwds = pwd.getText().toString();
+            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+            mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
+            mEditor.commit();
+            startActivity(intent);
+        }
+
+    }
+
+    private final class RegisterButtonCickListener implements View.OnClickListener{
+        public void onClick(View v) {
+            Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }

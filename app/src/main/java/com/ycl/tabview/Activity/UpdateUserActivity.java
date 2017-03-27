@@ -28,6 +28,11 @@ public class UpdateUserActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user);
+        initView();
+
+    }
+
+    private void initView(){
         et_password = (EditText) findViewById(R.id.et_password);
         iv_hide = (ImageView) findViewById(R.id.iv_hide);
         iv_show = (ImageView) findViewById(R.id.iv_show);
@@ -35,23 +40,26 @@ public class UpdateUserActivity extends Activity{
         iv_hide2 = (ImageView) findViewById(R.id.iv_hide2);
         iv_show2 = (ImageView) findViewById(R.id.iv_show2);
         save = (Button) findViewById(R.id.tv_save);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!(et_password.getText().toString()).equals(et_password2.getText().toString())){
-                    Toast.makeText(UpdateUserActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(UpdateUserActivity.this,"密码修改成功",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(UpdateUserActivity.this, SettingActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
         et_password.addTextChangedListener(new UpdateUserActivity.TextChange());
         et_password2.addTextChangedListener(new UpdateUserActivity.TextChange());
+
+        save.setOnClickListener(new SaveButtonClickListener());
     }
+
+    private final class SaveButtonClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            if(!(et_password.getText().toString()).equals(et_password2.getText().toString())){
+                Toast.makeText(UpdateUserActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(UpdateUserActivity.this,"密码修改成功",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UpdateUserActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
 
     // EditText监听器
     private class TextChange implements TextWatcher {
