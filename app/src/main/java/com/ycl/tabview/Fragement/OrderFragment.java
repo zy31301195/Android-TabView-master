@@ -1,5 +1,6 @@
 package com.ycl.tabview.Fragement;
 
+import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.ycl.tabview.Activity.GoodsActivity;
 import com.ycl.tabview.R;
 
 import java.util.ArrayList;
@@ -36,8 +38,7 @@ public class OrderFragment extends Fragment implements WeekView.EventClickListen
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) view.findViewById(R.id.weekView);
 
-// Set an action when any event is clicked.
-//        mWeekView.setOnEventClickListener(mEventClickListener);
+        mWeekView.setOnEventClickListener(this);
 
 // The week view has infinite scrolling horizontally. We have to provide the events of a
 // month every time the month changes on the week view.
@@ -86,8 +87,12 @@ public class OrderFragment extends Fragment implements WeekView.EventClickListen
 
     }
 
+
+
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
+        Intent intent = new Intent(getContext(), GoodsActivity.class);
+        startActivity(intent);
 
     }
 

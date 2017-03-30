@@ -20,6 +20,7 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
     private List<MyItemBean> mData;
 
     private OnRecycleItemClick onRecycleitemClick = null;
+    //public OnItemLongClick onItemLongClick = null;//长按
 
     public MyAdapter(List<MyItemBean> data){
         this.mData = data;
@@ -28,10 +29,18 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
     public void setOnItemClickListener(OnRecycleItemClick onItemClickListener) {
         onRecycleitemClick = onItemClickListener;
     }
+//    public void setOnItemLongClickListener(OnItemLongClick listener) {
+//        onItemLongClick = listener;
+//    }
+
 
     public interface OnRecycleItemClick{
         void onItemClick(View view, Object object);
     }
+
+//    public interface OnItemLongClick {
+//         void onItemLongClick(View view,int postion);
+//    }
 
     @Override
     public int getItemCount() {
@@ -43,6 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent,false);
         itemView.setOnClickListener(this);
+        //itemView.setOnLongClickListener(this);
         MyViewHolder vh = new MyViewHolder(itemView);
         return vh;
     }
@@ -66,4 +76,12 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
             onRecycleitemClick.onItemClick(v,v.getTag());
         }
     }
+
+//    @Override
+//    public boolean onLongClick(View v) {
+//        if(onItemLongClick != null){
+//            onItemLongClick.onItemLongClick(v, (Integer) v.getTag());
+//        }
+//        return true;
+//    }
 }

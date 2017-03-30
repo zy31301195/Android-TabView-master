@@ -1,8 +1,10 @@
 package com.ycl.tabview.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,8 @@ import com.ycl.tabview.R;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.ycl.tabview.Activity.RegisterActivity.school_name;
+
 /**
  * Created by Administrator on 2017/3/25.
  */
@@ -23,6 +27,7 @@ import java.util.Date;
 public class AddgoodsActivity extends Activity {
     private TextView goods_date;
     private TextView goods_time;
+    private TextView goods_school;
     private Button button;
     private int year;
     private int month;
@@ -49,10 +54,12 @@ public class AddgoodsActivity extends Activity {
     private void initView(){
         goods_date = (TextView) findViewById(R.id.goods_date);
         goods_time = (TextView) findViewById(R.id.goods_time);
+        goods_school = (TextView) findViewById(R.id.goods_school);
         button = (Button) findViewById(R.id.btn_add);
         goods_date.setOnClickListener(new DateButtonClickListener());
         goods_time.setOnClickListener(new TimeButtonClickListener());
         button.setOnClickListener(new ButtonClickListener());
+        goods_school.setOnClickListener(new SchoolButtonClickListener());
     }
 
     private final class DateButtonClickListener implements View.OnClickListener{
@@ -80,6 +87,41 @@ public class AddgoodsActivity extends Activity {
         }
     }
 
+    private final class SchoolButtonClickListener implements View.OnClickListener {
+        int index = 0 ;
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(AddgoodsActivity.this);
+            builder.setTitle("请选择所属分院");
+            builder.setSingleChoiceItems(school_name,0,new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    index = which;
+                }
+            });
+
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    goods_school.setText(school_name[index]);
+
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                }
+            });
+            builder.show();
+
+        }
+    }
+
     private DatePickerDialog.OnDateSetListener DateListener = new DatePickerDialog.OnDateSetListener(){
 
         @Override
@@ -87,7 +129,7 @@ public class AddgoodsActivity extends Activity {
             year = myear;
             month = mmonth;
             day = dayOfMonth;
-            goods_date.setText(year+"年"+(month+1)+"月"+day+"日");
+            goods_date.setText(year+"-"+(month+1)+"-"+day);
         }
     };
 

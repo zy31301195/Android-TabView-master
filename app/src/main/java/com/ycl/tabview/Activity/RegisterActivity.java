@@ -2,6 +2,8 @@ package com.ycl.tabview.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -25,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ycl.tabview.R;
@@ -39,6 +42,8 @@ import java.io.File;
 public class RegisterActivity extends Activity {
     private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private Button button;
+    private TextView sex;
+    private TextView school;
     private EditText et_username;
     private EditText et_usertel;
     private EditText et_password;
@@ -52,7 +57,7 @@ public class RegisterActivity extends Activity {
     private SharedPreferences mPref;
     private SharedPreferences.Editor mEditor;
     public static final String KEY_SEARCH_HISTORY_KEYWORD = "Tel_keyword";
-
+    public static final String[] school_name = {"计算","传媒","商学院","信电","工程","医学院","法学院","外国语","创意"};
     private String imageName;
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
@@ -79,6 +84,8 @@ public class RegisterActivity extends Activity {
         iv_show2 = (ImageView) findViewById(R.id.iv_show2);
         iv_photo = (ImageView) findViewById(R.id.iv_photo);
         button = (Button) findViewById(R.id.btn_register);
+        sex = (TextView) findViewById(R.id.et_usersex);
+        school = (TextView) findViewById(R.id.et_userschool);
 
         // 监听多个输入框
         et_username.addTextChangedListener(new TextChange());
@@ -92,6 +99,9 @@ public class RegisterActivity extends Activity {
         iv_hide2.setOnClickListener(new Hide2ButtonClickListener());
         iv_show2.setOnClickListener(new Show2ButtonClickListener());
         iv_photo.setOnClickListener(new PhotoButtonClickListener());
+        sex.setOnClickListener(new SexButtonClickListener());
+        school.setOnClickListener(new SchoolButtonClickListener());
+
     }
 
 
@@ -108,6 +118,77 @@ public class RegisterActivity extends Activity {
                 mEditor.commit();
                 startActivity(intent);
             }
+
+        }
+    }
+
+    private final class SexButtonClickListener implements View.OnClickListener {
+        int index = 0 ;
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+            builder.setTitle("请选择性别");
+            final String[] sexs = {"男", "女"};
+            builder.setSingleChoiceItems(sexs,0,new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    index = which;
+                }
+            });
+
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    sex.setText(sexs[index]);
+
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                }
+            });
+            builder.show();
+
+        }
+    }
+
+    private final class SchoolButtonClickListener implements View.OnClickListener {
+        int index = 0 ;
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+            builder.setTitle("请选择所属分院");
+            builder.setSingleChoiceItems(school_name,0,new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    index = which;
+                }
+            });
+
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    school.setText(school_name[index]);
+
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                }
+            });
+            builder.show();
 
         }
     }
@@ -343,8 +424,9 @@ public class RegisterActivity extends Activity {
             boolean Sign1 = et_username.getText().length() > 0;
             boolean Sign2 = et_usertel.getText().length() > 0;
             boolean Sign3 = et_password.getText().length() > 0;
+            boolean Sign4 = et_password2.getText().length() > 0;
 
-            if (Sign1 & Sign2 & Sign3) {
+            if (Sign1 & Sign2 & Sign3 & Sign4) {
                 button.setTextColor(0xFFFFFFFF);
                 button.setEnabled(true);
             }

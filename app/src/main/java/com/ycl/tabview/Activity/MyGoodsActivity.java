@@ -33,6 +33,7 @@ public class MyGoodsActivity extends Activity implements MyAdapter.OnRecycleItem
         this.mAdapter = new MyAdapter(mData);
         this.mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
+       // mAdapter.setOnItemLongClickListener(this);
     }
 
     private void initView(){
@@ -52,6 +53,11 @@ public class MyGoodsActivity extends Activity implements MyAdapter.OnRecycleItem
             mData.add(bean);
         }
     }
+
+//    @Override
+//    public void onItemLongClick(View view, int postion) {
+//        Toast.makeText(MyGoodsActivity.this, "点击"+postion, Toast.LENGTH_SHORT).show();
+//    }
 
     private final class AddButtonClickListener implements View.OnClickListener{
         @Override

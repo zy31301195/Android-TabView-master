@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
     private View search;
     private View view;
     private TextView qd;
-    public String[] name = {"计算","传媒","商学院","信电","工程","医学院","法学院","外国语","创意"};
+
     public String[] iamgeids ={};//图表id
     private static HomeFragment homeFragment =new HomeFragment();
     public static HomeFragment newInstance(){

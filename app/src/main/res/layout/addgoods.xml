@@ -131,7 +131,7 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/edittext_login"
                 android:hint="点击选择"
-                android:inputType="phone"
+                android:gravity="center_vertical"
                 android:paddingLeft="90dp"
                 android:textColorHint="#DDDDDD"
                 android:textSize="16sp" />
@@ -161,7 +161,7 @@
                 android:background="@drawable/edittext_login"
                 android:hint="点击选择"
                 android:paddingLeft="90dp"
-
+                android:gravity="center_vertical"
                 android:textColorHint="#DDDDDD"
                 android:textSize="16sp" />
 
@@ -176,6 +176,36 @@
                 android:textSize="16sp" />
 
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/school"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" >
+
+            <TextView
+                android:id="@+id/goods_school"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/edittext_login"
+                android:hint="点击选择"
+                android:paddingLeft="90dp"
+                android:gravity="center_vertical"
+                android:textColorHint="#DDDDDD"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/goods_school"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="所属分院"
+                android:textColor="#353535"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
