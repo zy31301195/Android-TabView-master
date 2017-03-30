@@ -69,7 +69,7 @@ public class ListViewAdapter extends BaseAdapter{
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
         viewHolder.tv_dates.setText(this.mDatas.get(position).exam_date);
         viewHolder.tv_name.setText(this.mDatas.get(position).exam_name);
-        viewHolder.prices.setText(this.mDatas.get(position).prices);
+        viewHolder.prices.setText(String.valueOf(this.mDatas.get(position).prices));
         viewHolder.hour.setText(this.mDatas.get(position).hour);
         viewHolder.minutes.setText(this.mDatas.get(position).minutes);
         viewHolder.second.setText(this.mDatas.get(position).second);

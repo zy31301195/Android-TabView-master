@@ -9,12 +9,15 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ycl.tabview.Adapter.ListViewAdapter;
 import com.ycl.tabview.Adapter.MenuListAdapter;
 import com.ycl.tabview.Adapter.MyAdapter;
 import com.ycl.tabview.Bean.MyItemBean;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.DropDownMenu;
+import com.ycl.tabview.View.MyRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,9 +26,9 @@ import java.util.List;
 public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemClick{
     private TextView secondTxt;
     private List<MyItemBean> mData;
-    private MyAdapter mAdapter;
+    private ListViewAdapter mAdapter;
     //菜单标题
-    private String headers[] = {"综合", "时间", "价格"};
+    private String headers[] = {"时间", "价格"};
     private ListView listView1;
     private ListView listView2;
     private ListView listView3;
@@ -101,7 +104,6 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        RecyclerView recyclerView  = new RecyclerView(this);
         this.mData = new ArrayList<MyItemBean>();
         for(int i=0;i<2;i++){
             MyItemBean bean = new MyItemBean();
@@ -109,15 +111,16 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
 
             mData.add(bean);
         }
-        this.mAdapter = new MyAdapter(mData);
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
-        linearLayout.addView(recyclerView);
-//        TextView contentView = new TextView(this);
-//        contentView.setText("这里是内容区域");
-//        contentView.setTextSize(20);
-//        contentView.setGravity(Gravity.CENTER);
-
+        this.mAdapter = new ListViewAdapter(this,mData);
+        ListView listView = new ListView(this);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(ChooseActivity.this,"click",Toast.LENGTH_LONG).show();
+            }
+        });
+        listView.setAdapter(mAdapter);
+        linearLayout.addView(listView);
 
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews,linearLayout );
 

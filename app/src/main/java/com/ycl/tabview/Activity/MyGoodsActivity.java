@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ycl.tabview.Adapter.ListViewAdapter;
 import com.ycl.tabview.Bean.MyItemBean;
@@ -18,7 +20,7 @@ import java.util.List;
  * Created by Administrator on 2017/3/25.
  */
 
-public class MyGoodsActivity extends Activity {
+public class MyGoodsActivity extends Activity{
     private ListView mListView;
     private TextView add;
     private List<MyItemBean> mData;
@@ -31,6 +33,20 @@ public class MyGoodsActivity extends Activity {
         initData();
         this.mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
         this.mListView.setAdapter(mAdapter);
+
+        this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MyGoodsActivity.this,mData.get(position).exam_name,Toast.LENGTH_LONG).show();
+            }
+        });
+        this.mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MyGoodsActivity.this,mData.get(position).exam_name+"long",Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
     }
 
     private void initView(){

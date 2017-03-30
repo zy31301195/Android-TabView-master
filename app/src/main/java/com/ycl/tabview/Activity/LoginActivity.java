@@ -10,8 +10,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ycl.tabview.R;
+import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.LoginBeanTest;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.ycl.tabview.Activity.RegisterActivity.KEY_SEARCH_HISTORY_KEYWORD;
 
@@ -58,10 +70,66 @@ public class LoginActivity extends Activity {
         public void onClick(View v) {
             String user = tel.getText().toString();
             String pwds = pwd.getText().toString();
-            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-            mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
-            mEditor.commit();
-            startActivity(intent);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://192.168.1.5:8080/Paimai/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+
+            retrofit.create(LoginHttps.class).getJson("15168282630","123")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subject<LoginBeanTest>() {
+                        @Override
+                        public boolean hasObservers() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean hasThrowable() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean hasComplete() {
+                            return false;
+                        }
+
+                        @Override
+                        public Throwable getThrowable() {
+                            return null;
+                        }
+
+                        @Override
+                        protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
+
+                        }
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(LoginBeanTest s) {
+                            Toast.makeText(LoginActivity.this,s.getUser(),Toast.LENGTH_LONG).show();
+                            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                            mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
+                            mEditor.commit();
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                        }
+                    });
+
         }
 
     }
