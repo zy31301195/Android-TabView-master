@@ -56,11 +56,17 @@
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
-    <com.ycl.tabview.View.MyRecyclerView
-        android:id="@+id/my_recyclerview"
+    <ListView
+        android:id="@+id/mygoods_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        />
+        android:layout_height="match_parent">
+
+    </ListView>
+    <!--<com.ycl.tabview.View.MyRecyclerView-->
+        <!--android:id="@+id/my_recyclerview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layoutManager="LinearLayoutManager"-->
+        <!--/>-->
 
 </LinearLayout>

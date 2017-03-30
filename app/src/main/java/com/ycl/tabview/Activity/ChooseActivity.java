@@ -3,13 +3,16 @@ package com.ycl.tabview.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ycl.tabview.Adapter.MenuListAdapter;
+import com.ycl.tabview.Adapter.MyAdapter;
+import com.ycl.tabview.Bean.MyItemBean;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.DropDownMenu;
 
@@ -17,15 +20,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChooseActivity extends Activity {
+public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemClick{
     private TextView secondTxt;
-
+    private List<MyItemBean> mData;
+    private MyAdapter mAdapter;
     //菜单标题
     private String headers[] = {"综合", "时间", "价格"};
     private ListView listView1;
     private ListView listView2;
     private ListView listView3;
-    private MenuListAdapter mMenuAdapter1;
     private MenuListAdapter mMenuAdapter2;
     private MenuListAdapter mMenuAdapter3;
 
@@ -59,22 +62,18 @@ public class ChooseActivity extends Activity {
         //init menu listview
 
         //这里是每个下拉菜单之后的布局,目前只是简单的listview作为展示
-        listView1 = new ListView(ChooseActivity.this);
         listView2 = new ListView(ChooseActivity.this);
         listView3 = new ListView(ChooseActivity.this);
 
-        listView1.setDividerHeight(0);
         listView2.setDividerHeight(0);
         listView3.setDividerHeight(0);
 
         mMenuAdapter2 = new MenuListAdapter(ChooseActivity.this, Arrays.asList(times));
         mMenuAdapter3 = new MenuListAdapter(ChooseActivity.this, Arrays.asList(price));
 
-        listView1.setAdapter(mMenuAdapter1);
         listView2.setAdapter(mMenuAdapter2);
         listView3.setAdapter(mMenuAdapter3);
 
-        popupViews.add(listView1);
         popupViews.add(listView2);
         popupViews.add(listView3);
 
@@ -99,17 +98,39 @@ public class ChooseActivity extends Activity {
 
 
         //这里添加 内容显示区域,可以是任何布局
-        TextView contentView = new TextView(this);
-        contentView.setText("这里是内容区域");
-        contentView.setTextSize(20);
-        contentView.setGravity(Gravity.CENTER);
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        RecyclerView recyclerView  = new RecyclerView(this);
+        this.mData = new ArrayList<MyItemBean>();
+        for(int i=0;i<2;i++){
+            MyItemBean bean = new MyItemBean();
+            bean.exam_name = "Xmy"+i;
+
+            mData.add(bean);
+        }
+        this.mAdapter = new MyAdapter(mData);
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
+        linearLayout.addView(recyclerView);
+//        TextView contentView = new TextView(this);
+//        contentView.setText("这里是内容区域");
+//        contentView.setTextSize(20);
+//        contentView.setGravity(Gravity.CENTER);
 
 
-        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews,contentView );
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews,linearLayout );
 
     }
 
     public void back(View view) {
         this.finish();
+    }
+
+    @Override
+    public void onItemClick(View view, Object object) {
+        Intent intent = new Intent(ChooseActivity.this, GoodsActivity.class);
+        startActivity(intent);
+        // Toast.makeText(view.getContext(),((MyItemBean)object).exam_name,Toast.LENGTH_LONG).show();
     }
 }

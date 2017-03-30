@@ -9,6 +9,7 @@ public class Exam {
     private String exam_name;//考试课程
     private String exam_date;//考试日期
     private String exam_time;//考试时间
+    private String exam_endtime;//开始结束时间
     private String exam_place;//考试地点
     private int exam_user_id;//发布者id
     private String exam_prices;//初始价
@@ -85,5 +86,13 @@ public class Exam {
 
     public void setExam_state(int exam_state) {
         this.exam_state = exam_state;
+    }
+
+    public String getExam_endtime() {
+        return exam_endtime;
+    }
+
+    public void setExam_endtime(String exam_endtime) {
+        this.exam_endtime = exam_endtime;
     }
 }

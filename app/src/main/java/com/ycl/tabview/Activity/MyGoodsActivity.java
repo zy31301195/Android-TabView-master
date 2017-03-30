@@ -3,11 +3,11 @@ package com.ycl.tabview.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ycl.tabview.Adapter.MyAdapter;
+import com.ycl.tabview.Adapter.ListViewAdapter;
 import com.ycl.tabview.Bean.MyItemBean;
 import com.ycl.tabview.R;
 
@@ -18,29 +18,24 @@ import java.util.List;
  * Created by Administrator on 2017/3/25.
  */
 
-public class MyGoodsActivity extends Activity implements MyAdapter.OnRecycleItemClick{
-    private RecyclerView mRecyclerView;
+public class MyGoodsActivity extends Activity {
+    private ListView mListView;
     private TextView add;
     private List<MyItemBean> mData;
-    private MyAdapter mAdapter;
+    private ListViewAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mygoods_activivty);
         initView();
         initData();
-
-        this.mAdapter = new MyAdapter(mData);
-        this.mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
-       // mAdapter.setOnItemLongClickListener(this);
+        this.mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
+        this.mListView.setAdapter(mAdapter);
     }
 
     private void initView(){
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview);
+        mListView = (ListView) findViewById(R.id.mygoods_list);
         add = (TextView) findViewById(R.id.add);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview);
-
         add.setOnClickListener(new AddButtonClickListener());
 
     }
@@ -72,9 +67,9 @@ public class MyGoodsActivity extends Activity implements MyAdapter.OnRecycleItem
         this.finish();
     }
 
-    @Override
-    public void onItemClick(View view, Object object) {
-        Intent intent = new Intent(MyGoodsActivity.this, GoodsActivity.class);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onItemClick(View view, Object object) {
+//        Intent intent = new Intent(MyGoodsActivity.this, GoodsActivity.class);
+//        startActivity(intent);
+//    }
 }
