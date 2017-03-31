@@ -48,7 +48,7 @@ public class RecordListViewAdapter extends BaseAdapter {
         RecordListViewAdapter.ViewHolder viewHolder = null;
         if (convertView == null)
         {
-            convertView = mInflater.inflate(R.layout.item, parent,
+            convertView = mInflater.inflate(R.layout.record_item, parent,
                     false);
             viewHolder = new RecordListViewAdapter.ViewHolder();
             /*得到各个控件的对象*/

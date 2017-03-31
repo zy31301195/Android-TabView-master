@@ -48,7 +48,7 @@ public class MessageListViewAdapter extends BaseAdapter {
         MessageListViewAdapter.ViewHolder viewHolder = null;
         if (convertView == null)
         {
-            convertView = mInflater.inflate(R.layout.item, parent,
+            convertView = mInflater.inflate(R.layout.comment_item, parent,
                     false);
             viewHolder = new MessageListViewAdapter.ViewHolder();
             /*得到各个控件的对象*/
