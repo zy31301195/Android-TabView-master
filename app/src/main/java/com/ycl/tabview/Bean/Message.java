@@ -10,6 +10,7 @@ public class Message {
     private String message_time;//留言时间
     private int user_id;//留言人id
     private int exam_id;//考试id
+    private String user_name;
 
     public int getMessage_id() {
         return message_id;
@@ -49,5 +50,13 @@ public class Message {
 
     public void setExam_id(int exam_id) {
         this.exam_id = exam_id;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 }

@@ -65,11 +65,6 @@ public class MyGoodsActivity extends Activity{
         }
     }
 
-//    @Override
-//    public void onItemLongClick(View view, int postion) {
-//        Toast.makeText(MyGoodsActivity.this, "点击"+postion, Toast.LENGTH_SHORT).show();
-//    }
-
     private final class AddButtonClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
@@ -78,14 +73,8 @@ public class MyGoodsActivity extends Activity{
         }
     }
 
-
     public void back(View view) {
         this.finish();
     }
 
-//    @Override
-//    public void onItemClick(View view, Object object) {
-//        Intent intent = new Intent(MyGoodsActivity.this, GoodsActivity.class);
-//        startActivity(intent);
-//    }
 }

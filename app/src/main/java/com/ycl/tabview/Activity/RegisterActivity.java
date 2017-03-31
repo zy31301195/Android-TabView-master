@@ -30,10 +30,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ycl.tabview.Bean.Users;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.SelectPicPopupWindow;
+import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.LoginBeanTest;
 
 import java.io.File;
+import java.util.Map;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
  * Created by Administrator on 2017/3/18.
@@ -45,6 +60,7 @@ public class RegisterActivity extends Activity {
     private TextView sex;
     private TextView school;
     private EditText et_username;
+    private EditText zgid;
     private EditText et_usertel;
     private EditText et_password;
     private ImageView iv_hide;
@@ -76,6 +92,7 @@ public class RegisterActivity extends Activity {
     private void initView(){
         et_username = (EditText) findViewById(R.id.et_usernick);
         et_usertel = (EditText) findViewById(R.id.et_usertel);
+        zgid = (EditText) findViewById(R.id.et_userzgid);
         et_password = (EditText) findViewById(R.id.et_password);
         iv_hide = (ImageView) findViewById(R.id.iv_hide);
         iv_show = (ImageView) findViewById(R.id.iv_show);
@@ -90,6 +107,7 @@ public class RegisterActivity extends Activity {
         // 监听多个输入框
         et_username.addTextChangedListener(new TextChange());
         et_usertel.addTextChangedListener(new TextChange());
+        zgid.addTextChangedListener(new TextChange());
         et_password.addTextChangedListener(new TextChange());
         et_password2.addTextChangedListener(new TextChange());
 
@@ -109,14 +127,82 @@ public class RegisterActivity extends Activity {
 
         @Override
         public void onClick(View v) {
+            Users user = new Users();
+            user.setUser_name(et_username.getText().toString());
+            user.setUser_pwd(et_password.getText().toString());
+            user.setUser_school(school.getText().toString());
+            user.setUser_sex(sex.getText().toString());
+            user.setUser_tel(et_usertel.getText().toString());
+            user.setUser_zgid(zgid.getText().toString());
+            Map map = user.createCommitParams();
+
             if(!(et_password.getText().toString()).equals(et_password2.getText().toString())){
                 Toast.makeText(RegisterActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
             }
             else {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, et_usertel.getText().toString());
-                mEditor.commit();
-                startActivity(intent);
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(API_BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .build();
+
+                retrofit.create(LoginHttps.class).getJson(map)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subject<LoginBeanTest>() {
+                            @Override
+                            public boolean hasObservers() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean hasThrowable() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean hasComplete() {
+                                return false;
+                            }
+
+                            @Override
+                            public Throwable getThrowable() {
+                                return null;
+                            }
+
+                            @Override
+                            protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
+
+                            }
+
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(LoginBeanTest s) {
+                                if(s.getUser().equals("success")){
+                                    Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                                    mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, et_usertel.getText().toString());
+                                    mEditor.commit();
+                                    startActivity(intent);
+                                }
+                                else
+                                    Toast.makeText(RegisterActivity.this,"该号码已存在",Toast.LENGTH_LONG).show();
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Toast.makeText(RegisterActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                            }
+                        });
             }
 
         }
@@ -312,7 +398,7 @@ public class RegisterActivity extends Activity {
             }
             switch (v.getId()) {
                 case R.id.picture_selector_take_photo_btn:
-                    imageName = "takephoto.png";
+                    imageName = "user_photo.png";
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     // 指定调用相机拍照后照片的储存路径
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -425,8 +511,9 @@ public class RegisterActivity extends Activity {
             boolean Sign2 = et_usertel.getText().length() > 0;
             boolean Sign3 = et_password.getText().length() > 0;
             boolean Sign4 = et_password2.getText().length() > 0;
+            boolean Sign5 = zgid.getText().length() > 0;
 
-            if (Sign1 & Sign2 & Sign3 & Sign4) {
+            if (Sign1 & Sign2 & Sign3 & Sign4 &Sign5) {
                 button.setTextColor(0xFFFFFFFF);
                 button.setEnabled(true);
             }

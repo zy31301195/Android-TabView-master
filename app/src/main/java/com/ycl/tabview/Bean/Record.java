@@ -8,8 +8,10 @@ public class Record {
     private int record_id;//记录id
     private String record_price;//出价价格
     private String reocrd_time;//起拍时间
+    private String record_date;//起拍日期
     private int exam_id;//考试id
     private int buyer_id;//买家id
+    private String buyer_name;//买家姓名
 
     public int getRecord_id() {
         return record_id;
@@ -49,5 +51,21 @@ public class Record {
 
     public void setBuyer_id(int buyer_id) {
         this.buyer_id = buyer_id;
+    }
+
+    public String getBuyer_name() {
+        return buyer_name;
+    }
+
+    public void setBuyer_name(String buyer_name) {
+        this.buyer_name = buyer_name;
+    }
+
+    public String getRecord_date() {
+        return record_date;
+    }
+
+    public void setRecord_date(String record_date) {
+        this.record_date = record_date;
     }
 }

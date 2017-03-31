@@ -146,7 +146,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tv_address"
+            android:id="@+id/tv_school"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
