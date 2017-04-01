@@ -15,9 +15,22 @@ import android.widget.Toast;
 import com.ycl.tabview.Adapter.ListViewAdapter;
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
+import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.ExamBean;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
  * Created by Administrator on 2017/3/25.
@@ -36,8 +49,7 @@ public class MyGoodsActivity extends Activity{
         setContentView(R.layout.mygoods_activivty);
         initView();
         initData();
-        this.mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
-        this.mListView.setAdapter(mAdapter);
+
 
 
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,14 +82,73 @@ public class MyGoodsActivity extends Activity{
     }
 
     private void initData(){
-        for(int i=0;i<2;i++){
-            Exam bean = new Exam();
-            bean.setExam_name("数据库"+i);
-            bean.setExam_date("2017-3-21");
-            bean.setExam_prices("100");
-            bean.setExam_school("计算");
-            mData.add(bean);
-        }
+//        for(int i=0;i<2;i++){
+//            Exam bean = new Exam();
+//            bean.setExam_name("数据库"+i);
+//            bean.setExam_date("2017-3-21");
+//            bean.setExam_prices("100");
+//            bean.setExam_school("计算");
+//            mData.add(bean);
+//        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        retrofit.create(LoginHttps.class).getJson()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subject<ExamBean>() {
+                    @Override
+                    public boolean hasObservers() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasThrowable() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasComplete() {
+                        return false;
+                    }
+
+                    @Override
+                    public Throwable getThrowable() {
+                        return null;
+                    }
+
+                    @Override
+                    protected void subscribeActual(Observer<? super ExamBean> observer) {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ExamBean s) {
+                        mData = s.getList();
+                        mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
+                        mListView.setAdapter(mAdapter);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(MyGoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
 

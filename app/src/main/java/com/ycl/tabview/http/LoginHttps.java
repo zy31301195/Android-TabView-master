@@ -1,7 +1,8 @@
 package com.ycl.tabview.http;
 
-import com.ycl.tabview.Bean.Exam;
+import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.httpBean.LoginBeanTest;
+import com.ycl.tabview.httpBean.UserBean;
 
 import java.util.Map;
 
@@ -23,5 +24,11 @@ public interface LoginHttps {
     Observable<LoginBeanTest> getJson(@QueryMap Map<String, String> map);
 
     @GET("AllExam.action")
-    Observable<Exam> getJson();
+    Observable<ExamBean> getJson();
+
+    @GET("MyExam.action")
+    Observable<ExamBean> getJson(@Query("user_id")int user_id);
+
+    @GET("ReadUser.action")
+    Observable<UserBean> getJson(@Query("user_tel")String user_tel);
 }

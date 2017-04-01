@@ -10,10 +10,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ycl.tabview.R;
+import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.LoginBeanTest;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.ycl.tabview.Activity.RegisterActivity.KEY_SEARCH_HISTORY_KEYWORD;
+import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 
 /**
@@ -27,6 +40,7 @@ public class LoginActivity extends Activity {
     private EditText pwd;
     private SharedPreferences mPref;
     private SharedPreferences.Editor mEditor;
+    public static String user_tel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,76 +72,73 @@ public class LoginActivity extends Activity {
         public void onClick(View v) {
             String user = tel.getText().toString();
             String pwds = pwd.getText().toString();
-            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-            mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
-            mEditor.commit();
-            startActivity(intent);
+            user_tel = user;
 
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(API_BASE_URL)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                    .build();
-//
-//            retrofit.create(LoginHttps.class).getJson(user,pwds)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Subject<LoginBeanTest>() {
-//                        @Override
-//                        public boolean hasObservers() {
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public boolean hasThrowable() {
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public boolean hasComplete() {
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public Throwable getThrowable() {
-//                            return null;
-//                        }
-//
-//                        @Override
-//                        protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onSubscribe(Disposable d) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onNext(LoginBeanTest s) {
-//                            if(s.getUser().equals("3")){
-//                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-//                                mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
-//                                mEditor.commit();
-//                                startActivity(intent);
-//                            }
-//                            else if(s.getUser().equals("2"))
-//                                Toast.makeText(LoginActivity.this,"密码错误",Toast.LENGTH_LONG).show();
-//                            else
-//                                Toast.makeText(LoginActivity.this,"没有该账号",Toast.LENGTH_LONG).show();
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//                           // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
-//                        }
-//                    });
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(API_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+
+            retrofit.create(LoginHttps.class).getJson(user,pwds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subject<LoginBeanTest>() {
+                        @Override
+                        public boolean hasObservers() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean hasThrowable() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean hasComplete() {
+                            return false;
+                        }
+
+                        @Override
+                        public Throwable getThrowable() {
+                            return null;
+                        }
+
+                        @Override
+                        protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
+
+                        }
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(LoginBeanTest s) {
+                            if(s.getUser().equals("3")){
+                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
+                                mEditor.commit();
+                                startActivity(intent);
+                            }
+                            else if(s.getUser().equals("2"))
+                                Toast.makeText(LoginActivity.this,"密码错误",Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(LoginActivity.this,"没有该账号",Toast.LENGTH_LONG).show();
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                           // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                        }
+                    });
 
         }
 

@@ -1,6 +1,7 @@
 package com.ycl.tabview.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ycl.tabview.R;
+
+import static com.ycl.tabview.Activity.LoginActivity.user_tel;
 
 /**
  * Created by Administrator on 2017/3/23.
@@ -34,6 +37,7 @@ public class UserInfoActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myinfo);
         initView();
+        initData();
 
     }
 
@@ -53,6 +57,17 @@ public class UserInfoActivity extends Activity{
         tv_sign = (TextView) this.findViewById(R.id.tv_sign);//签名
         tv_no = (TextView) this.findViewById(R.id.tv_no);//职工号
         tv_address = (TextView) this.findViewById(R.id.tv_address);//所在分院
+    }
+
+    private void initData(){
+        Intent intent = getIntent();
+        tv_name.setText(intent.getStringExtra("userName"));
+        tv_tel.setText(user_tel);
+        tv_sex.setText(intent.getStringExtra("userSex"));
+        tv_no.setText(intent.getStringExtra("userZgid"));
+        tv_address.setText(intent.getStringExtra("userSchool"));
+        tv_sign.setText(intent.getStringExtra("userSign"));
+
     }
 
     public void back(View view) {
