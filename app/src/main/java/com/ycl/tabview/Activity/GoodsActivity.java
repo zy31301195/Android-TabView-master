@@ -44,8 +44,8 @@ public class GoodsActivity extends Activity {
     private TextView user_sex;
     private TextView user_school;
     private TextView user_sign;
-    private List<Message> messageData;
-    private List<Record> recordData;
+    private List<Message> messageData = new ArrayList<Message>();
+    private List<Record> recordData =new ArrayList<>();
     private MessageListViewAdapter messageListViewAdapter;
     private RecordListViewAdapter recordListViewAdapter;
 
@@ -54,6 +54,7 @@ public class GoodsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_activity);
+        initData();
         initView();
         this.messageListViewAdapter = new MessageListViewAdapter(this,messageData);
         this.messagelist.setAdapter(messageListViewAdapter);
@@ -74,7 +75,7 @@ public class GoodsActivity extends Activity {
         exam_place = (TextView) findViewById(R.id.et_exam_place);
         exam_newprice = (TextView) findViewById(R.id.tv_new_prices);
         exam_oldprice = (TextView) findViewById(R.id.tv_old_price);
-        //recordlist = (ListView) findViewById(R.id.record_list);
+        recordlist = (ListView) findViewById(R.id.record_list);
         messagelist = (ListView) findViewById(R.id.comments_list);
         user_name = (TextView) findViewById(R.id.tv_name);
         user_school = (TextView) findViewById(R.id.tv_school);
@@ -96,7 +97,6 @@ public class GoodsActivity extends Activity {
     }
 
     private void initData(){
-        this.messageData = new ArrayList<Message>();
         for(int i=0;i<2;i++){
             Message bean = new Message();
             bean.setUser_name("Xmy"+i);
@@ -105,7 +105,6 @@ public class GoodsActivity extends Activity {
             messageData.add(bean);
         }
 
-        this.recordData = new ArrayList<Record>();
         for(int i=0;i<2;i++){
             Record beans = new Record();
             beans.setBuyer_name("Xmy"+i);
