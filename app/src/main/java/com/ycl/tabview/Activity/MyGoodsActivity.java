@@ -30,6 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.ycl.tabview.Fragement.MyFragment.user_id;
 import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
@@ -49,6 +50,8 @@ public class MyGoodsActivity extends Activity{
         setContentView(R.layout.mygoods_activivty);
         initView();
         initData();
+        mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
+        mListView.setAdapter(mAdapter);
 
 
 
@@ -82,14 +85,6 @@ public class MyGoodsActivity extends Activity{
     }
 
     private void initData(){
-//        for(int i=0;i<2;i++){
-//            Exam bean = new Exam();
-//            bean.setExam_name("数据库"+i);
-//            bean.setExam_date("2017-3-21");
-//            bean.setExam_prices("100");
-//            bean.setExam_school("计算");
-//            mData.add(bean);
-//        }
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
@@ -97,7 +92,7 @@ public class MyGoodsActivity extends Activity{
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        retrofit.create(LoginHttps.class).getJson()
+        retrofit.create(LoginHttps.class).getJson(user_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subject<ExamBean>() {
@@ -134,8 +129,6 @@ public class MyGoodsActivity extends Activity{
                     @Override
                     public void onNext(ExamBean s) {
                         mData = s.getList();
-                        mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
-                        mListView.setAdapter(mAdapter);
 
                     }
 

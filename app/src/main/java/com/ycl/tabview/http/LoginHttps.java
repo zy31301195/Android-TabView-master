@@ -23,6 +23,9 @@ public interface LoginHttps {
     @GET("Register.action")
     Observable<LoginBeanTest> getJson(@QueryMap Map<String, String> map);
 
+    @GET("AddExam.action")
+    Observable<LoginBeanTest> addExamsJson(@QueryMap Map<String, Object> map);
+
     @GET("AllExam.action")
     Observable<ExamBean> getJson();
 
@@ -31,4 +34,7 @@ public interface LoginHttps {
 
     @GET("ReadUser.action")
     Observable<UserBean> getJson(@Query("user_tel")String user_tel);
+
+    @GET("UpdateUser.action")
+    Observable<LoginBeanTest> updateJson(@Query("tel")String tel,@Query("param") String param,@Query("value") String value);
 }

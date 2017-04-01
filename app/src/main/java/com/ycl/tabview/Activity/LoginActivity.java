@@ -74,8 +74,14 @@ public class LoginActivity extends Activity {
             String pwds = pwd.getText().toString();
             user_tel = user;
 
+//            OkHttpClient client = new OkHttpClient.Builder().
+//                    connectTimeout(60, TimeUnit.SECONDS).
+//                    readTimeout(60, TimeUnit.SECONDS).
+//                    writeTimeout(60, TimeUnit.SECONDS).build();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(API_BASE_URL)
+                    //.client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();

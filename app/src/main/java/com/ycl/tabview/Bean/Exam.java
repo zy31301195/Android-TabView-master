@@ -1,5 +1,8 @@
 package com.ycl.tabview.Bean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Administrator on 2017/3/30.
  */
@@ -13,8 +16,17 @@ public class Exam {
     private String exam_place;//考试地点
     private int exam_user_id;//发布者id
     private String exam_prices;//初始价
+    private String exam_newprice;//现价
     private String exam_school;//所属分院
     private int exam_state;//状态
+
+    public String getExam_newprice() {
+        return exam_newprice;
+    }
+
+    public void setExam_newprice(String exam_newprice) {
+        this.exam_newprice = exam_newprice;
+    }
 
     public int getExam_id() {
         return exam_id;
@@ -94,5 +106,18 @@ public class Exam {
 
     public void setExam_endtime(String exam_endtime) {
         this.exam_endtime = exam_endtime;
+    }
+
+    public Map<String, Object> createCommitParams(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("exam_name", this.getExam_name());
+        params.put("exam_date", this.getExam_date());
+        params.put("exam_endtime", this.getExam_endtime());
+        params.put("exam_time", this.getExam_time());
+        params.put("exam_place", this.getExam_place());
+        params.put("exam_user_id", this.getExam_user_id());
+        params.put("exam_prices", this.getExam_prices());
+        params.put("exam_school", this.getExam_school());
+        return params;
     }
 }

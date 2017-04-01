@@ -12,6 +12,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ycl.tabview.R;
+import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.LoginBeanTest;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.ycl.tabview.Activity.LoginActivity.user_tel;
+import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
  * Created by Administrator on 2017/3/23.
@@ -53,9 +67,68 @@ public class UpdateUserActivity extends Activity{
                 Toast.makeText(UpdateUserActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(UpdateUserActivity.this,"密码修改成功",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(UpdateUserActivity.this, SettingActivity.class);
-                startActivity(intent);
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(API_BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .build();
+
+                retrofit.create(LoginHttps.class).updateJson(user_tel,"user_pwd",et_password.getText().toString())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subject<LoginBeanTest>() {
+                            @Override
+                            public boolean hasObservers() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean hasThrowable() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean hasComplete() {
+                                return false;
+                            }
+
+                            @Override
+                            public Throwable getThrowable() {
+                                return null;
+                            }
+
+                            @Override
+                            protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
+
+                            }
+
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(LoginBeanTest s) {
+                                if(s.getUser().equals("ok")){
+                                    Toast.makeText(UpdateUserActivity.this,"密码修改成功",Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(UpdateUserActivity.this, SettingActivity.class);
+                                    startActivity(intent);
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Toast.makeText(UpdateUserActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+
             }
         }
     }

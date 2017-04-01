@@ -101,9 +101,6 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
                         @Override
                         public void onNext(ExamBean s) {
                             mData = s.getList();
-                            mAdapter = new MyAdapter(mData);
-                            recyclerView.setAdapter(mAdapter);
-                            //mAdapter.setOnItemClickListener(this);
 
                         }
 
@@ -119,14 +116,16 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
                     });
 
 
-
+        mAdapter = new MyAdapter(mData);
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
 
         search.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),SearchActivity.class);
+                Intent intent=new Intent(getContext(),SearchActivity.class);
                 startActivity(intent);
 
             }
