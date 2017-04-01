@@ -57,8 +57,7 @@ public class MyGoodsActivity extends Activity{
                         menu.add(0,ITEM2,0,"删除");
                     }
                 });
-                //Toast.makeText(MyGoodsActivity.this,mData.get(position).exam_name+"long",Toast.LENGTH_LONG).show();
-                return true;
+                return false;
             }
         });
     }
@@ -71,7 +70,7 @@ public class MyGoodsActivity extends Activity{
     }
 
     private void initData(){
-        this.mData = new ArrayList<MyItemBean>();
+        this.mData = new ArrayList<>();
         for(int i=0;i<2;i++){
             MyItemBean bean = new MyItemBean();
             bean.exam_name = "Xmy"+i;
@@ -82,7 +81,6 @@ public class MyGoodsActivity extends Activity{
 
 
     public boolean onContextItemSelected(MenuItem item){
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()){
             case ITEM1:
                 Intent intent=new Intent(MyGoodsActivity.this,UpdateUserActivity.class);
