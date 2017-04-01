@@ -36,7 +36,7 @@
                     android:textStyle="bold"
                     android:text="张瑜"
                     android:textColor="@color/black"
-                    android:textSize="25sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/comment_date"
@@ -74,7 +74,7 @@
                     android:layout_marginLeft="4dp"
                     android:text="你好啊"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                      />
 
             </LinearLayout>

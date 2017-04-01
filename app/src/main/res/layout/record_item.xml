@@ -37,7 +37,7 @@
                     android:text="张瑜"
                     android:textStyle="bold"
                     android:textColor="@color/gray_normal"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_below="@+id/record_name"
@@ -47,7 +47,7 @@
                     android:layout_marginLeft="4dp"
                     android:text="2017-3-21"
                     android:textColor="@color/gray_normal"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_below="@+id/record_name"
@@ -58,7 +58,7 @@
                     android:layout_toRightOf="@+id/record_date"
                     android:text="8:30"
                     android:textColor="@color/gray_normal"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:text="￥"
                     android:textColor="#ec0f38"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_marginLeft="3dp"
                     android:text="599"
                     android:textColor="#ec0f38"
-                    android:textSize="35sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
