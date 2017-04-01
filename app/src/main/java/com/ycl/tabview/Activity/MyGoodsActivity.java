@@ -3,6 +3,9 @@ package com.ycl.tabview.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -25,6 +28,8 @@ public class MyGoodsActivity extends Activity{
     private TextView add;
     private List<MyItemBean> mData;
     private ListViewAdapter mAdapter;
+    private static final int ITEM1 = Menu.FIRST;//菜单选项id
+    private static final int ITEM2 = Menu.FIRST+1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,7 @@ public class MyGoodsActivity extends Activity{
         initData();
         this.mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
         this.mListView.setAdapter(mAdapter);
+
 
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -43,7 +49,15 @@ public class MyGoodsActivity extends Activity{
         this.mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MyGoodsActivity.this,mData.get(position).exam_name+"long",Toast.LENGTH_LONG).show();
+                mListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                    @Override
+                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                        //添加菜单项
+                        menu.add(0,ITEM1,0,"修改");
+                        menu.add(0,ITEM2,0,"删除");
+                    }
+                });
+                //Toast.makeText(MyGoodsActivity.this,mData.get(position).exam_name+"long",Toast.LENGTH_LONG).show();
                 return true;
             }
         });
@@ -63,6 +77,22 @@ public class MyGoodsActivity extends Activity{
             bean.exam_name = "Xmy"+i;
             mData.add(bean);
         }
+    }
+
+
+
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case ITEM1:
+                Intent intent=new Intent(MyGoodsActivity.this,UpdateUserActivity.class);
+                startActivity(intent);
+                break;
+            case ITEM2:
+                Toast.makeText(MyGoodsActivity.this,"已删除",Toast.LENGTH_LONG).show();
+                break;
+        }
+        return true;
     }
 
     private final class AddButtonClickListener implements View.OnClickListener{
