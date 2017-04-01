@@ -30,7 +30,7 @@
                     android:id="@+id/iv_menu"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/jisuan"/>
                 <TextView
                     android:textSize="13sp"
                     android:paddingTop="5dp"
@@ -57,7 +57,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/chuanmei"/>
                 <TextView
                     android:textSize="13sp"
                     android:paddingTop="5dp"
@@ -83,7 +83,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/shang"/>
                 <TextView
                     android:textSize="13sp"
                     android:id="@+id/tv_menu3"
@@ -124,7 +124,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/xindian"/>
                 <TextView
                     android:id="@+id/tv_menu4"
                     android:textSize="13sp"
@@ -150,7 +150,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/gongcheng"/>
                 <TextView
                     android:id="@+id/tv_menu5"
                     android:textSize="13sp"
@@ -176,7 +176,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/yixue"/>
                 <TextView
                     android:id="@+id/tv_menu6"
                     android:textSize="13sp"
@@ -215,7 +215,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/faxue"/>
                 <TextView
                     android:id="@+id/tv_menu7"
                     android:textSize="13sp"
@@ -241,7 +241,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/waiguoyu"/>
                 <TextView
                     android:id="@+id/tv_menu8"
                     android:textSize="13sp"
@@ -268,7 +268,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/art_collection"/>
+                    android:src="@drawable/chuangyi"/>
                 <TextView
                     android:id="@+id/tv_menu9"
                     android:textSize="13sp"
