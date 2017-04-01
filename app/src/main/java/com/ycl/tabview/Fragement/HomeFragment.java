@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
     private View view;
     private TextView qd;
 
-    public String[] iamgeids ={};//图表id
+    public int[] iamgeids ={R.drawable.jisuan};//图表id
     private static HomeFragment homeFragment =new HomeFragment();
     public static HomeFragment newInstance(){
         return homeFragment;
@@ -46,9 +46,9 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         qd = (TextView) view.findViewById(R.id.qd);
 
 //        List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
-//        for (int i=0;i<name.length;i++){
+//        for (int i=0;i<school_name.length;i++){
 //            Map<String,Object> list = new HashMap<String,Object>();
-//            list.put("names",name[i]);
+//            list.put("names",school_name[i]);
 //            list.put("images",iamgeids[i]);
 //            lists.add(list);
 //        }
