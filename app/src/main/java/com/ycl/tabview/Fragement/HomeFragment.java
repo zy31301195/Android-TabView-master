@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.ycl.tabview.Activity.GoodsActivity;
 import com.ycl.tabview.Activity.SearchActivity;
 import com.ycl.tabview.Adapter.MyAdapter;
-import com.ycl.tabview.Bean.MyItemBean;
+import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 import com.ycl.tabview.behavior.MyBehavior;
 
@@ -24,13 +24,12 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemClick{
     private RecyclerView recyclerView;
-    private List<MyItemBean> mData;
+    private List<Exam> mData;
     private MyAdapter mAdapter;
     private View search;
     private View view;
     private TextView qd;
 
-    public int[] iamgeids ={R.drawable.jisuan};//图表id
     private static HomeFragment homeFragment =new HomeFragment();
     public static HomeFragment newInstance(){
         return homeFragment;
@@ -45,19 +44,14 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         search = view.findViewById(R.id.ll_search);
         qd = (TextView) view.findViewById(R.id.qd);
 
-//        List<Map<String,Object>> lists = new ArrayList<Map<String,Object>>();
-//        for (int i=0;i<school_name.length;i++){
-//            Map<String,Object> list = new HashMap<String,Object>();
-//            list.put("names",school_name[i]);
-//            list.put("images",iamgeids[i]);
-//            lists.add(list);
-//        }
 
-        this.mData = new ArrayList<MyItemBean>();
+        this.mData = new ArrayList<>();
         for(int i=0;i<2;i++){
-            MyItemBean bean = new MyItemBean();
-            bean.exam_name = "Xmy"+i;
-
+            Exam bean = new Exam();
+            bean.setExam_name("数据库"+i);
+            bean.setExam_date("2017-3-21");
+            bean.setExam_prices("100");
+            bean.setExam_school("计算");
             mData.add(bean);
         }
         this.mAdapter = new MyAdapter(mData);

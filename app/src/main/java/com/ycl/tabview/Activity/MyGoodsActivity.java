@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ycl.tabview.Adapter.ListViewAdapter;
-import com.ycl.tabview.Bean.MyItemBean;
+import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.List;
 public class MyGoodsActivity extends Activity{
     private ListView mListView;
     private TextView add;
-    private List<MyItemBean> mData;
+    private List<Exam> mData = new ArrayList<>();
     private ListViewAdapter mAdapter;
     private static final int ITEM1 = Menu.FIRST;//菜单选项id
     private static final int ITEM2 = Menu.FIRST+1;
@@ -43,7 +43,7 @@ public class MyGoodsActivity extends Activity{
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MyGoodsActivity.this,mData.get(position).exam_name,Toast.LENGTH_LONG).show();
+                Toast.makeText(MyGoodsActivity.this,mData.get(position).getExam_name(),Toast.LENGTH_LONG).show();
             }
         });
         this.mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -70,10 +70,12 @@ public class MyGoodsActivity extends Activity{
     }
 
     private void initData(){
-        this.mData = new ArrayList<>();
         for(int i=0;i<2;i++){
-            MyItemBean bean = new MyItemBean();
-            bean.exam_name = "Xmy"+i;
+            Exam bean = new Exam();
+            bean.setExam_name("数据库"+i);
+            bean.setExam_date("2017-3-21");
+            bean.setExam_prices("100");
+            bean.setExam_school("计算");
             mData.add(bean);
         }
     }

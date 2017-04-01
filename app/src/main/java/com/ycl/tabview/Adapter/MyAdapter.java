@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ycl.tabview.Bean.MyItemBean;
+import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 import com.ycl.tabview.Util.MyViewHolder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.ycl.tabview.Activity.RegisterActivity.school_name;
 
 /**
  * Created by Administrator on 2017/3/24.
@@ -17,30 +21,25 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListener{
 
-    private List<MyItemBean> mData;
+    private List<Exam> mData;
+    public int[] imageids ={R.drawable.jisuan,R.drawable.chuanmei,R.drawable.shang,R.drawable.xindian,R.drawable.gongcheng,R.drawable.yixue,R.drawable.faxue,R.drawable.waiguoyu,R.drawable.chuangyi};//图表id
 
     private OnRecycleItemClick onRecycleitemClick = null;
-    //public OnItemLongClick onItemLongClick = null;//长按
 
-    public MyAdapter(List<MyItemBean> data){
+    public MyAdapter(List<Exam> data){
         this.mData = data;
     }
 
     public void setOnItemClickListener(OnRecycleItemClick onItemClickListener) {
         onRecycleitemClick = onItemClickListener;
     }
-//    public void setOnItemLongClickListener(OnItemLongClick listener) {
-//        onItemLongClick = listener;
-//    }
+
 
 
     public interface OnRecycleItemClick{
         void onItemClick(View view, Object object);
     }
 
-//    public interface OnItemLongClick {
-//         void onItemLongClick(View view,int postion);
-//    }
 
     @Override
     public int getItemCount() {
@@ -52,7 +51,6 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent,false);
         itemView.setOnClickListener(this);
-        //itemView.setOnLongClickListener(this);
         MyViewHolder vh = new MyViewHolder(itemView);
         return vh;
     }
@@ -60,12 +58,18 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myholder = (MyViewHolder) holder;
-        myholder.tv_dates.setText(this.mData.get(position).exam_date);
-        myholder.tv_name.setText(this.mData.get(position).exam_name);
-        myholder.prices.setText(String.valueOf(this.mData.get(position).prices));
-        myholder.hour.setText(this.mData.get(position).hour);
-        myholder.minutes.setText(this.mData.get(position).minutes);
-        myholder.second.setText(this.mData.get(position).second);
+        Map<String,Object> list = new HashMap<String,Object>();
+        for (int i=0;i<school_name.length;i++){
+            list.put(school_name[i], imageids[i]);
+        }
+
+        myholder.iv.setImageResource((Integer) list.get(this.mData.get(position).getExam_school()));
+        myholder.tv_dates.setText(this.mData.get(position).getExam_date());
+        myholder.tv_name.setText(this.mData.get(position).getExam_name());
+        myholder.prices.setText(this.mData.get(position).getExam_prices());
+//        myholder.hour.setText(this.mData.get(position).hour);
+//        myholder.minutes.setText(this.mData.get(position).minutes);
+//        myholder.second.setText(this.mData.get(position).second);
         myholder.itemView.setTag(this.mData.get(position));
 
     }
@@ -77,11 +81,4 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
         }
     }
 
-//    @Override
-//    public boolean onLongClick(View v) {
-//        if(onItemLongClick != null){
-//            onItemLongClick.onItemLongClick(v, (Integer) v.getTag());
-//        }
-//        return true;
-//    }
 }

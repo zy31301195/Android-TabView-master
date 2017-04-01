@@ -3,7 +3,6 @@ package com.ycl.tabview.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -14,10 +13,9 @@ import android.widget.Toast;
 import com.ycl.tabview.Adapter.ListViewAdapter;
 import com.ycl.tabview.Adapter.MenuListAdapter;
 import com.ycl.tabview.Adapter.MyAdapter;
-import com.ycl.tabview.Bean.MyItemBean;
+import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.DropDownMenu;
-import com.ycl.tabview.View.MyRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +23,7 @@ import java.util.List;
 
 public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemClick{
     private TextView secondTxt;
-    private List<MyItemBean> mData;
+    private List<Exam> mData = new ArrayList<>();
     private ListViewAdapter mAdapter;
     //菜单标题
     private String headers[] = {"时间", "价格"};
@@ -104,11 +102,12 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        this.mData = new ArrayList<MyItemBean>();
         for(int i=0;i<2;i++){
-            MyItemBean bean = new MyItemBean();
-            bean.exam_name = "Xmy"+i;
-
+            Exam bean = new Exam();
+            bean.setExam_name("数据库"+i);
+            bean.setExam_date("2017-3-21");
+            bean.setExam_prices("100");
+            bean.setExam_school("计算");
             mData.add(bean);
         }
         this.mAdapter = new ListViewAdapter(this,mData);
