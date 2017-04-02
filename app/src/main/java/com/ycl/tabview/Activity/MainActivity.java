@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         tabViewChildList.add(tabViewChild03);
         tabViewChildList.add(tabViewChild04);
 
-        hiddenEditMenu();
 
         tabView.setTabViewChild(tabViewChildList,getSupportFragmentManager());
         tabView.setOnTabChildClickListener(new TabView.OnTabChildClickListener() {
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         mMenu = menu;
+        hiddenEditMenu();
         return super.onCreateOptionsMenu(menu);
     }
 
