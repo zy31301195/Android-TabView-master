@@ -65,7 +65,7 @@ public class RecordListViewAdapter extends BaseAdapter {
             viewHolder = (RecordListViewAdapter.ViewHolder) convertView.getTag();//取出ViewHolder对象
         }
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
-        viewHolder.record_name.setText(this.mDatas.get(position).getBuyer_id());
+        viewHolder.record_name.setText(String.valueOf(this.mDatas.get(position).getBuyer_id()));
         viewHolder.record_date.setText(this.mDatas.get(position).getRecord_date());
         viewHolder.record_time.setText(String.valueOf(this.mDatas.get(position).getRecord_id()));
         viewHolder.tv_new_price.setText(this.mDatas.get(position).getRecord_price());

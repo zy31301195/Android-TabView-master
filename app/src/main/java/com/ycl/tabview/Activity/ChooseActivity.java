@@ -20,25 +20,27 @@ import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
-import java.lang.reflect.Array;
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.Subject;
 
 public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemClick {
     private TextView secondTxt;
     private List<Exam> mData = new ArrayList<>();
+    private List<Exam> mData_back = new ArrayList<>();
     private ListViewAdapter mAdapter;
     //菜单标题
     private String headers[] = {"时间", "价格"};
@@ -58,6 +60,7 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
     private String price[] = {"从高到低", "从低到高"};
 
     private List<View> popupViews = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +102,41 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
 
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
                 mDropDownMenu.setTabText(times[position]);
                 mDropDownMenu.closeMenu();
+                Flowable.fromIterable(mData_back)
+                        .filter(new Predicate<Exam>() {
+                            @Override
+                            public boolean test(@NonNull Exam exam) throws Exception {
+                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//2017-4-15
+                                Date date = df.parse(exam.getExam_date() + " 23:59:59");
+                                long now = new Date().getTime();
+                                long endTime = 0;
+                                if (position == 0) {   //3天
+                                    endTime = now + 4 * 24 * 60 * 60 * 1000;
+                                } else if (position == 1) { //1周
+                                    endTime = now + 8 * 24 * 60 * 60 * 1000;
+                                } else if (position == 2) {//2周
+                                    endTime = now + 15 * 24 * 60 * 60 * 1000;
+                                } else if (position == 3) {//all
+                                    endTime = Long.MAX_VALUE;
+                                }
+                                return date.getTime() - endTime < 0 && date.getTime() > now;
+
+                            }
+                        }).toList()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<Exam>>() {
+                            @Override
+                            public void accept(@NonNull List<Exam> exams) throws Exception {
+                                mData.clear();
+                                mData.addAll(exams);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
             }
         });
 
@@ -117,10 +151,10 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
                             @Override
                             public int compare(Exam o1, Exam o2) {
                                 int flag;
-                                if(position==1){
-                                    flag = Integer.valueOf(o1.getExam_prices())-Integer.valueOf(o2.getExam_prices());
-                                }else{
-                                    flag = Integer.valueOf(o2.getExam_prices())-Integer.valueOf(o1.getExam_prices());
+                                if (position == 1) {
+                                    flag = Integer.valueOf(o1.getExam_prices()) - Integer.valueOf(o2.getExam_prices());
+                                } else {
+                                    flag = Integer.valueOf(o2.getExam_prices()) - Integer.valueOf(o1.getExam_prices());
                                 }
                                 return flag;
                             }
@@ -128,13 +162,13 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<List<Exam>>() {
-                    @Override
-                    public void accept(@NonNull List<Exam> exams) throws Exception {
-                        mData.clear();
-                        mData.addAll(exams);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
+                            @Override
+                            public void accept(@NonNull List<Exam> exams) throws Exception {
+                                mData.clear();
+                                mData.addAll(exams);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
 
             }
         });
@@ -152,7 +186,9 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
                     @Override
                     public void accept(@NonNull ExamBean examBean) throws Exception {
                         mData.clear();
+                        mData_back.clear();
                         mData.addAll(examBean.getList());
+                        mData_back.addAll(examBean.getList());
                         mAdapter.notifyDataSetChanged();
                     }
                 }, new Consumer<Throwable>() {
