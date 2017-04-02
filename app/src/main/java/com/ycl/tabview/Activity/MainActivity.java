@@ -130,17 +130,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-//        switch (item.getItemId()){
-//            case R.id.One:
-//                Toast.makeText(this,"one",Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.Two:
-//                Toast.makeText(this,"two",Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.Three:
-//                Toast.makeText(this,"three",Toast.LENGTH_SHORT).show();
-//
-//        }
-//        return super.onOptionsItemSelected(item);
+
     }
 }

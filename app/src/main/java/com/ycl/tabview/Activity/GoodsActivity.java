@@ -17,9 +17,18 @@ import com.ycl.tabview.Bean.Message;
 import com.ycl.tabview.Bean.Record;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.AmountView;
+import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.RecordBean;
+import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
 
 /**
  * Created by Administrator on 2017/3/24.
@@ -44,7 +53,7 @@ public class GoodsActivity extends Activity {
     private TextView user_sex;
     private TextView user_school;
     private TextView user_sign;
-    private List<Message> messageData = new ArrayList<Message>();
+    private List<Message> messageData = new ArrayList<>();
     private List<Record> recordData =new ArrayList<>();
     private MessageListViewAdapter messageListViewAdapter;
     private RecordListViewAdapter recordListViewAdapter;
@@ -56,9 +65,6 @@ public class GoodsActivity extends Activity {
         setContentView(R.layout.goods_activity);
         initData();
         initView();
-
-        int examId =  getIntent().getIntExtra("examId",-1);
-        int userId =  getIntent().getIntExtra("userId",-1);
 
         this.messageListViewAdapter = new MessageListViewAdapter(this,messageData);
         this.messagelist.setAdapter(messageListViewAdapter);
@@ -89,7 +95,6 @@ public class GoodsActivity extends Activity {
         user_tel = (TextView) findViewById(R.id.tv_tel);
         buy = (Button) findViewById(R.id.buy);
 
-        exam_name.setText("aaa");
         mAmountView = (AmountView) findViewById(R.id.amount_view);
         mAmountView.setGoods_storage(50);
         mAmountView.setOnAmountChangeListener(new AmountView.OnAmountChangeListener() {
@@ -101,21 +106,71 @@ public class GoodsActivity extends Activity {
     }
 
     private void initData(){
-        for(int i=0;i<2;i++){
-            Message bean = new Message();
-            bean.setUser_name("Xmy"+i);
-            bean.setMessage_content("你好啊"+i);
-            bean.setMessage_time("2017-3-21");
-            messageData.add(bean);
-        }
+        int examId =  getIntent().getIntExtra("examId",-1);
+        int userId =  getIntent().getIntExtra("userId",-1);
 
-        for(int i=0;i<2;i++){
-            Record beans = new Record();
-            beans.setBuyer_name("Xmy"+i);
-            beans.setRecord_date("2017-3-21");
-            beans.setReocrd_time("8:3"+i);
-            recordData.add(beans);
-        }
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).recordJson(examId,userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subject<RecordBean>() {
+                    @Override
+                    public boolean hasObservers() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasThrowable() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasComplete() {
+                        return false;
+                    }
+
+                    @Override
+                    public Throwable getThrowable() {
+                        return null;
+                    }
+
+                    @Override
+                    protected void subscribeActual(Observer<? super RecordBean> observer) {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(RecordBean s) {
+                        exam_name.setText(s.getExam().getExam_name());
+                        exam_oldprice.setText(s.getExam().getExam_prices());
+                        exam_date.setText(s.getExam().getExam_date());
+                        exam_time.setText(s.getExam().getExam_time()+"-"+s.getExam().getExam_endtime());
+                        exam_place.setText(s.getExam().getExam_place());
+                        exam_newprice.setText(s.getExam().getExam_newprice());
+                        messageData.clear();
+                        messageData.addAll((Message)s.getAllMessage());
+                        messageListViewAdapter.notifyDataSetChanged();
+                        recordData.clear();
+                        recordData.addAll(s.getAllRecord());
+                        recordListViewAdapter.notifyDataSetChanged();
+
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(GoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
 
     }
 

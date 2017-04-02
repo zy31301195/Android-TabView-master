@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class Retrofitutil {
-    public static final String API_BASE_URL = "http://39.189.218.98:8080/Paimai/";
+    public static final String API_BASE_URL = "http://192.168.191.1:8080/Paimai/";
     private static Retrofit mRetrofit = new Retrofit.Builder().
             baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

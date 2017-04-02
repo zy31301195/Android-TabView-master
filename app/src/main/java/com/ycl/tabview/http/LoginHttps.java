@@ -3,6 +3,7 @@ package com.ycl.tabview.http;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.httpBean.LoginBean;
 import com.ycl.tabview.httpBean.LoginBeanTest;
+import com.ycl.tabview.httpBean.RecordBean;
 import com.ycl.tabview.httpBean.UserBean;
 
 import java.util.Map;
@@ -37,4 +38,7 @@ public interface LoginHttps {
 
     @GET("UpdateUser.action")
     Observable<LoginBeanTest> updateJson(@Query("tel")String tel,@Query("param") String param,@Query("value") String value);
+
+    @GET("Login.action")
+    Observable<RecordBean> recordJson(@Query("exam_id")int exam_id, @Query("user_id") int user_id);
 }
