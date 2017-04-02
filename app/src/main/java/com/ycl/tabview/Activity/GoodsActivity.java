@@ -161,9 +161,6 @@ public class GoodsActivity extends Activity {
                         recordData.clear();
                         recordData.addAll(s.getAllRecord());
                         recordListViewAdapter.notifyDataSetChanged();
-
-
-
                     }
 
                     @Override

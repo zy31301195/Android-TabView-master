@@ -29,15 +29,16 @@ public class ClassifyFragment extends Fragment {
     private RelativeLayout grid9;
 
 
-    private static ClassifyFragment classifyActivity =new ClassifyFragment();
-    public static ClassifyFragment newInstance(){
+    private static ClassifyFragment classifyActivity = new ClassifyFragment();
+
+    public static ClassifyFragment newInstance() {
         return classifyActivity;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.classify_fragment,container,false);
+        final View view = inflater.inflate(R.layout.classify_fragment, container, false);
 
         grid1 = (RelativeLayout) view.findViewById(R.id.grid1);
         grid2 = (RelativeLayout) view.findViewById(R.id.grid2);
@@ -52,10 +53,11 @@ public class ClassifyFragment extends Fragment {
         grid1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu1);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key", "exam_school");
                 startActivity(intent);
 
             }
@@ -64,10 +66,11 @@ public class ClassifyFragment extends Fragment {
         grid2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu2);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key", "exam_school");
                 startActivity(intent);
 
             }
@@ -76,10 +79,11 @@ public class ClassifyFragment extends Fragment {
         grid3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu3);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key", "exam_school");
                 startActivity(intent);
 
             }
@@ -88,10 +92,11 @@ public class ClassifyFragment extends Fragment {
         grid4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu4);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key", "exam_school");
                 startActivity(intent);
 
             }
@@ -100,10 +105,11 @@ public class ClassifyFragment extends Fragment {
         grid5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu5);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key", "exam_school");
                 startActivity(intent);
 
             }
@@ -111,10 +117,11 @@ public class ClassifyFragment extends Fragment {
         grid6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu6);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key","exam_school");
                 startActivity(intent);
 
             }
@@ -122,10 +129,11 @@ public class ClassifyFragment extends Fragment {
         grid7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu7);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key","exam_school");
                 startActivity(intent);
 
             }
@@ -133,10 +141,11 @@ public class ClassifyFragment extends Fragment {
         grid8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu8);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key","exam_school");
                 startActivity(intent);
 
             }
@@ -145,11 +154,11 @@ public class ClassifyFragment extends Fragment {
         grid9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),ChooseActivity.class);
+                Intent intent = new Intent(getContext(), ChooseActivity.class);
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu9);
                 String tv1String = tv1.getText().toString();
-                intent.putExtra("title",tv1String);
-                intent.putExtra("key","exam_school");
+                intent.putExtra("title", tv1String);
+                intent.putExtra("key", "exam_school");
                 startActivity(intent);
 
             }
@@ -157,8 +166,6 @@ public class ClassifyFragment extends Fragment {
 
         return view;
     }
-
-
 
 
 }

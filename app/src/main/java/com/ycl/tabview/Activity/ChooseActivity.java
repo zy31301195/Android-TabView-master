@@ -20,17 +20,23 @@ import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
-public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemClick{
+public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemClick {
     private TextView secondTxt;
     private List<Exam> mData = new ArrayList<>();
     private ListViewAdapter mAdapter;
@@ -42,7 +48,7 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
     private MenuListAdapter mMenuAdapter2;
     private MenuListAdapter mMenuAdapter3;
     private String value;
-    private String  key;
+    private String key;
 
     private DropDownMenu mDropDownMenu;
 
@@ -58,10 +64,10 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose);
         Intent intent = getIntent();//getIntent将该项目中包含的原始intent检索出来，将检索出来的intent赋值给一个Intent类型的变量intent
-        Bundle bundle=intent.getExtras();//.getExtras()得到intent所附带的额外数据
-        value =bundle.getString("title");//getString()返回指定key的值
+        Bundle bundle = intent.getExtras();//.getExtras()得到intent所附带的额外数据
+        value = bundle.getString("title");//getString()返回指定key的值
         key = bundle.getString("key");
-        secondTxt=(TextView)findViewById(R.id.tv_title);//用TextView显示值
+        secondTxt = (TextView) findViewById(R.id.tv_title);//用TextView显示值
         secondTxt.setText(value);
         initView();
 
@@ -102,10 +108,34 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
 
         listView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
                 mDropDownMenu.setTabText(price[position]);
                 mDropDownMenu.closeMenu();
+                Flowable.fromIterable(mData)
+                        .toSortedList(new Comparator<Exam>() {
+                            @Override
+                            public int compare(Exam o1, Exam o2) {
+                                int flag;
+                                if(position==1){
+                                    flag = Integer.valueOf(o1.getExam_prices())-Integer.valueOf(o2.getExam_prices());
+                                }else{
+                                    flag = Integer.valueOf(o2.getExam_prices())-Integer.valueOf(o1.getExam_prices());
+                                }
+                                return flag;
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<Exam>>() {
+                    @Override
+                    public void accept(@NonNull List<Exam> exams) throws Exception {
+                        mData.clear();
+                        mData.addAll(exams);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+
             }
         });
 
@@ -115,57 +145,20 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        Retrofitutil.getmRetrofit().create(LoginHttps.class).searchJson(key,value)
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).searchJson(key, value)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subject<ExamBean>() {
+                .subscribe(new Consumer<ExamBean>() {
                     @Override
-                    public boolean hasObservers() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasThrowable() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasComplete() {
-                        return false;
-                    }
-
-                    @Override
-                    public Throwable getThrowable() {
-                        return null;
-                    }
-
-                    @Override
-                    protected void subscribeActual(Observer<? super ExamBean> observer) {
-
-                    }
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ExamBean s) {
+                    public void accept(@NonNull ExamBean examBean) throws Exception {
                         mData.clear();
-                        mData.addAll(s.getList());
+                        mData.addAll(examBean.getList());
                         mAdapter.notifyDataSetChanged();
-
-
                     }
-
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(ChooseActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Toast.makeText(ChooseActivity.this, throwable.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -177,19 +170,18 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
 //            bean.setExam_school("计算");
 //            mData.add(bean);
 //        }
-        this.mAdapter = new ListViewAdapter(this,mData);
+        this.mAdapter = new ListViewAdapter(this, mData);
         ListView listView = new ListView(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ChooseActivity.this,"click",Toast.LENGTH_LONG).show();
+                Toast.makeText(ChooseActivity.this, "click", Toast.LENGTH_LONG).show();
             }
         });
         listView.setAdapter(mAdapter);
         linearLayout.addView(listView);
 
-        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews,linearLayout );
-
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, linearLayout);
     }
 
     public void back(View view) {
