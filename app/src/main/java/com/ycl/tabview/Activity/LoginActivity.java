@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.ycl.tabview.Bean.Users;
 import com.ycl.tabview.R;
+import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
@@ -38,7 +39,8 @@ public class LoginActivity extends Activity {
     private EditText pwd;
     private SharedPreferences mPref;
     private SharedPreferences.Editor mEditor;
-    public static Users users = new Users();
+    private Myapplication mMyapplication;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class LoginActivity extends Activity {
         mPref =  getSharedPreferences("register", Activity.MODE_PRIVATE);
         mEditor = mPref.edit();
         String history = mPref.getString(KEY_SEARCH_HISTORY_KEYWORD,"");
+        mMyapplication= (Myapplication) getApplication();
         if (!TextUtils.isEmpty(history)){
             tel.setText(history);
         }
@@ -109,6 +112,7 @@ public class LoginActivity extends Activity {
                         public void onNext(LoginBean s) {
                             if(s.getUser().equals("3")){
                                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                Users users = mMyapplication.users;
                                 users.setUser_id(s.getUsers().getUser_id());
                                 users.setUser_zgid(s.getUsers().getUser_zgid());
                                 users.setUser_tel(s.getUsers().getUser_tel());

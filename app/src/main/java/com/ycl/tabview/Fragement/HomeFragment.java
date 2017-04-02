@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         myBehavior.setRefreshListener(new MyBehavior.RefreshListener(){
             @Override
             public void onRefresh() {
-
+                myBehavior.stopRefresh();
             }
         });
 

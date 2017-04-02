@@ -14,8 +14,8 @@ import com.ycl.tabview.Activity.MyGoodsActivity;
 import com.ycl.tabview.Activity.SettingActivity;
 import com.ycl.tabview.Activity.UserInfoActivity;
 import com.ycl.tabview.R;
+import com.ycl.tabview.application.Myapplication;
 
-import static com.ycl.tabview.Activity.LoginActivity.users;
 
 public class MyFragment extends Fragment {
     private RelativeLayout re_myinfo;
@@ -28,12 +28,21 @@ public class MyFragment extends Fragment {
     private String school;
     private String sign;
     private String zgid;
+    private Myapplication mMyapplication;
 
 
 
     private static MyFragment fragmentCommon =new MyFragment();
     public static MyFragment newInstance(){
         return fragmentCommon;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mMyapplication = (Myapplication) getActivity().getApplication();
+        tel.setText("电话："+ mMyapplication.users.getUser_tel());
+        name.setText(mMyapplication.users.getUser_name());
     }
 
     @Nullable @Override
@@ -45,8 +54,6 @@ public class MyFragment extends Fragment {
         fabu = (RelativeLayout) view.findViewById(R.id.fabu);
         name = (TextView) view.findViewById(R.id.tv_name);
         tel = (TextView) view.findViewById(R.id.tv_fxid);
-        tel.setText("电话："+ users.getUser_tel());
-        name.setText(users.getUser_name());
 
 
 

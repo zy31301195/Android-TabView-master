@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ycl.tabview.R;
+import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBeanTest;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
@@ -20,7 +21,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
-import static com.ycl.tabview.Activity.LoginActivity.users;
 
 /**
  * Created by Administrator on 2017/4/2.
@@ -30,10 +30,12 @@ public class AddSignActivity extends Activity{
     private TextView title;
     private Button button;
     private EditText sign;
+    private Myapplication mMyapplication;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addmessage_activity);
+        mMyapplication = (Myapplication) getApplication();
         initView();
     }
     private void  initView(){
@@ -54,7 +56,7 @@ public class AddSignActivity extends Activity{
 
         @Override
         public void onClick(View v) {
-            Retrofitutil.getmRetrofit().create(LoginHttps.class).updateJson(users.getUser_tel(),"user_sign",sign.getText().toString())
+            Retrofitutil.getmRetrofit().create(LoginHttps.class).updateJson(mMyapplication.users.getUser_tel(),"user_sign",sign.getText().toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subject<LoginBeanTest>() {
@@ -91,9 +93,9 @@ public class AddSignActivity extends Activity{
                         @Override
                         public void onNext(LoginBeanTest s) {
                             if(s.getUser().equals("ok")){
+                                mMyapplication.users.setUser_sign(sign.getText().toString());
                                 Toast.makeText(AddSignActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(AddSignActivity.this,UserInfoActivity.class);
-                                startActivity(intent);
+                                AddSignActivity.this.finish();
                             }
 
                         }

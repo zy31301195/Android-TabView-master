@@ -1,6 +1,7 @@
 package com.ycl.tabview.Activity;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.ycl.tabview.Adapter.ListViewAdapter;
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
+import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
@@ -27,7 +29,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
-import static com.ycl.tabview.Activity.LoginActivity.users;
 
 /**
  * Created by Administrator on 2017/3/25.
@@ -38,17 +39,18 @@ public class MyGoodsActivity extends Activity{
     private TextView add;
     private List<Exam> mData = new ArrayList<>();
     private ListViewAdapter mAdapter;
+    private Myapplication mMyapplication;
     private static final int ITEM1 = Menu.FIRST;//菜单选项id
     private static final int ITEM2 = Menu.FIRST+1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mygoods_activivty);
+        mMyapplication = (Myapplication) getApplication();
         initView();
         initData();
         mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
         mListView.setAdapter(mAdapter);
-
 
 
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,7 +84,7 @@ public class MyGoodsActivity extends Activity{
 
     private void initData(){
 
-        Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson(users.getUser_id())
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson(mMyapplication.users.getUser_id())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subject<ExamBean>() {

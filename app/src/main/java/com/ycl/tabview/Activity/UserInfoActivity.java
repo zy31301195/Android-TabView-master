@@ -9,14 +9,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ycl.tabview.R;
-
-import static com.ycl.tabview.Activity.LoginActivity.users;
+import com.ycl.tabview.application.Myapplication;
 
 /**
  * Created by Administrator on 2017/3/23.
  */
 
-public class UserInfoActivity extends Activity{
+public class UserInfoActivity extends Activity {
     private RelativeLayout re_avatar;
     private RelativeLayout re_name;
     private RelativeLayout re_tel;
@@ -32,22 +31,30 @@ public class UserInfoActivity extends Activity{
     private TextView tv_no;
     private TextView tv_sign;
     private TextView tv_address;
+    private Myapplication mMyapplication;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myinfo);
+        mMyapplication = (Myapplication) getApplication();
         initView();
         initData();
 
     }
 
-    private void  initView(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    private void initView() {
         re_avatar = (RelativeLayout) this.findViewById(R.id.re_avatar);
         re_name = (RelativeLayout) this.findViewById(R.id.re_name);
         re_tel = (RelativeLayout) this.findViewById(R.id.re_tel);
         re_sex = (RelativeLayout) this.findViewById(R.id.re_sex);
         re_address = (RelativeLayout) this.findViewById(R.id.re_address);
-        re_sign = (RelativeLayout)this.findViewById(R.id.re_sign);
+        re_sign = (RelativeLayout) this.findViewById(R.id.re_sign);
         re_no = (RelativeLayout) this.findViewById(R.id.re_no);
         re_sign = (RelativeLayout) this.findViewById(R.id.re_sign);
 
@@ -61,13 +68,13 @@ public class UserInfoActivity extends Activity{
         re_sign.setOnClickListener(new SignClickListener());
     }
 
-    private void initData(){
-        tv_name.setText(users.getUser_name());
-        tv_tel.setText(users.getUser_tel());
-        tv_sex.setText(users.getUser_sex());
-        tv_no.setText(users.getUser_zgid());
-        tv_address.setText(users.getUser_school());
-        tv_sign.setText(users.getUser_sign());
+    private void initData() {
+        tv_name.setText(mMyapplication.users.getUser_name());
+        tv_tel.setText(mMyapplication.users.getUser_tel());
+        tv_sex.setText(mMyapplication.users.getUser_sex());
+        tv_no.setText(mMyapplication.users.getUser_zgid());
+        tv_address.setText(mMyapplication.users.getUser_school());
+        tv_sign.setText(mMyapplication.users.getUser_sign());
 
     }
 
@@ -76,12 +83,12 @@ public class UserInfoActivity extends Activity{
     }
 
 
-    private final class SignClickListener implements View.OnClickListener{
+    private final class SignClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            Intent  intent = new Intent(UserInfoActivity.this,AddSignActivity.class);
-            intent.putExtra("title","签名");
+            Intent intent = new Intent(UserInfoActivity.this, AddSignActivity.class);
+            intent.putExtra("title", "签名");
             startActivity(intent);
 
         }

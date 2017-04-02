@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
+import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBeanTest;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
@@ -31,7 +32,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
-import static com.ycl.tabview.Activity.LoginActivity.users;
 import static com.ycl.tabview.Activity.RegisterActivity.school_name;
 
 /**
@@ -52,6 +52,7 @@ public class AddgoodsActivity extends Activity {
     private int day;
     private int hour;
     private int minute;
+    private Myapplication mMyapplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class AddgoodsActivity extends Activity {
         Calendar calendar =Calendar.getInstance();
         Date today = new Date();
         calendar.setTime(today);
+        mMyapplication= (Myapplication) getApplication();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -121,7 +123,7 @@ public class AddgoodsActivity extends Activity {
             exam.setExam_endtime(goods_endtime.getText().toString());
             exam.setExam_school(goods_school.getText().toString());
             exam.setExam_prices(goods_price.getText().toString());
-            exam.setExam_user_id(users.getUser_id());
+            exam.setExam_user_id(mMyapplication.users.getUser_id());
             Map<String, Object> map = exam.createCommitParams();
 
 

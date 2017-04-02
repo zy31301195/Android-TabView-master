@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ycl.tabview.R;
+import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBeanTest;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
@@ -22,7 +23,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
-import static com.ycl.tabview.Activity.LoginActivity.users;
 
 /**
  * Created by Administrator on 2017/3/23.
@@ -36,11 +36,12 @@ public class UpdateUserActivity extends Activity{
     private EditText et_password2;
     private ImageView iv_hide2;
     private ImageView iv_show2;
+    private Myapplication mMyapplication;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user);
         initView();
-
+        mMyapplication = (Myapplication) getApplication();
     }
 
     private void initView(){
@@ -68,7 +69,7 @@ public class UpdateUserActivity extends Activity{
                 Toast.makeText(UpdateUserActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
             }
             else {
-                Retrofitutil.getmRetrofit().create(LoginHttps.class).updateJson(users.getUser_tel(),"user_pwd",et_password.getText().toString())
+                Retrofitutil.getmRetrofit().create(LoginHttps.class).updateJson(mMyapplication.users.getUser_tel(),"user_pwd",et_password.getText().toString())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subject<LoginBeanTest>() {
