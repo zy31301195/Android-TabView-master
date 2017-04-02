@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ycl.tabview.Bean.Message;
 import com.ycl.tabview.R;
+import com.ycl.tabview.httpBean.RecordBean;
 
 import java.util.List;
 
@@ -19,9 +20,9 @@ import java.util.List;
 public class MessageListViewAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
-    private List<Message> mDatas;
+    private List<RecordBean.AllMessageBean> mDatas;
 
-    public MessageListViewAdapter(Context context, List<Message> mDatas)
+    public MessageListViewAdapter(Context context, List<RecordBean.AllMessageBean> mDatas)
     {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
@@ -62,7 +63,7 @@ public class MessageListViewAdapter extends BaseAdapter {
             viewHolder = (MessageListViewAdapter.ViewHolder) convertView.getTag();//取出ViewHolder对象
         }
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
-        viewHolder.comment_name.setText(this.mDatas.get(position).getUser_name());
+        viewHolder.comment_name.setText(this.mDatas.get(position).getUser_id());
         viewHolder.comment_date.setText(String.valueOf(this.mDatas.get(position).getMessage_time()));
         viewHolder.comment_content.setText(this.mDatas.get(position).getMessage_content());
         return convertView;

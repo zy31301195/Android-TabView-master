@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ycl.tabview.Bean.Record;
 import com.ycl.tabview.R;
+import com.ycl.tabview.httpBean.RecordBean;
 
 import java.util.List;
 
@@ -19,9 +20,9 @@ import java.util.List;
 public class RecordListViewAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
-    private List<Record> mDatas;
+    private List<RecordBean.AllRecordBean> mDatas;
 
-    public RecordListViewAdapter(Context context, List<Record> mDatas)
+    public RecordListViewAdapter(Context context, List<RecordBean.AllRecordBean> mDatas)
     {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
@@ -64,9 +65,9 @@ public class RecordListViewAdapter extends BaseAdapter {
             viewHolder = (RecordListViewAdapter.ViewHolder) convertView.getTag();//取出ViewHolder对象
         }
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
-        viewHolder.record_name.setText(this.mDatas.get(position).getBuyer_name());
+        viewHolder.record_name.setText(this.mDatas.get(position).getBuyer_id());
         viewHolder.record_date.setText(this.mDatas.get(position).getRecord_date());
-        viewHolder.record_time.setText(String.valueOf(this.mDatas.get(position).getReocrd_time()));
+        viewHolder.record_time.setText(String.valueOf(this.mDatas.get(position).getRecord_id()));
         viewHolder.tv_new_price.setText(this.mDatas.get(position).getRecord_price());
         return convertView;
     }

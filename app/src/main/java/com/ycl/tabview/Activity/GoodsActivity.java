@@ -53,8 +53,8 @@ public class GoodsActivity extends Activity {
     private TextView user_sex;
     private TextView user_school;
     private TextView user_sign;
-    private List<Message> messageData = new ArrayList<>();
-    private List<Record> recordData =new ArrayList<>();
+    private List<RecordBean.AllMessageBean> messageData = new ArrayList<>();
+    private List<RecordBean.AllRecordBean> recordData =new ArrayList<>();
     private MessageListViewAdapter messageListViewAdapter;
     private RecordListViewAdapter recordListViewAdapter;
 
@@ -152,7 +152,7 @@ public class GoodsActivity extends Activity {
                         exam_place.setText(s.getExam().getExam_place());
                         exam_newprice.setText(s.getExam().getExam_newprice());
                         messageData.clear();
-                        messageData.addAll((Message)s.getAllMessage());
+                        messageData.addAll(s.getAllMessage());
                         messageListViewAdapter.notifyDataSetChanged();
                         recordData.clear();
                         recordData.addAll(s.getAllRecord());
