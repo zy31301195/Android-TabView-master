@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.ycl.tabview.Activity.LoginActivity.user_tel;
+import static com.ycl.tabview.Activity.LoginActivity.users;
 import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
@@ -73,7 +73,7 @@ public class UpdateUserActivity extends Activity{
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build();
 
-                retrofit.create(LoginHttps.class).updateJson(user_tel,"user_pwd",et_password.getText().toString())
+                retrofit.create(LoginHttps.class).updateJson(users.getUser_tel(),"user_pwd",et_password.getText().toString())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subject<LoginBeanTest>() {

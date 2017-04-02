@@ -9,26 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ycl.tabview.Activity.MyGoodsActivity;
 import com.ycl.tabview.Activity.SettingActivity;
 import com.ycl.tabview.Activity.UserInfoActivity;
 import com.ycl.tabview.R;
-import com.ycl.tabview.http.LoginHttps;
-import com.ycl.tabview.httpBean.UserBean;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.Subject;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.ycl.tabview.Activity.LoginActivity.user_tel;
-import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
+import static com.ycl.tabview.Activity.LoginActivity.users;
 
 public class MyFragment extends Fragment {
     private RelativeLayout re_myinfo;
@@ -36,7 +23,6 @@ public class MyFragment extends Fragment {
     private RelativeLayout fabu;
     private TextView name;
     private TextView tel;
-    public static int user_id;
     private String names;
     private String sex;
     private String school;
@@ -59,81 +45,15 @@ public class MyFragment extends Fragment {
         fabu = (RelativeLayout) view.findViewById(R.id.fabu);
         name = (TextView) view.findViewById(R.id.tv_name);
         tel = (TextView) view.findViewById(R.id.tv_fxid);
-        tel.setText("电话："+ user_tel);
+        tel.setText("电话："+ users.getUser_tel());
+        name.setText(users.getUser_name());
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
 
-        retrofit.create(LoginHttps.class).getJson(user_tel)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subject<UserBean>() {
-                    @Override
-                    public boolean hasObservers() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasThrowable() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasComplete() {
-                        return false;
-                    }
-
-                    @Override
-                    public Throwable getThrowable() {
-                        return null;
-                    }
-
-                    @Override
-                    protected void subscribeActual(Observer<? super UserBean> observer) {
-
-                    }
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(UserBean s) {
-                        name.setText(s.getUsers().getUser_name());
-                        user_id = s.getUsers().getUser_id();
-                        names = s.getUsers().getUser_name();
-                        sex = s.getUsers().getUser_sex();
-                        zgid = s.getUsers().getUser_zgid();
-                        sign = s.getUsers().getUser_sign();
-                        school = s.getUsers().getUser_school();
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
-                    }
-                });
 
         re_myinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),UserInfoActivity.class);
-                intent.putExtra("userName",names);
-                intent.putExtra("userSex",sex);
-                intent.putExtra("userZgid",zgid);
-                intent.putExtra("userSchool",school);
-                intent.putExtra("userSign",sign);
-
+                Intent intent=new Intent(getContext(),UserInfoActivity.class);
                 startActivity(intent);
             }
         });
@@ -141,7 +61,7 @@ public class MyFragment extends Fragment {
         re_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),SettingActivity.class);
+                Intent intent=new Intent(getContext(),SettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -149,7 +69,7 @@ public class MyFragment extends Fragment {
         fabu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),MyGoodsActivity.class);
+                Intent intent=new Intent(getContext(),MyGoodsActivity.class);
                 startActivity(intent);
             }
         });

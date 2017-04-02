@@ -29,6 +29,7 @@
         <activity android:name=".Activity.GoodsActivity"></activity>
         <activity android:name=".Activity.MyGoodsActivity"></activity>
         <activity android:name=".Activity.AddgoodsActivity"></activity>
+        <activity android:name=".Activity.AddSignActivity"></activity>
 
     </application>
 

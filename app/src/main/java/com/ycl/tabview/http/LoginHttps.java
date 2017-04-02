@@ -1,6 +1,7 @@
 package com.ycl.tabview.http;
 
 import com.ycl.tabview.httpBean.ExamBean;
+import com.ycl.tabview.httpBean.LoginBean;
 import com.ycl.tabview.httpBean.LoginBeanTest;
 import com.ycl.tabview.httpBean.UserBean;
 
@@ -18,7 +19,7 @@ import retrofit2.http.QueryMap;
 public interface LoginHttps {
     public static final String API_BASE_URL = "http://192.168.191.1:8080/Paimai/";
     @GET("Login.action")
-    Observable<LoginBeanTest> getJson(@Query("user_tel")String tel,@Query("pwd") String pwd);
+    Observable<LoginBean> getJson(@Query("user_tel")String tel, @Query("pwd") String pwd);
 
     @GET("Register.action")
     Observable<LoginBeanTest> getJson(@QueryMap Map<String, String> map);

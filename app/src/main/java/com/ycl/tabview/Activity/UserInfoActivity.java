@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.ycl.tabview.R;
 
-import static com.ycl.tabview.Activity.LoginActivity.user_tel;
+import static com.ycl.tabview.Activity.LoginActivity.users;
 
 /**
  * Created by Administrator on 2017/3/23.
@@ -49,6 +49,7 @@ public class UserInfoActivity extends Activity{
         re_address = (RelativeLayout) this.findViewById(R.id.re_address);
         re_sign = (RelativeLayout)this.findViewById(R.id.re_sign);
         re_no = (RelativeLayout) this.findViewById(R.id.re_no);
+        re_sign = (RelativeLayout) this.findViewById(R.id.re_sign);
 
         iv_avatar = (ImageView) this.findViewById(R.id.iv_avatar);//照片
         tv_name = (TextView) this.findViewById(R.id.tv_name);//昵称
@@ -57,20 +58,32 @@ public class UserInfoActivity extends Activity{
         tv_sign = (TextView) this.findViewById(R.id.tv_sign);//签名
         tv_no = (TextView) this.findViewById(R.id.tv_no);//职工号
         tv_address = (TextView) this.findViewById(R.id.tv_address);//所在分院
+        re_sign.setOnClickListener(new SignClickListener());
     }
 
     private void initData(){
-        Intent intent = getIntent();
-        tv_name.setText(intent.getStringExtra("userName"));
-        tv_tel.setText(user_tel);
-        tv_sex.setText(intent.getStringExtra("userSex"));
-        tv_no.setText(intent.getStringExtra("userZgid"));
-        tv_address.setText(intent.getStringExtra("userSchool"));
-        tv_sign.setText(intent.getStringExtra("userSign"));
+        tv_name.setText(users.getUser_name());
+        tv_tel.setText(users.getUser_tel());
+        tv_sex.setText(users.getUser_sex());
+        tv_no.setText(users.getUser_zgid());
+        tv_address.setText(users.getUser_school());
+        tv_sign.setText(users.getUser_sign());
 
     }
 
     public void back(View view) {
         this.finish();
+    }
+
+
+    private final class SignClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Intent  intent = new Intent(UserInfoActivity.this,AddSignActivity.class);
+            intent.putExtra("title","签名");
+            startActivity(intent);
+
+        }
     }
 }

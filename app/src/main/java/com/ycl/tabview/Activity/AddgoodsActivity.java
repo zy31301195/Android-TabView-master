@@ -33,8 +33,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.ycl.tabview.Activity.LoginActivity.users;
 import static com.ycl.tabview.Activity.RegisterActivity.school_name;
-import static com.ycl.tabview.Fragement.MyFragment.user_id;
 import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
@@ -124,7 +124,7 @@ public class AddgoodsActivity extends Activity {
             exam.setExam_endtime(goods_endtime.getText().toString());
             exam.setExam_school(goods_school.getText().toString());
             exam.setExam_prices(goods_price.getText().toString());
-            exam.setExam_user_id(user_id);
+            exam.setExam_user_id(users.getUser_id());
             Map map = exam.createCommitParams();
 
             Retrofit retrofit = new Retrofit.Builder()

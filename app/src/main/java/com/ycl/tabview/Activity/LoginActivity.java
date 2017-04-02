@@ -12,9 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ycl.tabview.Bean.Users;
 import com.ycl.tabview.R;
 import com.ycl.tabview.http.LoginHttps;
-import com.ycl.tabview.httpBean.LoginBeanTest;
+import com.ycl.tabview.httpBean.LoginBean;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,7 +41,7 @@ public class LoginActivity extends Activity {
     private EditText pwd;
     private SharedPreferences mPref;
     private SharedPreferences.Editor mEditor;
-    public static String user_tel;
+    public static Users users = new Users();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,6 @@ public class LoginActivity extends Activity {
         public void onClick(View v) {
             String user = tel.getText().toString();
             String pwds = pwd.getText().toString();
-            user_tel = user;
 
 //            OkHttpClient client = new OkHttpClient.Builder().
 //                    connectTimeout(60, TimeUnit.SECONDS).
@@ -89,7 +89,7 @@ public class LoginActivity extends Activity {
             retrofit.create(LoginHttps.class).getJson(user,pwds)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subject<LoginBeanTest>() {
+                    .subscribe(new Subject<LoginBean>() {
                         @Override
                         public boolean hasObservers() {
                             return false;
@@ -111,7 +111,7 @@ public class LoginActivity extends Activity {
                         }
 
                         @Override
-                        protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
+                        protected void subscribeActual(Observer<? super LoginBean> observer) {
 
                         }
 
@@ -121,16 +121,23 @@ public class LoginActivity extends Activity {
                         }
 
                         @Override
-                        public void onNext(LoginBeanTest s) {
+                        public void onNext(LoginBean s) {
                             if(s.getUser().equals("3")){
                                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                users.setUser_id(s.getUsers().getUser_id());
+                                users.setUser_zgid(s.getUsers().getUser_zgid());
+                                users.setUser_tel(s.getUsers().getUser_tel());
+                                users.setUser_sex(s.getUsers().getUser_sex());
+                                users.setUser_name(s.getUsers().getUser_name());
+                                users.setUser_school(s.getUsers().getUser_school());
+                                users.setUser_sign(s.getUsers().getUser_sign());
                                 mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
                                 mEditor.commit();
                                 startActivity(intent);
                             }
                             else if(s.getUser().equals("2"))
                                 Toast.makeText(LoginActivity.this,"密码错误",Toast.LENGTH_LONG).show();
-                            else
+                            else if(s.getUser().equals("1"))
                                 Toast.makeText(LoginActivity.this,"没有该账号",Toast.LENGTH_LONG).show();
 
                         }

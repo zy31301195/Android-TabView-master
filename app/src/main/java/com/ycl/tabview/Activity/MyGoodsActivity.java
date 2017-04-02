@@ -30,7 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.ycl.tabview.Fragement.MyFragment.user_id;
+import static com.ycl.tabview.Activity.LoginActivity.users;
 import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
@@ -92,7 +92,7 @@ public class MyGoodsActivity extends Activity{
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        retrofit.create(LoginHttps.class).getJson(user_id)
+        retrofit.create(LoginHttps.class).getJson(users.getUser_id())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subject<ExamBean>() {
