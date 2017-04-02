@@ -39,6 +39,9 @@ public interface LoginHttps {
     @GET("UpdateUser.action")
     Observable<LoginBeanTest> updateJson(@Query("tel")String tel,@Query("param") String param,@Query("value") String value);
 
-    @GET("Login.action")
-    Observable<RecordBean> recordJson(@Query("exam_id")int exam_id, @Query("user_id") int user_id);
+    @GET("Exam.action")
+    Observable<RecordBean> recordJson(@Query("exam_id")int exam_id, @Query("user_id")int user_id);
+
+    @GET("SearhExam.action")
+    Observable<ExamBean> searchJson(@Query("key")String key, @Query("value")String value);
 }

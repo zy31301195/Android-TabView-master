@@ -106,6 +106,7 @@ public class SearchActivity extends Activity implements View.OnClickListener {
 				TextView tv1 = mKeywordEt;
 				String tv1String = tv1.getText().toString();
 				intent.putExtra("title",tv1String);
+				intent.putExtra("key","exam_name");
 				startActivity(intent);
 			}
 		});

@@ -16,10 +16,19 @@ import com.ycl.tabview.Adapter.MyAdapter;
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.DropDownMenu;
+import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.ExamBean;
+import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
 
 public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemClick{
     private TextView secondTxt;
@@ -32,6 +41,8 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
     private ListView listView3;
     private MenuListAdapter mMenuAdapter2;
     private MenuListAdapter mMenuAdapter3;
+    private String value;
+    private String  key;
 
     private DropDownMenu mDropDownMenu;
 
@@ -48,9 +59,10 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
         setContentView(R.layout.choose);
         Intent intent = getIntent();//getIntent将该项目中包含的原始intent检索出来，将检索出来的intent赋值给一个Intent类型的变量intent
         Bundle bundle=intent.getExtras();//.getExtras()得到intent所附带的额外数据
-        String str=bundle.getString("title");//getString()返回指定key的值
+        value =bundle.getString("title");//getString()返回指定key的值
+        key = bundle.getString("key");
         secondTxt=(TextView)findViewById(R.id.tv_title);//用TextView显示值
-        secondTxt.setText(str);
+        secondTxt.setText(value);
         initView();
 
     }
@@ -102,14 +114,69 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        for(int i=0;i<2;i++){
-            Exam bean = new Exam();
-            bean.setExam_name("数据库"+i);
-            bean.setExam_date("2017-3-21");
-            bean.setExam_prices("100");
-            bean.setExam_school("计算");
-            mData.add(bean);
-        }
+
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).searchJson(key,value)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subject<ExamBean>() {
+                    @Override
+                    public boolean hasObservers() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasThrowable() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasComplete() {
+                        return false;
+                    }
+
+                    @Override
+                    public Throwable getThrowable() {
+                        return null;
+                    }
+
+                    @Override
+                    protected void subscribeActual(Observer<? super ExamBean> observer) {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ExamBean s) {
+                        mData.clear();
+                        mData.addAll(s.getList());
+                        mAdapter.notifyDataSetChanged();
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(ChooseActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+//        for(int i=0;i<2;i++){
+//            Exam bean = new Exam();
+//            bean.setExam_name("数据库"+i);
+//            bean.setExam_date("2017-3-21");
+//            bean.setExam_prices("100");
+//            bean.setExam_school("计算");
+//            mData.add(bean);
+//        }
         this.mAdapter = new ListViewAdapter(this,mData);
         ListView listView = new ListView(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

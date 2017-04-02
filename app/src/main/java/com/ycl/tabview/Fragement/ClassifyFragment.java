@@ -149,6 +149,7 @@ public class ClassifyFragment extends Fragment {
                 TextView tv1 = (TextView) view.findViewById(R.id.tv_menu9);
                 String tv1String = tv1.getText().toString();
                 intent.putExtra("title",tv1String);
+                intent.putExtra("key","exam_school");
                 startActivity(intent);
 
             }

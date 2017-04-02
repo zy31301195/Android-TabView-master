@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.ycl.tabview.Adapter.MessageListViewAdapter;
 import com.ycl.tabview.Adapter.RecordListViewAdapter;
-import com.ycl.tabview.Bean.Message;
-import com.ycl.tabview.Bean.Record;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.AmountView;
 import com.ycl.tabview.http.LoginHttps;
@@ -63,8 +61,8 @@ public class GoodsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_activity);
-        initData();
         initView();
+        initData();
 
         this.messageListViewAdapter = new MessageListViewAdapter(this,messageData);
         this.messagelist.setAdapter(messageListViewAdapter);
@@ -151,6 +149,12 @@ public class GoodsActivity extends Activity {
                         exam_time.setText(s.getExam().getExam_time()+"-"+s.getExam().getExam_endtime());
                         exam_place.setText(s.getExam().getExam_place());
                         exam_newprice.setText(s.getExam().getExam_newprice());
+                        user_name.setText(s.getUser().getUser_name());
+                        user_tel.setText(s.getUser().getUser_tel());
+                        user_zgid.setText(s.getUser().getUser_zgid());
+                        user_sex.setText(s.getUser().getUser_sex());
+                        user_sign.setText(s.getUser().getUser_sign());
+                        user_school.setText(s.getUser().getUser_school());
                         messageData.clear();
                         messageData.addAll(s.getAllMessage());
                         messageListViewAdapter.notifyDataSetChanged();
