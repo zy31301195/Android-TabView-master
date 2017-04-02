@@ -19,6 +19,7 @@ import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBeanTest;
+import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -29,13 +30,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.ycl.tabview.Activity.LoginActivity.users;
 import static com.ycl.tabview.Activity.RegisterActivity.school_name;
-import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
  * Created by Administrator on 2017/3/25.
@@ -125,15 +122,10 @@ public class AddgoodsActivity extends Activity {
             exam.setExam_school(goods_school.getText().toString());
             exam.setExam_prices(goods_price.getText().toString());
             exam.setExam_user_id(users.getUser_id());
-            Map map = exam.createCommitParams();
+            Map<String, Object> map = exam.createCommitParams();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
 
-            retrofit.create(LoginHttps.class).addExamsJson(map)
+            Retrofitutil.getmRetrofit().create(LoginHttps.class).addExamsJson(map)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subject<LoginBeanTest>() {

@@ -56,6 +56,10 @@ public class GoodsActivity extends Activity {
         setContentView(R.layout.goods_activity);
         initData();
         initView();
+
+        int examId =  getIntent().getIntExtra("examId",-1);
+        int userId =  getIntent().getIntExtra("userId",-1);
+
         this.messageListViewAdapter = new MessageListViewAdapter(this,messageData);
         this.messagelist.setAdapter(messageListViewAdapter);
         this.recordListViewAdapter = new RecordListViewAdapter(this,recordData);

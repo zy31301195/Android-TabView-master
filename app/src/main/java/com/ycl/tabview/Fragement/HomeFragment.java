@@ -21,6 +21,7 @@ import com.ycl.tabview.R;
 import com.ycl.tabview.behavior.MyBehavior;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.ExamBean;
+import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +31,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemClick{
     private RecyclerView recyclerView;
-    private List<Exam> mData = new ArrayList<>();;
+    private List<Exam> mData = new ArrayList<>();
     private MyAdapter mAdapter;
     private View search;
     private View view;
@@ -57,14 +54,12 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
         search = view.findViewById(R.id.ll_search);
         qd = (TextView) view.findViewById(R.id.qd);
+        mAdapter = new MyAdapter(mData);
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
 
-        retrofit.create(LoginHttps.class).getJson()
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subject<ExamBean>() {
@@ -100,8 +95,9 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
 
                         @Override
                         public void onNext(ExamBean s) {
-                            mData = s.getList();
-
+                            mData.clear();
+                            mData.addAll(s.getList());
+                            mAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -114,11 +110,6 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
                            // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
                         }
                     });
-
-
-        mAdapter = new MyAdapter(mData);
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
 
         search.setOnClickListener(new View.OnClickListener() {
 
@@ -140,12 +131,6 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         myBehavior.setRefreshListener(new MyBehavior.RefreshListener(){
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        myBehavior.stopRefresh();
-                    }
-                },2000);
 
             }
         });
@@ -158,8 +143,9 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
     @Override
     public void onItemClick(View view, Object object) {
         Intent intent = new Intent(getContext(), GoodsActivity.class);
+        intent.putExtra("examId",((Exam)object).getExam_id());
+        intent.putExtra("userId",((Exam)object).getExam_user_id());
         startActivity(intent);
-       // Toast.makeText(view.getContext(),((MyItemBean)object).exam_name,Toast.LENGTH_LONG).show();
     }
 }
 

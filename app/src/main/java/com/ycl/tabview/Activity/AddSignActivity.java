@@ -12,18 +12,15 @@ import android.widget.Toast;
 import com.ycl.tabview.R;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBeanTest;
+import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.ycl.tabview.Activity.LoginActivity.users;
-import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
  * Created by Administrator on 2017/4/2.
@@ -49,17 +46,15 @@ public class AddSignActivity extends Activity{
 
     }
 
+    public void back(View view) {
+        this.finish();
+    }
+
     private final class ButtonClickListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
-
-            retrofit.create(LoginHttps.class).updateJson(users.getUser_tel(),"user_sign",sign.getText().toString())
+            Retrofitutil.getmRetrofit().create(LoginHttps.class).updateJson(users.getUser_tel(),"user_sign",sign.getText().toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subject<LoginBeanTest>() {

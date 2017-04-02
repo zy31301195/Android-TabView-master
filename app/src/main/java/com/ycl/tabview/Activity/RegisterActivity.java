@@ -35,6 +35,7 @@ import com.ycl.tabview.R;
 import com.ycl.tabview.View.SelectPicPopupWindow;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBeanTest;
+import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
 import java.io.File;
 import java.util.Map;
@@ -44,11 +45,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 /**
  * Created by Administrator on 2017/3/18.
@@ -134,19 +130,13 @@ public class RegisterActivity extends Activity {
             user.setUser_sex(sex.getText().toString());
             user.setUser_tel(et_usertel.getText().toString());
             user.setUser_zgid(zgid.getText().toString());
-            Map map = user.createCommitParams();
+            Map<String, String> map = user.createCommitParams();
 
             if(!(et_password.getText().toString()).equals(et_password2.getText().toString())){
                 Toast.makeText(RegisterActivity.this,"两次密码不匹配",Toast.LENGTH_SHORT).show();
             }
             else {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(API_BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build();
-
-                retrofit.create(LoginHttps.class).getJson(map)
+                Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson(map)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subject<LoginBeanTest>() {

@@ -16,18 +16,15 @@ import com.ycl.tabview.Bean.Users;
 import com.ycl.tabview.R;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.LoginBean;
+import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.ycl.tabview.Activity.RegisterActivity.KEY_SEARCH_HISTORY_KEYWORD;
-import static com.ycl.tabview.http.LoginHttps.API_BASE_URL;
 
 
 /**
@@ -74,19 +71,7 @@ public class LoginActivity extends Activity {
             String user = tel.getText().toString();
             String pwds = pwd.getText().toString();
 
-//            OkHttpClient client = new OkHttpClient.Builder().
-//                    connectTimeout(60, TimeUnit.SECONDS).
-//                    readTimeout(60, TimeUnit.SECONDS).
-//                    writeTimeout(60, TimeUnit.SECONDS).build();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    //.client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
-
-            retrofit.create(LoginHttps.class).getJson(user,pwds)
+            Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson(user,pwds)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subject<LoginBean>() {

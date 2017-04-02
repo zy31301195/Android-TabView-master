@@ -17,7 +17,6 @@ import retrofit2.http.QueryMap;
  */
 
 public interface LoginHttps {
-    public static final String API_BASE_URL = "http://192.168.191.1:8080/Paimai/";
     @GET("Login.action")
     Observable<LoginBean> getJson(@Query("user_tel")String tel, @Query("pwd") String pwd);
 
