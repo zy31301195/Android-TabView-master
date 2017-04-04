@@ -27,6 +27,9 @@ public interface LoginHttps {
     @GET("AddExam.action")
     Observable<LoginBeanTest> addExamsJson(@QueryMap Map<String, Object> map);
 
+    @GET("AddRecord.action")
+    Observable<LoginBeanTest> addRecordJson(@QueryMap Map<String, Object> map);
+
     @GET("AllExam.action")
     Observable<ExamBean> getJson();
 

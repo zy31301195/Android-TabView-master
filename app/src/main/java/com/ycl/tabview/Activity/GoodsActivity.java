@@ -14,14 +14,20 @@ import android.widget.Toast;
 
 import com.ycl.tabview.Adapter.MessageListViewAdapter;
 import com.ycl.tabview.Adapter.RecordListViewAdapter;
+import com.ycl.tabview.Bean.Record;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.AmountView;
+import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.httpBean.LoginBeanTest;
 import com.ycl.tabview.httpBean.RecordBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -52,7 +58,10 @@ public class GoodsActivity extends Activity {
     private TextView user_sex;
     private TextView user_school;
     private TextView user_sign;
-    private EditText addprice;
+    private int mount;
+    private int examId;
+    private int userId;
+    private Myapplication mMyapplication;
     private List<RecordBean.AllMessageBean> messageData = new ArrayList<>();
     private List<RecordBean.AllRecordBean> recordData =new ArrayList<>();
     private MessageListViewAdapter messageListViewAdapter;
@@ -63,6 +72,7 @@ public class GoodsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_activity);
+        mMyapplication= (Myapplication) getApplication();
         initView();
         initData();
 
@@ -94,21 +104,22 @@ public class GoodsActivity extends Activity {
         user_zgid = (TextView) findViewById(R.id.tv_no);
         user_tel = (TextView) findViewById(R.id.tv_tel);
         buy = (Button) findViewById(R.id.buy);
-        addprice = (EditText) findViewById(R.id.etAmount);
+        buy.setOnClickListener(new ButtonClickListener());
 
         mAmountView = (AmountView) findViewById(R.id.amount_view);
-        mAmountView.setGoods_storage(50);
+
         mAmountView.setOnAmountChangeListener(new AmountView.OnAmountChangeListener() {
             @Override
             public void onAmountChange(View view, int amount) {
-                Toast.makeText(getApplicationContext(), "Amount=>  " + amount, Toast.LENGTH_SHORT).show();
+                mount = amount;
+                //Toast.makeText(getApplicationContext(), "Amount=>  " + amount, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void initData(){
-        int examId =  getIntent().getIntExtra("examId",-1);
-        int userId =  getIntent().getIntExtra("userId",-1);
+        examId =  getIntent().getIntExtra("examId",-1);
+        userId =  getIntent().getIntExtra("userId",-1);
 
         Retrofitutil.getmRetrofit().create(LoginHttps.class).recordJson(examId,userId)
                 .subscribeOn(Schedulers.io())
@@ -159,6 +170,9 @@ public class GoodsActivity extends Activity {
                         user_sign.setText(s.getUser().getUser_sign());
                         user_school.setText(s.getUser().getUser_school());
                         messageData.clear();
+
+                        mAmountView.setGoods_storage(Integer.valueOf(s.getExam().getExam_newprice())-1);
+                        mAmountView.setTextValue(Integer.valueOf(s.getExam().getExam_newprice())-1);
                         messageData.addAll(s.getAllMessage());
                         messageListViewAdapter.notifyDataSetChanged();
                         recordData.clear();
@@ -176,6 +190,75 @@ public class GoodsActivity extends Activity {
                     }
                 });
 
+    }
+
+
+    private final class ButtonClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datetime = simpleDateFormat.format(new Date());
+            Record record = new Record();
+            record.setBuyer_id(mMyapplication.users.getUser_id());
+            record.setExam_id(examId);
+            record.setRecord_price(String.valueOf(mount));
+            record.setReocrd_time(datetime);
+            Map<String, Object> map = record.createCommitParams();
+
+            Retrofitutil.getmRetrofit().create(LoginHttps.class).addRecordJson(map)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subject<LoginBeanTest>() {
+                        @Override
+                        public boolean hasObservers() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean hasThrowable() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean hasComplete() {
+                            return false;
+                        }
+
+                        @Override
+                        public Throwable getThrowable() {
+                            return null;
+                        }
+
+                        @Override
+                        protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
+
+                        }
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(LoginBeanTest s) {
+                            if(s.getUser().equals("addOk")){
+                                initData();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(GoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                        }
+                    });
+
+
+        }
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView) {

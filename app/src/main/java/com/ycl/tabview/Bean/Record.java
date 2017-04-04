@@ -1,5 +1,8 @@
 package com.ycl.tabview.Bean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Administrator on 2017/3/30.
  */
@@ -10,7 +13,6 @@ public class Record {
     private String reocrd_time;//起拍时间
     private int exam_id;//考试id
     private int buyer_id;//买家id
-    private String buyer_name;//买家姓名
 
     public int getRecord_id() {
         return record_id;
@@ -52,12 +54,13 @@ public class Record {
         this.buyer_id = buyer_id;
     }
 
-    public String getBuyer_name() {
-        return buyer_name;
-    }
+    public Map<String, Object> createCommitParams(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("record_price", this.getRecord_price());
+        params.put("record_time", this.getReocrd_time());
+        params.put("exam_id", this.getExam_id());
+        params.put("buyer_id", this.getBuyer_id());
 
-    public void setBuyer_name(String buyer_name) {
-        this.buyer_name = buyer_name;
+        return params;
     }
-
 }
