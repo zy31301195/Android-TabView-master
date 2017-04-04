@@ -131,7 +131,59 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         myBehavior.setRefreshListener(new MyBehavior.RefreshListener(){
             @Override
             public void onRefresh() {
-                myBehavior.stopRefresh();
+                Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subject<ExamBean>() {
+                            @Override
+                            public boolean hasObservers() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean hasThrowable() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean hasComplete() {
+                                return false;
+                            }
+
+                            @Override
+                            public Throwable getThrowable() {
+                                return null;
+                            }
+
+                            @Override
+                            protected void subscribeActual(Observer<? super ExamBean> observer) {
+
+                            }
+
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(ExamBean s) {
+                                mData.clear();
+                                mData.addAll(s.getList());
+                                mAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                                myBehavior.stopRefresh();
+                            }
+                        });
+
             }
         });
 

@@ -164,9 +164,8 @@ public class AddgoodsActivity extends Activity {
                         @Override
                         public void onNext(LoginBeanTest s) {
                             if(s.getUser().equals("addExamOk")){
-                                Intent intent=new Intent(AddgoodsActivity.this,MyGoodsActivity.class);
-                                startActivity(intent);
                                 Toast.makeText(AddgoodsActivity.this,"添加成功",Toast.LENGTH_LONG).show();
+                                AddgoodsActivity.this.finish();
                             }
 
                         }
@@ -181,9 +180,6 @@ public class AddgoodsActivity extends Activity {
                             // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
                         }
                     });
-
-            Intent intent = new Intent(AddgoodsActivity.this, MyGoodsActivity.class);
-            startActivity(intent);
         }
     }
 

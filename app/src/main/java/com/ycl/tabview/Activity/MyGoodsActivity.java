@@ -137,7 +137,11 @@ public class MyGoodsActivity extends Activity{
                 });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
 
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){

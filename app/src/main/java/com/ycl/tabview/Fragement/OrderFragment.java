@@ -84,7 +84,7 @@ public class OrderFragment extends Fragment implements WeekView.EventClickListen
                             Calendar endTime = (Calendar) startTime.clone();
                             endTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(mData.get(i).getExam_endtime().split(":")[0]));
                             endTime.set(Calendar.MINUTE, Integer.valueOf(mData.get(i).getExam_endtime().split(":")[1]));
-                            WeekViewEvent event = new WeekViewEvent(i, getEventTitle(startTime), startTime, endTime);
+                            WeekViewEvent event = new WeekViewEvent(i, getEventTitle(mData.get(i).getExam_name(),startTime,endTime), startTime, endTime);
                             event.setColor(ranColor);
                             mEvents.add(event);
                         }
@@ -115,6 +115,8 @@ public class OrderFragment extends Fragment implements WeekView.EventClickListen
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         Intent intent = new Intent(getContext(), GoodsActivity.class);
+        intent.putExtra("examId",);
+        intent.putExtra("userId",);
         startActivity(intent);
 
     }
@@ -124,7 +126,7 @@ public class OrderFragment extends Fragment implements WeekView.EventClickListen
 
     }
 
-    protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
+    protected String getEventTitle(String exam_name,Calendar time,Calendar endtime) {
+        return String.format("%s \n%02d:%02d-%02d:%02d", exam_name,time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE),endtime.get(Calendar.HOUR_OF_DAY),endtime.get(Calendar.MINUTE));
     }
 }
