@@ -229,7 +229,16 @@ public class AddgoodsActivity extends Activity {
             year = myear;
             month = mmonth;
             day = dayOfMonth;
-            goods_date.setText(year+"-"+(month+1)+"-"+day);
+            String line1 ="-";
+            String line2 = "-";
+            if(month<9 ) {
+                line1="-0";
+            }
+            if (day<10){
+                line2 = "-0";
+            }
+            goods_date.setText(year+line1+(month+1)+line2+day);
+
         }
     };
 

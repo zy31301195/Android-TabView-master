@@ -20,9 +20,6 @@ import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -228,6 +225,5 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
     public void onItemClick(View view, Object object) {
         Intent intent = new Intent(ChooseActivity.this, GoodsActivity.class);
         startActivity(intent);
-        // Toast.makeText(view.getContext(),((MyItemBean)object).exam_name,Toast.LENGTH_LONG).show();
     }
 }

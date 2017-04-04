@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -51,6 +52,7 @@ public class GoodsActivity extends Activity {
     private TextView user_sex;
     private TextView user_school;
     private TextView user_sign;
+    private EditText addprice;
     private List<RecordBean.AllMessageBean> messageData = new ArrayList<>();
     private List<RecordBean.AllRecordBean> recordData =new ArrayList<>();
     private MessageListViewAdapter messageListViewAdapter;
@@ -92,6 +94,7 @@ public class GoodsActivity extends Activity {
         user_zgid = (TextView) findViewById(R.id.tv_no);
         user_tel = (TextView) findViewById(R.id.tv_tel);
         buy = (Button) findViewById(R.id.buy);
+        addprice = (EditText) findViewById(R.id.etAmount);
 
         mAmountView = (AmountView) findViewById(R.id.amount_view);
         mAmountView.setGoods_storage(50);

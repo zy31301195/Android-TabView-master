@@ -41,7 +41,7 @@
 
                 <TextView
                     android:layout_below="@+id/record_name"
-                    android:id="@+id/record_date"
+                    android:id="@+id/record_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
@@ -49,16 +49,6 @@
                     android:textColor="@color/gray_normal"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:layout_below="@+id/record_name"
-                    android:id="@+id/record_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/record_date"
-                    android:text="8:30"
-                    android:textColor="@color/gray_normal"
-                    android:textSize="15sp" />
 
             </RelativeLayout>
 

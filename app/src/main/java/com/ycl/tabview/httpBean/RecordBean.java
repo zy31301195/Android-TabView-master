@@ -64,7 +64,6 @@ public class RecordBean {
          * exam_prices : 100
          * exam_newprice : 100
          * exam_school : 计算
-         * exam_state : 1
          */
 
         private int exam_id;
@@ -77,7 +76,6 @@ public class RecordBean {
         private String exam_prices;
         private String exam_newprice;
         private String exam_school;
-        private int exam_state;
 
         public int getExam_id() {
             return exam_id;
@@ -159,13 +157,6 @@ public class RecordBean {
             this.exam_school = exam_school;
         }
 
-        public int getExam_state() {
-            return exam_state;
-        }
-
-        public void setExam_state(int exam_state) {
-            this.exam_state = exam_state;
-        }
     }
 
     public static class UserBean {
@@ -314,7 +305,6 @@ public class RecordBean {
         /**
          * record_id : 1
          * record_price : 50
-         * record_date : 2017-3-21
          * record_time : 8:55
          * exam_id : 1
          * buyer_id : 1
@@ -322,7 +312,6 @@ public class RecordBean {
 
         private int record_id;
         private String record_price;
-        private String record_date;
         private String record_time;
         private int exam_id;
         private int buyer_id;
@@ -341,14 +330,6 @@ public class RecordBean {
 
         public void setRecord_price(String record_price) {
             this.record_price = record_price;
-        }
-
-        public String getRecord_date() {
-            return record_date;
-        }
-
-        public void setRecord_date(String record_date) {
-            this.record_date = record_date;
         }
 
         public String getRecord_time() {

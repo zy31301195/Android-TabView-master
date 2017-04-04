@@ -18,7 +18,7 @@ public class Exam {
     private String exam_prices;//初始价
     private String exam_newprice;//现价
     private String exam_school;//所属分院
-    private int exam_state;//状态
+
 
     public String getExam_newprice() {
         return exam_newprice;
@@ -92,13 +92,6 @@ public class Exam {
         this.exam_school = exam_school;
     }
 
-    public int getExam_state() {
-        return exam_state;
-    }
-
-    public void setExam_state(int exam_state) {
-        this.exam_state = exam_state;
-    }
 
     public String getExam_endtime() {
         return exam_endtime;

@@ -8,7 +8,6 @@ public class Record {
     private int record_id;//记录id
     private String record_price;//出价价格
     private String reocrd_time;//起拍时间
-    private String record_date;//起拍日期
     private int exam_id;//考试id
     private int buyer_id;//买家id
     private String buyer_name;//买家姓名
@@ -61,11 +60,4 @@ public class Record {
         this.buyer_name = buyer_name;
     }
 
-    public String getRecord_date() {
-        return record_date;
-    }
-
-    public void setRecord_date(String record_date) {
-        this.record_date = record_date;
-    }
 }
