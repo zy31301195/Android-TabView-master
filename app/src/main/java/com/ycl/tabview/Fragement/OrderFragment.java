@@ -1,7 +1,6 @@
 package com.ycl.tabview.Fragement;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,11 +25,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -115,8 +112,8 @@ public class OrderFragment extends Fragment implements WeekView.EventClickListen
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         Intent intent = new Intent(getContext(), GoodsActivity.class);
-        intent.putExtra("examId",);
-        intent.putExtra("userId",);
+        intent.putExtra("examId",mData.get((int) event.getId()).getExam_id());
+        intent.putExtra("userId",mData.get((int) event.getId()).getExam_user_id());
         startActivity(intent);
 
     }

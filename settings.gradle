@@ -1,1 +1,1 @@
-include ':app', ':tabviewlibrary'
+include ':app', ':tabviewlibrary', ':easycountdowntextureview'

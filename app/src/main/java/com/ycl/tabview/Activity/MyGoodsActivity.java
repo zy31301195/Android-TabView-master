@@ -1,7 +1,6 @@
 package com.ycl.tabview.Activity;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -56,7 +55,11 @@ public class MyGoodsActivity extends Activity{
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MyGoodsActivity.this,mData.get(position).getExam_name(),Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(MyGoodsActivity.this,GoodsActivity.class);
+                intent.putExtra("examId",mData.get(position).getExam_id());
+                intent.putExtra("userId",mData.get(position).getExam_user_id());
+                startActivity(intent);
+                //Toast.makeText(MyGoodsActivity.this,mData.get(position).getExam_name(),Toast.LENGTH_LONG).show();
             }
         });
         this.mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
