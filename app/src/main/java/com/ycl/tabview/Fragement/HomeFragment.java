@@ -187,8 +187,6 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
             }
         });
 
-
-
         return view;
     }
 
