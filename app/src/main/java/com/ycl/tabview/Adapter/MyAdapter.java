@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 import com.ycl.tabview.Util.MyViewHolder;
+import com.ycl.tabview.View.EasyCountDownTextureView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +20,13 @@ import static com.ycl.tabview.Activity.RegisterActivity.school_name;
  * Created by Administrator on 2017/3/24.
  */
 
-public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListener{
+public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListener,EasyCountDownTextureView.EasyCountDownListener{
 
     private List<Exam> mData;
     public int[] imageids ={R.drawable.jisuan,R.drawable.chuanmei,R.drawable.shang,R.drawable.xindian,R.drawable.gongcheng,R.drawable.yixue,R.drawable.faxue,R.drawable.waiguoyu,R.drawable.chuangyi};//图表id
 
     private OnRecycleItemClick onRecycleitemClick = null;
+    private EasyCountDownTextureView countdownText;
 
     public MyAdapter(List<Exam> data){
         this.mData = data;
@@ -34,6 +36,25 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
         onRecycleitemClick = onItemClickListener;
     }
 
+    @Override
+    public void onCountDownStart() {
+
+    }
+
+    @Override
+    public void onCountDownTimeError() {
+
+    }
+
+    @Override
+    public void onCountDownStop(long millisInFuture) {
+
+    }
+
+    @Override
+    public void onCountDownCompleted() {
+
+    }
 
 
     public interface OnRecycleItemClick{
@@ -62,7 +83,6 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
         for (int i=0;i<school_name.length;i++){
             list.put(school_name[i], imageids[i]);
         }
-
         myholder.iv.setImageResource((Integer) list.get(this.mData.get(position).getExam_school()));
         myholder.tv_dates.setText(this.mData.get(position).getExam_date());
         myholder.tv_name.setText(this.mData.get(position).getExam_name());

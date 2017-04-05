@@ -61,9 +61,9 @@ public class ListViewAdapter extends BaseAdapter{
             viewHolder.iv = (ImageView)convertView.findViewById(R.id.image_left);
             viewHolder.tv_name = (TextView)convertView.findViewById(R.id.tv_name);
             viewHolder.tv_dates = (TextView) convertView.findViewById(R.id.tv_dates);
-            viewHolder.hour = (TextView) convertView.findViewById(R.id.hour);
-            viewHolder.minutes= (TextView) convertView.findViewById(R.id.mimute);
-            viewHolder.second = (TextView) convertView.findViewById(R.id.second);
+//            viewHolder.hour = (TextView) convertView.findViewById(R.id.hour);
+//            viewHolder.minutes= (TextView) convertView.findViewById(R.id.mimute);
+//            viewHolder.second = (TextView) convertView.findViewById(R.id.second);
             viewHolder.prices = (TextView) convertView.findViewById(R.id.tv_new_price);
 
             convertView.setTag(viewHolder);//绑定ViewHolder对象

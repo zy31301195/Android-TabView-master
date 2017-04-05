@@ -23,9 +23,9 @@ public class MyViewHolder extends ViewHolder{
 		iv = (ImageView)arg0.findViewById(R.id.image_left);
 		tv_name = (TextView)arg0.findViewById(R.id.tv_name);
 		tv_dates = (TextView) arg0.findViewById(R.id.tv_dates);
-		hour = (TextView) arg0.findViewById(R.id.hour);
-		minutes= (TextView) arg0.findViewById(R.id.mimute);
-		second = (TextView) arg0.findViewById(R.id.second);
+//		hour = (TextView) arg0.findViewById(R.id.hour);
+//		minutes= (TextView) arg0.findViewById(R.id.mimute);
+//		second = (TextView) arg0.findViewById(R.id.second);
 		prices = (TextView) arg0.findViewById(R.id.tv_new_price);
 	}
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -67,51 +68,59 @@
                 android:layout_marginLeft="5dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/hour"
+                <com.ycl.tabview.View.EasyCountDownTextureView
+                    android:id="@+id/setting_countdown_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/countdown_bg"
-                    android:padding="1.5dp"
-                    android:text="00"
-                    android:textColor="@color/white" />
+                    app:easyCountHour="6"
+                    app:easyCountMinute="6"
+                    app:easyCountSecond="26" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
-                    android:text=":"
-                    android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/mimute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/countdown_bg"
-                    android:padding="1.5dp"
-                    android:text="32"
-                    android:textColor="@color/white" />
+                <!--<TextView-->
+                    <!--android:id="@+id/hour"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/countdown_bg"-->
+                    <!--android:padding="1.5dp"-->
+                    <!--android:text="00"-->
+                    <!--android:textColor="@color/white" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
-                    android:text=":"
-                    android:textColor="@color/black" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="3dp"-->
+                    <!--android:layout_marginRight="3dp"-->
+                    <!--android:text=":"-->
+                    <!--android:textColor="@color/black" />-->
 
-                <TextView
-                    android:id="@+id/second"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/countdown_bg"
-                    android:padding="1.5dp"
-                    android:text="49"
-                    android:textColor="@color/white" />
+                <!--<TextView-->
+                    <!--android:id="@+id/mimute"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/countdown_bg"-->
+                    <!--android:padding="1.5dp"-->
+                    <!--android:text="32"-->
+                    <!--android:textColor="@color/white" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="3dp"-->
+                    <!--android:layout_marginRight="3dp"-->
+                    <!--android:text=":"-->
+                    <!--android:textColor="@color/black" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/second"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/countdown_bg"-->
+                    <!--android:padding="1.5dp"-->
+                    <!--android:text="49"-->
+                    <!--android:textColor="@color/white" />-->
 
             </LinearLayout>
-
 
         </FrameLayout>
 
