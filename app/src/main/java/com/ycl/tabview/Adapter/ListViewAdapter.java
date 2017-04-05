@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
+import com.ycl.tabview.View.EasyCountDownTextureView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +30,7 @@ public class ListViewAdapter extends BaseAdapter{
     private Context mContext;
     private List<Exam> mDatas;
     public int[] imageids ={R.drawable.jisuan,R.drawable.chuanmei,R.drawable.shang,R.drawable.xindian,R.drawable.gongcheng,R.drawable.yixue,R.drawable.faxue,R.drawable.waiguoyu,R.drawable.chuangyi};//图表id
-
+    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public ListViewAdapter(Context context, List<Exam> mDatas)
     {
         mInflater = LayoutInflater.from(context);
@@ -61,9 +65,7 @@ public class ListViewAdapter extends BaseAdapter{
             viewHolder.iv = (ImageView)convertView.findViewById(R.id.image_left);
             viewHolder.tv_name = (TextView)convertView.findViewById(R.id.tv_name);
             viewHolder.tv_dates = (TextView) convertView.findViewById(R.id.tv_dates);
-//            viewHolder.hour = (TextView) convertView.findViewById(R.id.hour);
-//            viewHolder.minutes= (TextView) convertView.findViewById(R.id.mimute);
-//            viewHolder.second = (TextView) convertView.findViewById(R.id.second);
+            viewHolder.mEasyCountDownTextureView = (EasyCountDownTextureView) convertView.findViewById(R.id.setting_countdown_text);
             viewHolder.prices = (TextView) convertView.findViewById(R.id.tv_new_price);
 
             convertView.setTag(viewHolder);//绑定ViewHolder对象
@@ -81,6 +83,13 @@ public class ListViewAdapter extends BaseAdapter{
         viewHolder.tv_dates.setText(this.mDatas.get(position).getExam_date());
         viewHolder.tv_name.setText(this.mDatas.get(position).getExam_name());
         viewHolder.prices.setText(this.mDatas.get(position).getExam_prices());
+        try {
+            Date date = df.parse(this.mDatas.get(position).getExam_date() + " 00:00:00");
+            long t = date.getTime() - System.currentTimeMillis() - 24*60*60*1000;
+            viewHolder.mEasyCountDownTextureView.setTime(t);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         return convertView;
     }
@@ -90,10 +99,7 @@ public class ListViewAdapter extends BaseAdapter{
         public ImageView iv;
         public TextView tv_name;
         public TextView tv_dates;
-        public TextView hour;
-        public TextView minutes;
-        public TextView second;
         public TextView prices;
-
+        public EasyCountDownTextureView mEasyCountDownTextureView;
     }
 }

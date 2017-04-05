@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
 import com.ycl.tabview.Util.MyViewHolder;
-import com.ycl.tabview.View.EasyCountDownTextureView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +28,6 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
     public int[] imageids = {R.drawable.jisuan, R.drawable.chuanmei, R.drawable.shang, R.drawable.xindian, R.drawable.gongcheng, R.drawable.yixue, R.drawable.faxue, R.drawable.waiguoyu, R.drawable.chuangyi};//图表id
 
     private OnRecycleItemClick onRecycleitemClick = null;
-    private EasyCountDownTextureView countdownText;
     private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public MyAdapter(List<Exam> data) {
@@ -73,7 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
         myholder.prices.setText(this.mData.get(position).getExam_prices());
         try {
             Date date = df.parse(this.mData.get(position).getExam_date() + " 00:00:00");
-            long t = date.getTime() - System.currentTimeMillis();
+            long t = date.getTime() - System.currentTimeMillis() - 24*60*60*1000;
             myholder.mEasyCountDownTextureView.setTime(t);
         } catch (ParseException e) {
             e.printStackTrace();

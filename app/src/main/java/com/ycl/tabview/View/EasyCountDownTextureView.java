@@ -605,9 +605,10 @@ public class EasyCountDownTextureView extends TextureView
 
         private int checkCalendarHour(final long millisInFuture, int calendarHour) {
             final int days = (int) (millisInFuture / ONE_DAY);
-            if (days > 1) {
-                calendarHour += (days - 1) * 24;
-            }
+//            if (days > 1) {
+//                calendarHour += (days - 1) * 24;
+//            }
+            calendarHour += (days) * 24;
             return calendarHour;
         }
 
