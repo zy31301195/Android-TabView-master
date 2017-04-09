@@ -1,17 +1,18 @@
 package com.ycl.tabview.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.ycl.tabview.Adapter.MessageListViewAdapter;
 import com.ycl.tabview.Adapter.RecordListViewAdapter;
 import com.ycl.tabview.Bean.Record;
@@ -43,6 +44,7 @@ public class GoodsActivity extends Activity {
 
     private TabHost mTabHost;
     private AmountView mAmountView;
+    private LinearLayout linearLayout;
     private TextView exam_name;
     private TextView exam_date;
     private TextView exam_time;
@@ -58,37 +60,48 @@ public class GoodsActivity extends Activity {
     private TextView user_sex;
     private TextView user_school;
     private TextView user_sign;
+    private TextView message_button;
     private int mount;
     private int examId;
     private int userId;
+    private int state;
     private Myapplication mMyapplication;
     private List<RecordBean.AllMessageBean> messageData = new ArrayList<>();
-    private List<RecordBean.AllRecordBean> recordData =new ArrayList<>();
+    private List<RecordBean.AllRecordBean> recordData = new ArrayList<>();
     private MessageListViewAdapter messageListViewAdapter;
     private RecordListViewAdapter recordListViewAdapter;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_activity);
-        mMyapplication= (Myapplication) getApplication();
+        mMyapplication = (Myapplication) getApplication();
         initView();
         initData();
 
-        this.messageListViewAdapter = new MessageListViewAdapter(this,messageData);
+        this.messageListViewAdapter = new MessageListViewAdapter(this, messageData);
         this.messagelist.setAdapter(messageListViewAdapter);
-        this.recordListViewAdapter = new RecordListViewAdapter(this,recordData);
+        this.recordListViewAdapter = new RecordListViewAdapter(this, recordData);
         this.recordlist.setAdapter(recordListViewAdapter);
-        setListViewHeightBasedOnChildren(recordlist);
+        //setListViewHeightBasedOnChildren(recordlist);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    private void initView(){
+    private void initView() {
         mTabHost = (TabHost) findViewById(R.id.tabHost);
         mTabHost.setup();// init
         mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("考试详情").setContent(R.id.tab1));
         mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("发布者信息").setContent(R.id.tab2));
         mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("留言").setContent(R.id.tab3));
+        linearLayout = (LinearLayout) findViewById(R.id.chujia);
         exam_name = (TextView) findViewById(R.id.et_exam_name);
         exam_date = (TextView) findViewById(R.id.et_exam_date);
         exam_time = (TextView) findViewById(R.id.et_exam_time);
@@ -103,8 +116,10 @@ public class GoodsActivity extends Activity {
         user_sign = (TextView) findViewById(R.id.tv_sign);
         user_zgid = (TextView) findViewById(R.id.tv_no);
         user_tel = (TextView) findViewById(R.id.tv_tel);
+        message_button = (TextView) findViewById(R.id.message_button);
         buy = (Button) findViewById(R.id.buy);
         buy.setOnClickListener(new ButtonClickListener());
+        message_button.setOnClickListener(new MessageButtonClickListener());
 
         mAmountView = (AmountView) findViewById(R.id.amount_view);
 
@@ -117,11 +132,20 @@ public class GoodsActivity extends Activity {
         });
     }
 
-    private void initData(){
-        examId =  getIntent().getIntExtra("examId",-1);
-        userId =  getIntent().getIntExtra("userId",-1);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
 
-        Retrofitutil.getmRetrofit().create(LoginHttps.class).recordJson(examId,userId)
+    private void initData() {
+        examId = getIntent().getIntExtra("examId", -1);
+        userId = getIntent().getIntExtra("userId", -1);
+        state = getIntent().getIntExtra("state", -2);
+        if (state == -1) {
+            linearLayout.setVisibility(View.GONE);
+        }
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).recordJson(examId, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subject<RecordBean>() {
@@ -160,7 +184,7 @@ public class GoodsActivity extends Activity {
                         exam_name.setText(s.getExam().getExam_name());
                         exam_oldprice.setText(s.getExam().getExam_prices());
                         exam_date.setText(s.getExam().getExam_date());
-                        exam_time.setText(s.getExam().getExam_time()+"-"+s.getExam().getExam_endtime());
+                        exam_time.setText(s.getExam().getExam_time() + "-" + s.getExam().getExam_endtime());
                         exam_place.setText(s.getExam().getExam_place());
                         exam_newprice.setText(s.getExam().getExam_newprice());
                         user_name.setText(s.getUser().getUser_name());
@@ -171,8 +195,8 @@ public class GoodsActivity extends Activity {
                         user_school.setText(s.getUser().getUser_school());
                         messageData.clear();
 
-                        mAmountView.setGoods_storage(Integer.valueOf(s.getExam().getExam_newprice())-1);
-                        mAmountView.setTextValue(Integer.valueOf(s.getExam().getExam_newprice())-1);
+                        mAmountView.setGoods_storage(Integer.valueOf(s.getExam().getExam_newprice()) - 1);
+                        mAmountView.setTextValue(Integer.valueOf(s.getExam().getExam_newprice()) - 1);
                         messageData.addAll(s.getAllMessage());
                         messageListViewAdapter.notifyDataSetChanged();
                         recordData.clear();
@@ -182,7 +206,7 @@ public class GoodsActivity extends Activity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(GoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(GoodsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -192,8 +216,44 @@ public class GoodsActivity extends Activity {
 
     }
 
+//    /**
+//     * ATTENTION: This was auto-generated to implement the App Indexing API.
+//     * See https://g.co/AppIndexing/AndroidStudio for more information.
+//     */
+//    public Action getIndexApiAction() {
+//        Thing object = new Thing.Builder()
+//                .setName("Goods Page") // TODO: Define a title for the content shown.
+//                // TODO: Make sure this auto-generated URL is correct.
+//                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+//                .build();
+//        return new Action.Builder(Action.TYPE_VIEW)
+//                .setObject(object)
+//                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+//                .build();
+//    }
 
-    private final class ButtonClickListener implements View.OnClickListener{
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//        // ATTENTION: This was auto-generated to implement the App Indexing API.
+//        // See https://g.co/AppIndexing/AndroidStudio for more information.
+//        client.connect();
+//        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//
+//        // ATTENTION: This was auto-generated to implement the App Indexing API.
+//        // See https://g.co/AppIndexing/AndroidStudio for more information.
+//        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+//        client.disconnect();
+//    }
+
+
+    private final class ButtonClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -242,14 +302,14 @@ public class GoodsActivity extends Activity {
 
                         @Override
                         public void onNext(LoginBeanTest s) {
-                            if(s.getUser().equals("addOk")){
+                            if (s.getUser().equals("addOk")) {
                                 initData();
                             }
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            Toast.makeText(GoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(GoodsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -261,28 +321,16 @@ public class GoodsActivity extends Activity {
         }
     }
 
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
+    private final class MessageButtonClickListener implements View.OnClickListener {
 
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-            // 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(GoodsActivity.this,AddMessageActivity.class);
+            intent.putExtra("Exam_id",examId);
+            intent.putExtra("title","添加留言");
+            startActivity(intent);
 
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        listView.setLayoutParams(params);
+        }
     }
 
 }

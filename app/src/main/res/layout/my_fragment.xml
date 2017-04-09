@@ -85,7 +85,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@id/iv_xiangce"
-            android:text="发布"
+            android:text="发布中"
             android:textColor="#353535"
             android:textSize="16sp" />
 
@@ -98,7 +98,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/re_shoucang"
+        android:id="@+id/re_tiaopei"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/btn_list_item_bg"
@@ -106,7 +106,7 @@
         android:paddingLeft="12dp" >
 
         <ImageView
-            android:id="@+id/iv_shoucang"
+            android:id="@+id/iv_tiaopei"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
@@ -119,14 +119,21 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_shoucang"
-            android:text="收藏"
+            android:layout_toRightOf="@id/iv_tiaopei"
+            android:text="已调配"
             android:textColor="#353535"
             android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="12dp"
+            android:background="#dadada" />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_marginTop="20dp"
-        android:id="@+id/re_money_bag"
+
+        android:id="@+id/re_liupai"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/btn_list_item_bg"
@@ -134,7 +141,7 @@
         android:paddingLeft="12dp" >
 
         <ImageView
-            android:id="@+id/iv_money_bag"
+            android:id="@+id/iv_liupai"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
@@ -147,8 +154,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_money_bag"
-            android:text="钱包"
+            android:layout_toRightOf="@id/iv_liupai"
+            android:text="已流拍"
             android:textColor="#353535"
             android:textSize="16sp" />
 
@@ -160,33 +167,33 @@
             android:background="#dadada" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/re_card_bag"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true"
-        android:paddingLeft="12dp" >
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/re_card_bag"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="@drawable/btn_list_item_bg"-->
+        <!--android:clickable="true"-->
+        <!--android:paddingLeft="12dp" >-->
 
-        <ImageView
-            android:id="@+id/iv_card_bag"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/akd" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_card_bag"-->
+            <!--android:layout_width="24dp"-->
+            <!--android:layout_height="24dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:src="@drawable/akd" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_card_bag"
-            android:text="卡包"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_toRightOf="@id/iv_card_bag"-->
+            <!--android:text="卡包"-->
+            <!--android:textColor="#353535"-->
+            <!--android:textSize="16sp" />-->
+    <!--</RelativeLayout>-->
     <RelativeLayout
         android:layout_marginTop="20dp"
         android:id="@+id/re_setting"

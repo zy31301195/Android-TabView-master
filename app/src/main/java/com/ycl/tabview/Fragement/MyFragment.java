@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ycl.tabview.Activity.LoseGoodsActivity;
 import com.ycl.tabview.Activity.MyGoodsActivity;
 import com.ycl.tabview.Activity.SettingActivity;
+import com.ycl.tabview.Activity.TakeGoodsActivity;
 import com.ycl.tabview.Activity.UserInfoActivity;
 import com.ycl.tabview.R;
 import com.ycl.tabview.application.Myapplication;
@@ -21,13 +23,10 @@ public class MyFragment extends Fragment {
     private RelativeLayout re_myinfo;
     private RelativeLayout re_setting;
     private RelativeLayout fabu;
+    private RelativeLayout tiaopei;
+    private RelativeLayout liupai;
     private TextView name;
     private TextView tel;
-    private String names;
-    private String sex;
-    private String school;
-    private String sign;
-    private String zgid;
     private Myapplication mMyapplication;
 
 
@@ -54,7 +53,8 @@ public class MyFragment extends Fragment {
         fabu = (RelativeLayout) view.findViewById(R.id.fabu);
         name = (TextView) view.findViewById(R.id.tv_name);
         tel = (TextView) view.findViewById(R.id.tv_fxid);
-
+        tiaopei = (RelativeLayout) view.findViewById(R.id.re_tiaopei);
+        liupai = (RelativeLayout) view.findViewById(R.id.re_liupai);
 
 
         re_myinfo.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,23 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(),MyGoodsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tiaopei.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),TakeGoodsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        liupai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),LoseGoodsActivity.class);
                 startActivity(intent);
             }
         });

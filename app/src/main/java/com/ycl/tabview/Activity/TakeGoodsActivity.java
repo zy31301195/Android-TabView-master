@@ -3,9 +3,6 @@ package com.ycl.tabview.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -30,51 +27,34 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
 /**
- * Created by Administrator on 2017/3/25.
+ * Created by Administrator on 2017/4/8.
  */
 
-public class MyGoodsActivity extends Activity{
+public class TakeGoodsActivity extends Activity {
     private ListView mListView;
-    private TextView add;
     private List<Exam> mData = new ArrayList<>();
     private ListViewAdapter mAdapter;
+    private TextView add;
+    private TextView title;
     private Myapplication mMyapplication;
-    private static final int ITEM1 = Menu.FIRST;//菜单选项id
-    private static final int ITEM2 = Menu.FIRST+1;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mygoods_activivty);
         mMyapplication = (Myapplication) getApplication();
         initView();
         initData();
-        mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
+        mAdapter = new ListViewAdapter(TakeGoodsActivity.this,mData);
         mListView.setAdapter(mAdapter);
-
-
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(MyGoodsActivity.this,GoodsActivity.class);
+                Intent intent=new Intent(TakeGoodsActivity.this,GoodsActivity.class);
                 intent.putExtra("examId",mData.get(position).getExam_id());
                 intent.putExtra("userId",mData.get(position).getExam_user_id());
-                intent.putExtra("state",0);
+                intent.putExtra("state",-1);
                 startActivity(intent);
                 //Toast.makeText(MyGoodsActivity.this,mData.get(position).getExam_name(),Toast.LENGTH_LONG).show();
-            }
-        });
-        this.mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                    @Override
-                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                        //添加菜单项
-                        menu.add(0,ITEM1,0,"修改");
-                        menu.add(0,ITEM2,0,"删除");
-                    }
-                });
-                return false;
             }
         });
     }
@@ -82,13 +62,15 @@ public class MyGoodsActivity extends Activity{
     private void initView(){
         mListView = (ListView) findViewById(R.id.mygoods_list);
         add = (TextView) findViewById(R.id.add);
-        add.setOnClickListener(new AddButtonClickListener());
+        add.setVisibility(View.GONE);
+        title = (TextView) findViewById(R.id.tv_title);
+        title.setText("已调配的考试");
 
     }
 
     private void initData(){
 
-        Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson(mMyapplication.users.getUser_id())
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).takecompleteJson(mMyapplication.users.getUser_id())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subject<ExamBean>() {
@@ -131,7 +113,7 @@ public class MyGoodsActivity extends Activity{
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(MyGoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(TakeGoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -140,36 +122,4 @@ public class MyGoodsActivity extends Activity{
                     }
                 });
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData();
-    }
-
-    public boolean onContextItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case ITEM1:
-                Intent intent=new Intent(MyGoodsActivity.this,UpdateUserActivity.class);
-                startActivity(intent);
-                break;
-            case ITEM2:
-                Toast.makeText(MyGoodsActivity.this,"已删除",Toast.LENGTH_LONG).show();
-                break;
-        }
-        return true;
-    }
-
-    private final class AddButtonClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MyGoodsActivity.this, AddgoodsActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    public void back(View view) {
-        this.finish();
-    }
-
 }

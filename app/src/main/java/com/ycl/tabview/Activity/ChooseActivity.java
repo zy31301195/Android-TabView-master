@@ -195,20 +195,18 @@ public class ChooseActivity extends Activity implements MyAdapter.OnRecycleItemC
                     }
                 });
 
-//        for(int i=0;i<2;i++){
-//            Exam bean = new Exam();
-//            bean.setExam_name("数据库"+i);
-//            bean.setExam_date("2017-3-21");
-//            bean.setExam_prices("100");
-//            bean.setExam_school("计算");
-//            mData.add(bean);
-//        }
+
         this.mAdapter = new ListViewAdapter(this, mData);
         ListView listView = new ListView(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ChooseActivity.this, "click", Toast.LENGTH_LONG).show();
+               // Toast.makeText(ChooseActivity.this, "click", Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(ChooseActivity.this,GoodsActivity.class);
+                intent.putExtra("examId",mData.get(position).getExam_id());
+                intent.putExtra("userId",mData.get(position).getExam_user_id());
+                intent.putExtra("state",0);
+                startActivity(intent);
             }
         });
         listView.setAdapter(mAdapter);

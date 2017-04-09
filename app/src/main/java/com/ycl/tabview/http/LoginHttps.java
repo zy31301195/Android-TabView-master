@@ -30,6 +30,9 @@ public interface LoginHttps {
     @GET("AddRecord.action")
     Observable<LoginBeanTest> addRecordJson(@QueryMap Map<String, Object> map);
 
+    @GET("AddMessage.action")
+    Observable<LoginBeanTest> addMessageJson(@QueryMap Map<String, Object> map);
+
     @GET("AllExam.action")
     Observable<ExamBean> getJson();
 
@@ -38,6 +41,12 @@ public interface LoginHttps {
 
     @GET("Complete.action")
     Observable<ExamBean> completeJson(@Query("user_id")int user_id);
+
+    @GET("TakeComplete.action")
+    Observable<ExamBean> takecompleteJson(@Query("user_id")int user_id);
+
+    @GET("LoseComplete.action")
+    Observable<ExamBean> losecompleteJson(@Query("user_id")int user_id);
 
     @GET("ReadUser.action")
     Observable<UserBean> getJson(@Query("user_tel")String user_tel);

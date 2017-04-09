@@ -114,6 +114,7 @@ public class OrderFragment extends Fragment implements WeekView.EventClickListen
         Intent intent = new Intent(getContext(), GoodsActivity.class);
         intent.putExtra("examId",mData.get((int) event.getId()).getExam_id());
         intent.putExtra("userId",mData.get((int) event.getId()).getExam_user_id());
+        intent.putExtra("state",-1);
         startActivity(intent);
 
     }

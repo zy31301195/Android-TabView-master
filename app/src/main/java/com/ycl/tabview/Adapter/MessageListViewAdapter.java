@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.ycl.tabview.Bean.Message;
 import com.ycl.tabview.R;
 import com.ycl.tabview.httpBean.RecordBean;
 
@@ -63,7 +62,7 @@ public class MessageListViewAdapter extends BaseAdapter {
             viewHolder = (MessageListViewAdapter.ViewHolder) convertView.getTag();//取出ViewHolder对象
         }
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
-        viewHolder.comment_name.setText(this.mDatas.get(position).getUser_id());
+        viewHolder.comment_name.setText(this.mDatas.get(position).getUser_name());
         viewHolder.comment_date.setText(String.valueOf(this.mDatas.get(position).getMessage_time()));
         viewHolder.comment_content.setText(this.mDatas.get(position).getMessage_content());
         return convertView;

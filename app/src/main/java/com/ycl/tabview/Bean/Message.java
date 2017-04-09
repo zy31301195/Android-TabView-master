@@ -1,5 +1,8 @@
 package com.ycl.tabview.Bean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Administrator on 2017/3/30.
  */
@@ -58,5 +61,15 @@ public class Message {
 
     public void setUser_name(String user_name) {
         this.user_name = user_name;
+    }
+
+    public Map<String, Object> createCommitParams(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("message_content", this.getMessage_content());
+        params.put("message_time", this.getMessage_time());
+        params.put("user_id", this.getUser_id());
+        params.put("exam_id", this.getExam_id());
+
+        return params;
     }
 }

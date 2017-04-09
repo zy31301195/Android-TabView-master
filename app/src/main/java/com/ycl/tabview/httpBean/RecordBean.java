@@ -259,6 +259,15 @@ public class RecordBean {
         private String message_time;
         private int user_id;
         private int exam_id;
+        private String user_name;//买家姓名
+
+        public String getUser_name() {
+            return user_name;
+        }
+
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
 
         public int getMessage_id() {
             return message_id;
@@ -315,6 +324,15 @@ public class RecordBean {
         private String record_time;
         private int exam_id;
         private int buyer_id;
+        private String user_name;//买家姓名
+
+        public String getUser_name() {
+            return user_name;
+        }
+
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
 
         public int getRecord_id() {
             return record_id;

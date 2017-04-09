@@ -13,6 +13,7 @@ public class Record {
     private String reocrd_time;//起拍时间
     private int exam_id;//考试id
     private int buyer_id;//买家id
+    private String user_name;//买家姓名
 
     public int getRecord_id() {
         return record_id;
@@ -48,6 +49,14 @@ public class Record {
 
     public int getBuyer_id() {
         return buyer_id;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public void setBuyer_id(int buyer_id) {
