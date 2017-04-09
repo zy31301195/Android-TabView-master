@@ -49,7 +49,7 @@ public class TakeGoodsActivity extends Activity {
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(TakeGoodsActivity.this,GoodsActivity.class);
+                Intent intent=new Intent(TakeGoodsActivity.this,OkExamsActivity.class);
                 intent.putExtra("examId",mData.get(position).getExam_id());
                 intent.putExtra("userId",mData.get(position).getExam_user_id());
                 intent.putExtra("state",-1);

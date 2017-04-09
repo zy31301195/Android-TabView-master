@@ -1,7 +1,6 @@
 package com.ycl.tabview.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,22 +10,16 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ycl.tabview.Adapter.MessageListViewAdapter;
-import com.ycl.tabview.Adapter.RecordListViewAdapter;
-import com.ycl.tabview.Bean.Record;
+import com.ycl.tabview.Adapter.OkRecordListViewAdapter;
 import com.ycl.tabview.R;
 import com.ycl.tabview.View.AmountView;
 import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
-import com.ycl.tabview.httpBean.LoginBeanTest;
-import com.ycl.tabview.httpBean.RecordBean;
+import com.ycl.tabview.httpBean.OkExamsBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -35,11 +28,10 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
 /**
- * Created by Administrator on 2017/3/24.
+ * Created by Administrator on 2017/4/9.
  */
 
-public class GoodsActivity extends Activity {
-
+public class OkExamsActivity extends Activity {
     private TabHost mTabHost;
     private AmountView mAmountView;
     private LinearLayout linearLayout;
@@ -64,24 +56,20 @@ public class GoodsActivity extends Activity {
     private int userId;
     private int state;
     private Myapplication mMyapplication;
-    private List<RecordBean.AllMessageBean> messageData = new ArrayList<>();
-    private List<RecordBean.AllRecordBean> recordData = new ArrayList<>();
-    private MessageListViewAdapter messageListViewAdapter;
-    private RecordListViewAdapter recordListViewAdapter;
+    private List<OkExamsBean.AllRecordBean> recordData = new ArrayList<>();
+    private OkRecordListViewAdapter recordListViewAdapter;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.goods_activity);
+        setContentView(R.layout.okexams);
         mMyapplication = (Myapplication) getApplication();
         initView();
         initData();
 
-        this.messageListViewAdapter = new MessageListViewAdapter(this, messageData);
-        this.messagelist.setAdapter(messageListViewAdapter);
-        this.recordListViewAdapter = new RecordListViewAdapter(this, recordData);
+        this.recordListViewAdapter = new OkRecordListViewAdapter(this, recordData);
         this.recordlist.setAdapter(recordListViewAdapter);
 
     }
@@ -90,8 +78,8 @@ public class GoodsActivity extends Activity {
         mTabHost = (TabHost) findViewById(R.id.tabHost);
         mTabHost.setup();// init
         mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("考试详情").setContent(R.id.tab1));
-        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("发布者信息").setContent(R.id.tab2));
-        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("留言").setContent(R.id.tab3));
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("买家者信息").setContent(R.id.tab2));
+       // mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("留言").setContent(R.id.tab3));
         linearLayout = (LinearLayout) findViewById(R.id.chujia);
         exam_name = (TextView) findViewById(R.id.et_exam_name);
         exam_date = (TextView) findViewById(R.id.et_exam_date);
@@ -107,20 +95,7 @@ public class GoodsActivity extends Activity {
         user_sign = (TextView) findViewById(R.id.tv_sign);
         user_zgid = (TextView) findViewById(R.id.tv_no);
         user_tel = (TextView) findViewById(R.id.tv_tel);
-        message_button = (TextView) findViewById(R.id.message_button);
-        buy = (Button) findViewById(R.id.buy);
-        buy.setOnClickListener(new ButtonClickListener());
-        message_button.setOnClickListener(new MessageButtonClickListener());
 
-        mAmountView = (AmountView) findViewById(R.id.amount_view);
-
-        mAmountView.setOnAmountChangeListener(new AmountView.OnAmountChangeListener() {
-            @Override
-            public void onAmountChange(View view, int amount) {
-                mount = amount;
-                //Toast.makeText(getApplicationContext(), "Amount=>  " + amount, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -136,10 +111,10 @@ public class GoodsActivity extends Activity {
         if (state == -1) {
             linearLayout.setVisibility(View.GONE);
         }
-        Retrofitutil.getmRetrofit().create(LoginHttps.class).recordJson(examId, userId)
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).okExamsJson(examId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subject<RecordBean>() {
+                .subscribe(new Subject<OkExamsBean>() {
                     @Override
                     public boolean hasObservers() {
                         return false;
@@ -161,7 +136,7 @@ public class GoodsActivity extends Activity {
                     }
 
                     @Override
-                    protected void subscribeActual(Observer<? super RecordBean> observer) {
+                    protected void subscribeActual(Observer<? super OkExamsBean> observer) {
 
                     }
 
@@ -171,7 +146,7 @@ public class GoodsActivity extends Activity {
                     }
 
                     @Override
-                    public void onNext(RecordBean s) {
+                    public void onNext(OkExamsBean s) {
                         exam_name.setText(s.getExam().getExam_name());
                         exam_oldprice.setText(s.getExam().getExam_prices());
                         exam_date.setText(s.getExam().getExam_date());
@@ -184,12 +159,6 @@ public class GoodsActivity extends Activity {
                         user_sex.setText(s.getUser().getUser_sex());
                         user_sign.setText(s.getUser().getUser_sign());
                         user_school.setText(s.getUser().getUser_school());
-                        messageData.clear();
-
-                        mAmountView.setGoods_storage(Integer.valueOf(s.getExam().getExam_newprice()) - 1);
-                        mAmountView.setTextValue(Integer.valueOf(s.getExam().getExam_newprice()) - 1);
-                        messageData.addAll(s.getAllMessage());
-                        messageListViewAdapter.notifyDataSetChanged();
                         recordData.clear();
                         recordData.addAll(s.getAllRecord());
                         recordListViewAdapter.notifyDataSetChanged();
@@ -197,7 +166,7 @@ public class GoodsActivity extends Activity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(GoodsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(OkExamsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -205,87 +174,6 @@ public class GoodsActivity extends Activity {
                     }
                 });
 
-    }
-
-
-    private final class ButtonClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String datetime = simpleDateFormat.format(new Date());
-            Record record = new Record();
-            record.setBuyer_id(mMyapplication.users.getUser_id());
-            record.setExam_id(examId);
-            record.setRecord_price(String.valueOf(mount));
-            record.setReocrd_time(datetime);
-            Map<String, Object> map = record.createCommitParams();
-
-            Retrofitutil.getmRetrofit().create(LoginHttps.class).addRecordJson(map)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subject<LoginBeanTest>() {
-                        @Override
-                        public boolean hasObservers() {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean hasThrowable() {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean hasComplete() {
-                            return false;
-                        }
-
-                        @Override
-                        public Throwable getThrowable() {
-                            return null;
-                        }
-
-                        @Override
-                        protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
-
-                        }
-
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(LoginBeanTest s) {
-                            if (s.getUser().equals("addOk")) {
-                                initData();
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Toast.makeText(GoodsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void onComplete() {
-                        }
-                    });
-
-
-        }
-    }
-
-    private final class MessageButtonClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Intent intent=new Intent(GoodsActivity.this,AddMessageActivity.class);
-            intent.putExtra("Exam_id",examId);
-            intent.putExtra("title","添加留言");
-            startActivity(intent);
-
-        }
     }
 
 }

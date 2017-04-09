@@ -187,8 +187,7 @@
                 android:background="@drawable/edittext_login"
                 android:hint="填写密码"
                 android:paddingLeft="90dp"
-                android:password="true"
-                android:singleLine="true"
+                android:inputType="textPassword"
                 android:textColorHint="#DDDDDD"
                 android:textSize="16sp" />
 
@@ -241,8 +240,7 @@
                 android:background="@drawable/edittext_login"
                 android:hint="填写密码"
                 android:paddingLeft="90dp"
-                android:password="true"
-                android:singleLine="true"
+                android:inputType="textPassword"
                 android:textColorHint="#DDDDDD"
                 android:textSize="16sp" />
 

@@ -2,7 +2,6 @@ package com.ycl.tabview.Fragement;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -195,6 +194,7 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         Intent intent = new Intent(getContext(), GoodsActivity.class);
         intent.putExtra("examId",((Exam)object).getExam_id());
         intent.putExtra("userId",((Exam)object).getExam_user_id());
+        intent.putExtra("state",0);
         startActivity(intent);
     }
 }

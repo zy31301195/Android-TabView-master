@@ -3,6 +3,7 @@ package com.ycl.tabview.http;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.httpBean.LoginBean;
 import com.ycl.tabview.httpBean.LoginBeanTest;
+import com.ycl.tabview.httpBean.OkExamsBean;
 import com.ycl.tabview.httpBean.RecordBean;
 import com.ycl.tabview.httpBean.UserBean;
 
@@ -13,9 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
-/**
- * Created by falling on 2017/3/27.
- */
+
 
 public interface LoginHttps {
     @GET("Login.action")
@@ -59,4 +58,7 @@ public interface LoginHttps {
 
     @GET("SearhExam.action")
     Observable<ExamBean> searchJson(@Query("key")String key, @Query("value")String value);
+
+    @GET("OkExams.action")
+    Observable<OkExamsBean> okExamsJson(@Query("exam_id")int exam_id);
 }

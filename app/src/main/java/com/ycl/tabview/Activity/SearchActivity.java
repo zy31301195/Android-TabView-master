@@ -30,7 +30,7 @@ import java.util.List;
 public class SearchActivity extends Activity implements View.OnClickListener {
 	public static final String EXTRA_KEY_TYPE = "extra_key_type";
 	public static final String EXTRA_KEY_KEYWORD = "extra_key_keyword";
-	public static final String KEY_SEARCH_HISTORY_KEYWORD = "key_search_history_keyword";
+	public static final String KEY_SEARCH_HISTORY_KEYWORDS = "key_search_history_keyword";
 	private EditText mKeywordEt;
 	private TextView mOperationTv;
 
@@ -103,6 +103,7 @@ public class SearchActivity extends Activity implements View.OnClickListener {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(SearchActivity.this,ChooseActivity.class);
+				save();
 				TextView tv1 = mKeywordEt;
 				String tv1String = tv1.getText().toString();
 				intent.putExtra("title",tv1String);
@@ -117,7 +118,7 @@ public class SearchActivity extends Activity implements View.OnClickListener {
 		mSearchHistoryLl = (LinearLayout) findViewById(R.id.search_history_ll);
 		ListView listView = (ListView) findViewById(R.id.search_history_lv);
 		findViewById(R.id.clear_history_btn).setOnClickListener(this);
-		String history = mPref.getString(KEY_SEARCH_HISTORY_KEYWORD,"");
+		String history = mPref.getString(KEY_SEARCH_HISTORY_KEYWORDS,"");
 		if (!TextUtils.isEmpty(history)){
 			List<String> list = new ArrayList<String>();
 			for(Object o : history.split(",")) {
@@ -144,14 +145,14 @@ public class SearchActivity extends Activity implements View.OnClickListener {
 
 	public void save() {
 		String text = mKeywordEt.getText().toString();
-		String oldText = mPref.getString(KEY_SEARCH_HISTORY_KEYWORD,"");
+		String oldText = mPref.getString(KEY_SEARCH_HISTORY_KEYWORDS,"");
 		System.out.println("zlw======="+oldText);
 		if (!TextUtils.isEmpty(text) && !oldText.contains(text)) {
 			if(mHistoryKeywords.size()>7){
 				Toast.makeText(this,"最多保存8条历史",Toast.LENGTH_SHORT).show();
 				return;
 			}
-			mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, text + "," + oldText);
+			mEditor.putString(KEY_SEARCH_HISTORY_KEYWORDS, text + "," + oldText);
 			mEditor.commit();
 			mHistoryKeywords.add(0,text);
 		}
