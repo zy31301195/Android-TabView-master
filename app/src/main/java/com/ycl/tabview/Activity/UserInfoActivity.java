@@ -142,7 +142,7 @@ public class UserInfoActivity extends Activity {
             //实例化SelectPicPopupWindow
             menuWindow = new SelectPicPopupWindow(UserInfoActivity.this, itemsOnClick);
             //显示窗口
-            menuWindow.showAtLocation(UserInfoActivity.this.findViewById(R.id.btn_register), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            menuWindow.showAtLocation(UserInfoActivity.this.findViewById(R.id.iv_avatar), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
             //设置layout在PopupWindow中显示的位置
         }
 

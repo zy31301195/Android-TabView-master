@@ -40,6 +40,8 @@ public class MyFragment extends Fragment {
 
 
     private static MyFragment fragmentCommon =new MyFragment();
+    private String mPath;
+
     public static MyFragment newInstance(){
         return fragmentCommon;
     }
@@ -51,11 +53,11 @@ public class MyFragment extends Fragment {
         tel.setText("电话："+ mMyapplication.users.getUser_tel());
         name.setText(mMyapplication.users.getUser_name());
 
-        String path = "/storage/emulated/0/DCIM/zy/"+mMyapplication.users.getUser_tel()+".png";
-        File file = new File(path);
+        mPath = "/storage/emulated/0/DCIM/zy/"+mMyapplication.users.getUser_tel()+".png";
+        File file = new File(mPath);
         if(file.exists()){
             //Toast.makeText(getActivity(),"找到图片",Toast.LENGTH_LONG).show();
-            Bitmap bm = BitmapFactory.decodeFile(path);
+            Bitmap bm = BitmapFactory.decodeFile(mPath);
             image.setImageBitmap(bm);
         }
 
@@ -128,7 +130,18 @@ public class MyFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPath = "/storage/emulated/0/DCIM/zy/"+mMyapplication.users.getUser_tel()+".png";
+        File file = new File(mPath);
+        if(file.exists()){
+            //Toast.makeText(getActivity(),"找到图片",Toast.LENGTH_LONG).show();
+            Bitmap bm = BitmapFactory.decodeFile(mPath);
+            image.setImageBitmap(bm);
+        }
 
+    }
 }
 
 

@@ -13,8 +13,16 @@ public class Retrofitutil {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
 
+    private static Retrofit Weather = new Retrofit.Builder().
+            baseUrl("http://wthrcdn.etouch.cn/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
+
     public static Retrofit getmRetrofit() {
         return mRetrofit;
     }
 
+    public static Retrofit getWeather() {
+        return Weather;
+    }
 }

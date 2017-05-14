@@ -17,9 +17,11 @@ import com.ycl.tabview.Activity.NewActivity;
 import com.ycl.tabview.Activity.SearchActivity;
 import com.ycl.tabview.Adapter.MyAdapter;
 import com.ycl.tabview.Bean.Exam;
+import com.ycl.tabview.Bean.Weather;
 import com.ycl.tabview.R;
 import com.ycl.tabview.behavior.MyBehavior;
 import com.ycl.tabview.http.LoginHttps;
+import com.ycl.tabview.http.WeatherHttp;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
 
@@ -28,7 +30,9 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
@@ -111,6 +115,21 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
                         }
                     });
 
+        Retrofitutil.getWeather().create(WeatherHttp.class)
+                .getWeather("杭州")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Weather>() {
+                    @Override
+                    public void accept(@NonNull Weather weather) throws Exception {
+                        Toast.makeText(getContext(), weather.getData().getForecast().get(0).getHigh(), Toast.LENGTH_LONG).show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Toast.makeText(getContext(),throwable.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
         search.setOnClickListener(new View.OnClickListener() {
 
 
