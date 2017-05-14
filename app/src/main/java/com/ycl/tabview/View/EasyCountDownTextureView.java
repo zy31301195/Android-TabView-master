@@ -45,11 +45,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * Description：EasyCountDownTextureView
- * Created by：CaMnter
- * Time：2016-03-16 13:45
- */
+
 public class EasyCountDownTextureView extends TextureView
     implements TextureView.SurfaceTextureListener {
 

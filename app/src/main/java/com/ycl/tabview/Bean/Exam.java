@@ -18,6 +18,8 @@ public class Exam {
     private String exam_prices;//初始价
     private String exam_newprice;//现价
     private String exam_school;//所属分院
+    private int exam_state;//状态
+    private String exam_createtime;//创建日期
 
 
     public String getExam_newprice() {
@@ -92,6 +94,21 @@ public class Exam {
         this.exam_school = exam_school;
     }
 
+    public int getExam_state() {
+        return exam_state;
+    }
+
+    public void setExam_state(int exam_state) {
+        this.exam_state = exam_state;
+    }
+
+    public String getExam_createtime() {
+        return exam_createtime;
+    }
+
+    public void setExam_createtime(String exam_createtime) {
+        this.exam_createtime = exam_createtime;
+    }
 
     public String getExam_endtime() {
         return exam_endtime;
@@ -111,6 +128,23 @@ public class Exam {
         params.put("exam_user_id", this.getExam_user_id());
         params.put("exam_prices", this.getExam_prices());
         params.put("exam_school", this.getExam_school());
+        params.put("exam_createtime", this.getExam_createtime());
+        return params;
+    }
+
+    public Map<String, Object> createCommitParam(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("exam_id",this.getExam_id());
+        params.put("exam_name", this.getExam_name());
+        params.put("exam_date", this.getExam_date());
+        params.put("exam_endtime", this.getExam_endtime());
+        params.put("exam_time", this.getExam_time());
+        params.put("exam_place", this.getExam_place());
+        params.put("exam_user_id", this.getExam_user_id());
+        params.put("exam_prices", this.getExam_prices());
+        params.put("exam_school", this.getExam_school());
+        params.put("exam_createtime", this.getExam_createtime());
+        params.put("exam_state",this.getExam_state());
         return params;
     }
 }

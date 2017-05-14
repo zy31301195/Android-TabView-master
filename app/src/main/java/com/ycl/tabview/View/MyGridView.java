@@ -4,9 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-/**
- * Created by yui on 2016/4/22.
- */
+
 public class MyGridView extends GridView {
     public MyGridView(Context context) {
         super(context);

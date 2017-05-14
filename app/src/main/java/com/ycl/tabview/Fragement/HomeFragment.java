@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ycl.tabview.Activity.GoodsActivity;
+import com.ycl.tabview.Activity.NewActivity;
 import com.ycl.tabview.Activity.SearchActivity;
 import com.ycl.tabview.Adapter.MyAdapter;
 import com.ycl.tabview.Bean.Exam;
@@ -121,6 +122,14 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
             }
 
 
+        });
+
+        qd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),NewActivity.class);
+                startActivity(intent);
+            }
         });
 
         final MyBehavior myBehavior = new MyBehavior(HomeFragment.this);

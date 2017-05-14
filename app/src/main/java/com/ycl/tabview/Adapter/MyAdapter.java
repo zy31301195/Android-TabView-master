@@ -68,10 +68,10 @@ public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListe
         myholder.iv.setImageResource((Integer) list.get(this.mData.get(position).getExam_school()));
         myholder.tv_dates.setText(this.mData.get(position).getExam_date());
         myholder.tv_name.setText(this.mData.get(position).getExam_name());
-        myholder.prices.setText(this.mData.get(position).getExam_prices());
+        myholder.prices.setText(this.mData.get(position).getExam_newprice());
         try {
-            Date date = df.parse(this.mData.get(position).getExam_date() + " 00:00:00");
-            long t = date.getTime() - System.currentTimeMillis() - 24*60*60*1000;
+            Date date = df.parse(this.mData.get(position).getExam_createtime() + " 00:00:00");
+            long t = date.getTime() + 2*24*60*60*1000 - System.currentTimeMillis() ;
             myholder.mEasyCountDownTextureView.setTime(t);
         } catch (ParseException e) {
             e.printStackTrace();

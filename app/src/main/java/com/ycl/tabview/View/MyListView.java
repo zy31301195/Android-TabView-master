@@ -6,7 +6,6 @@ import android.widget.ListView;
 
 /**
  * 达到使ListView适应ScrollView的效果
- * Created by yui on 2016/4/1.
  */
 public class MyListView extends ListView {
     private Context mContext;

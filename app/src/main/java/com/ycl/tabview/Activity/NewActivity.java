@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.ycl.tabview.Adapter.ListViewAdapter;
 import com.ycl.tabview.Bean.Exam;
 import com.ycl.tabview.R;
-import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.http.LoginHttps;
 import com.ycl.tabview.httpBean.ExamBean;
 import com.ycl.tabview.retrofitUtil.Retrofitutil;
@@ -27,52 +26,49 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
 /**
- * Created by Administrator on 2017/3/25.
+ * Created by Administrator on 2017/5/7.
  */
 
-public class MyGoodsActivity extends Activity{
+public class NewActivity extends Activity {
     private ListView mListView;
-    private TextView add;
     private List<Exam> mData = new ArrayList<>();
     private ListViewAdapter mAdapter;
-    private Myapplication mMyapplication;
+    private TextView add;
+    private TextView title;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mygoods_activivty);
-        mMyapplication = (Myapplication) getApplication();
+
         initView();
         initData();
-        mAdapter = new ListViewAdapter(MyGoodsActivity.this,mData);
+        mAdapter = new ListViewAdapter(NewActivity.this,mData);
         mListView.setAdapter(mAdapter);
-
-
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(MyGoodsActivity.this,GoodsActivity.class);
+                Intent intent=new Intent(NewActivity.this,TodayActivity.class);
                 intent.putExtra("examId",mData.get(position).getExam_id());
                 intent.putExtra("userId",mData.get(position).getExam_user_id());
-                intent.putExtra("state",0);
+                intent.putExtra("state",-1);
                 startActivity(intent);
-                //Toast.makeText(MyGoodsActivity.this,mData.get(position).getExam_name(),Toast.LENGTH_LONG).show();
             }
         });
 
     }
-
     private void initView(){
         mListView = (ListView) findViewById(R.id.mygoods_list);
         add = (TextView) findViewById(R.id.add);
         add.setVisibility(View.GONE);
-
+        title = (TextView) findViewById(R.id.tv_title);
+        title.setText("明日拍卖预告");
 
     }
 
     private void initData(){
 
-        Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson(mMyapplication.users.getUser_id())
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).getTodayJson()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subject<ExamBean>() {
@@ -115,7 +111,7 @@ public class MyGoodsActivity extends Activity{
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(MyGoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(NewActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -125,17 +121,8 @@ public class MyGoodsActivity extends Activity{
                 });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData();
-    }
-
-
-
 
     public void back(View view) {
         this.finish();
     }
-
 }

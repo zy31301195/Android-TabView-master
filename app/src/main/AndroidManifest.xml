@@ -35,6 +35,10 @@
         <activity android:name=".Activity.LoseGoodsActivity"></activity>
         <activity android:name=".Activity.AddMessageActivity"></activity>
         <activity android:name=".Activity.OkExamsActivity"></activity>
+        <activity android:name=".Activity.NewActivity"></activity>
+        <activity android:name=".Activity.TodayActivity"></activity>
+        <activity android:name=".Activity.MyYugaoActivity"></activity>
+        <activity android:name=".Activity.UpdateExamActivity"></activity>
 
     </application>
 

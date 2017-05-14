@@ -35,10 +35,10 @@ import io.reactivex.subjects.Subject;
 import static com.ycl.tabview.Activity.RegisterActivity.school_name;
 
 /**
- * Created by Administrator on 2017/3/25.
+ * Created by Administrator on 2017/5/8.
  */
 
-public class AddgoodsActivity extends Activity {
+public class UpdateExamActivity extends Activity {
     private TextView goods_date;
     private TextView goods_time;
     private TextView goods_endtime;
@@ -46,6 +46,7 @@ public class AddgoodsActivity extends Activity {
     private EditText goods_name;
     private EditText goods_place;
     private EditText goods_price;
+    private TextView title;
     private Button button;
     private int year;
     private int month;
@@ -68,7 +69,12 @@ public class AddgoodsActivity extends Activity {
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
         initView();
-
+        initData();
+        goods_date.setOnClickListener(new DateButtonClickListener());
+        goods_time.setOnClickListener(new TimeButtonClickListener());
+        goods_endtime.setOnClickListener(new TimeButtonClickListener2());
+        button.setOnClickListener(new ButtonClickListener());
+        goods_school.setOnClickListener(new SchoolButtonClickListener());
     }
 
     private void initView(){
@@ -80,17 +86,26 @@ public class AddgoodsActivity extends Activity {
         goods_place = (EditText) findViewById(R.id.goods_place);
         goods_price = (EditText) findViewById(R.id.goods_price);
         button = (Button) findViewById(R.id.btn_add);
-        goods_date.setOnClickListener(new DateButtonClickListener());
-        goods_time.setOnClickListener(new TimeButtonClickListener());
-        goods_endtime.setOnClickListener(new TimeButtonClickListener2());
-        button.setOnClickListener(new ButtonClickListener());
-        goods_school.setOnClickListener(new SchoolButtonClickListener());
+        button.setText("修改");
+        title = (TextView) findViewById(R.id.tv_title);
+        title.setText("修改拍卖信息");
+    }
+
+    private void initData(){
+        goods_date.setText(getIntent().getStringExtra("examDate"));
+        goods_time.setText(getIntent().getStringExtra("examTime"));
+        goods_endtime.setText(getIntent().getStringExtra("examEndtime"));
+        goods_school.setText(getIntent().getStringExtra("examSchool"));
+        goods_name.setText(getIntent().getStringExtra("examName"));
+        goods_place.setText(getIntent().getStringExtra("examPlace"));
+        goods_price.setText(getIntent().getStringExtra("examPrices"));
+
     }
 
     private final class DateButtonClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            DatePickerDialog datePickerDialog = new DatePickerDialog(AddgoodsActivity.this,DateListener,year,month,day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateExamActivity.this,DateListener,year,month,day);
             datePickerDialog.show();
 
         }
@@ -99,7 +114,7 @@ public class AddgoodsActivity extends Activity {
     private final class TimeButtonClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            TimePickerDialog timePickerDialog = new TimePickerDialog(AddgoodsActivity.this,TimeListener,hour,minute,true);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateExamActivity.this,TimeListener,hour,minute,true);
             timePickerDialog.show();
         }
     }
@@ -107,7 +122,7 @@ public class AddgoodsActivity extends Activity {
     private final class TimeButtonClickListener2 implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            TimePickerDialog timePickerDialog = new TimePickerDialog(AddgoodsActivity.this,TimeListener2,hour,minute,true);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateExamActivity.this,TimeListener2,hour,minute,true);
             timePickerDialog.show();
         }
     }
@@ -118,6 +133,7 @@ public class AddgoodsActivity extends Activity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String datetime = simpleDateFormat.format(new Date());
             Exam exam = new Exam();
+            exam.setExam_id(getIntent().getIntExtra("examId",-1));
             exam.setExam_name(goods_name.getText().toString());
             exam.setExam_place(goods_place.getText().toString());
             exam.setExam_date(goods_date.getText().toString());
@@ -126,11 +142,12 @@ public class AddgoodsActivity extends Activity {
             exam.setExam_school(goods_school.getText().toString());
             exam.setExam_prices(goods_price.getText().toString());
             exam.setExam_user_id(mMyapplication.users.getUser_id());
-            exam.setExam_createtime(datetime);
-            Map<String, Object> map = exam.createCommitParams();
+            exam.setExam_createtime(getIntent().getStringExtra("examCreatetime"));
+            exam.setExam_state(0);
+            Map<String, Object> map = exam.createCommitParam();
 
 
-            Retrofitutil.getmRetrofit().create(LoginHttps.class).addExamsJson(map)
+            Retrofitutil.getmRetrofit().create(LoginHttps.class).updateExamJson(map)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subject<LoginBeanTest>() {
@@ -166,20 +183,20 @@ public class AddgoodsActivity extends Activity {
 
                         @Override
                         public void onNext(LoginBeanTest s) {
-                            if(s.getUser().equals("addExamOk")){
-                                Toast.makeText(AddgoodsActivity.this,"添加成功",Toast.LENGTH_LONG).show();
-                                AddgoodsActivity.this.finish();
+                            if(s.getUser().equals("update")){
+                                Toast.makeText(UpdateExamActivity.this,"修改成功",Toast.LENGTH_LONG).show();
+                                UpdateExamActivity.this.finish();
                             }
-                            else{
-                                Toast.makeText(AddgoodsActivity.this,"考试将在三天内进行，无法进行调配",Toast.LENGTH_LONG).show();
-                                AddgoodsActivity.this.finish();
-                            }
+//                            else{
+//                                Toast.makeText(UpdateExamActivity.this,"考试将在三天内进行，无法进行调配",Toast.LENGTH_LONG).show();
+//                                UpdateExamActivity.this.finish();
+//                            }
 
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            Toast.makeText(AddgoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(UpdateExamActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -194,7 +211,7 @@ public class AddgoodsActivity extends Activity {
         int index = 0 ;
         @Override
         public void onClick(View v) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(AddgoodsActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(UpdateExamActivity.this);
             builder.setTitle("请选择所属分院");
             builder.setSingleChoiceItems(school_name,0,new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which)

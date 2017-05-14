@@ -82,10 +82,10 @@ public class ListViewAdapter extends BaseAdapter{
         viewHolder.iv.setImageResource((Integer) list.get(this.mDatas.get(position).getExam_school()));
         viewHolder.tv_dates.setText(this.mDatas.get(position).getExam_date());
         viewHolder.tv_name.setText(this.mDatas.get(position).getExam_name());
-        viewHolder.prices.setText(this.mDatas.get(position).getExam_prices());
+        viewHolder.prices.setText(this.mDatas.get(position).getExam_newprice());
         try {
-            Date date = df.parse(this.mDatas.get(position).getExam_date() + " 00:00:00");
-            long t = date.getTime() - System.currentTimeMillis() - 24*60*60*1000;
+            Date date = df.parse(this.mDatas.get(position).getExam_createtime() + " 00:00:00");
+            long t = date.getTime() + 2*24*60*60*1000 - System.currentTimeMillis() ;
             viewHolder.mEasyCountDownTextureView.setTime(t);
         } catch (ParseException e) {
             e.printStackTrace();

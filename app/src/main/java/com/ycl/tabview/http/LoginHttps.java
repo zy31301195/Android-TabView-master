@@ -6,6 +6,7 @@ import com.ycl.tabview.httpBean.LoginBeanTest;
 import com.ycl.tabview.httpBean.OkExamsBean;
 import com.ycl.tabview.httpBean.RecordBean;
 import com.ycl.tabview.httpBean.UserBean;
+import com.ycl.tabview.httpBean.YugaoBean;
 
 import java.util.Map;
 
@@ -32,8 +33,14 @@ public interface LoginHttps {
     @GET("AddMessage.action")
     Observable<LoginBeanTest> addMessageJson(@QueryMap Map<String, Object> map);
 
+    @GET("UpdateExam.action")
+    Observable<LoginBeanTest> updateExamJson(@QueryMap Map<String, Object> map);
+
     @GET("AllExam.action")
     Observable<ExamBean> getJson();
+
+    @GET("TodayExams.action")
+    Observable<ExamBean> getTodayJson();
 
     @GET("MyExam.action")
     Observable<ExamBean> getJson(@Query("user_id")int user_id);
@@ -61,4 +68,10 @@ public interface LoginHttps {
 
     @GET("OkExams.action")
     Observable<OkExamsBean> okExamsJson(@Query("exam_id")int exam_id);
+
+    @GET("Yugao.action")
+    Observable<YugaoBean> YugaoJson(@Query("exam_id")int exam_id);
+
+    @GET("MyYugao.action")
+    Observable<ExamBean> MyYugaoJson(@Query("user_id")int user_id);
 }

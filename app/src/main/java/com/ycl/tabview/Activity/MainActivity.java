@@ -1,6 +1,10 @@
 package com.ycl.tabview.Activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -19,6 +23,8 @@ import com.ycl.tabview.library.TabViewChild;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ycl.tabview.Activity.RegisterActivity.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity {
     TabView tabView;
@@ -43,6 +49,17 @@ public class MainActivity extends AppCompatActivity {
         tabViewChildList.add(tabViewChild02);
         tabViewChildList.add(tabViewChild03);
         tabViewChildList.add(tabViewChild04);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+            return;
+
+        }
 
 
         tabView.setTabViewChild(tabViewChildList,getSupportFragmentManager());

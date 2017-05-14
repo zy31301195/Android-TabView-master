@@ -51,7 +51,7 @@ import io.reactivex.subjects.Subject;
  */
 
 public class RegisterActivity extends Activity {
-    private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    public static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private Button button;
     private TextView sex;
     private TextView school;
@@ -71,9 +71,9 @@ public class RegisterActivity extends Activity {
     public static final String KEY_SEARCH_HISTORY_KEYWORD = "Tel_keyword";
     public static final String[] school_name = {"计算","传媒","商学院","信电","工程","医学院","法学院","外国语","创意"};
     private String imageName;
-    private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
-    private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
-    private static final int PHOTO_REQUEST_CUT = 3;// 结果
+    public static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
+    public static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
+    public static final int PHOTO_REQUEST_CUT = 3;// 结果
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -388,7 +388,7 @@ public class RegisterActivity extends Activity {
             }
             switch (v.getId()) {
                 case R.id.picture_selector_take_photo_btn:
-                    imageName = "user_photo.png";
+                    imageName = et_usertel.getText().toString()+".png";
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     // 指定调用相机拍照后照片的储存路径
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -396,7 +396,7 @@ public class RegisterActivity extends Activity {
                     startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
                     break;
                 case R.id.picture_selector_pick_picture_btn:
-                    imageName = "user_photo.png";
+                    imageName = et_usertel.getText().toString()+".png";
                     Intent intent2 = new Intent(Intent.ACTION_PICK, null);
                     intent2.setDataAndType(
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
