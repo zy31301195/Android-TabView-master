@@ -1,9 +1,15 @@
 package com.ycl.tabview.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -68,7 +74,8 @@ public class GoodsActivity extends Activity {
     private List<RecordBean.AllRecordBean> recordData = new ArrayList<>();
     private MessageListViewAdapter messageListViewAdapter;
     private RecordListViewAdapter recordListViewAdapter;
-
+    private static final int ITEM1 = Menu.FIRST;//菜单选项id
+    private int item_position=0;
 
 
     @Override
@@ -83,7 +90,20 @@ public class GoodsActivity extends Activity {
         this.messagelist.setAdapter(messageListViewAdapter);
         this.recordListViewAdapter = new RecordListViewAdapter(this, recordData);
         this.recordlist.setAdapter(recordListViewAdapter);
-
+        this.messagelist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                messagelist.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                    @Override
+                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                        //添加菜单项
+                        menu.add(0,ITEM1,0,"删除");
+                        item_position = position;
+                    }
+                });
+                return false;
+            }
+        });
     }
 
     private void initView() {
@@ -260,6 +280,9 @@ public class GoodsActivity extends Activity {
                             if (s.getUser().equals("addOk")) {
                                 initData();
                             }
+                            else {
+                                Toast.makeText(GoodsActivity.this, "该时间段内已存在监考任务", Toast.LENGTH_LONG).show();
+                            }
                         }
 
                         @Override
@@ -286,6 +309,98 @@ public class GoodsActivity extends Activity {
             startActivity(intent);
 
         }
+    }
+
+
+    private void updateData(int id,int userId,int exam_id){
+
+        Retrofitutil.getmRetrofit().create(LoginHttps.class).getMessage(id,userId,exam_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subject<LoginBeanTest>() {
+                    @Override
+                    public boolean hasObservers() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasThrowable() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasComplete() {
+                        return false;
+                    }
+
+                    @Override
+                    public Throwable getThrowable() {
+                        return null;
+                    }
+
+                    @Override
+                    protected void subscribeActual(Observer<? super LoginBeanTest> observer) {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(LoginBeanTest s) {
+                        if (s.getUser().equals("noRight")){
+                            Toast.makeText(GoodsActivity.this,"非本人，无法操作",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            messageData.remove(item_position);
+                            messageListViewAdapter.notifyDataSetChanged();
+                            Toast.makeText(GoodsActivity.this,"删除成功",Toast.LENGTH_LONG).show();}
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(GoodsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Toast.makeText(LoginActivity.this,"complete",Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    public boolean onContextItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case ITEM1:
+                AlertDialog.Builder normalDia = new AlertDialog.Builder(GoodsActivity.this);
+                normalDia.setTitle("提示");
+                normalDia.setMessage("是否确定删除?");
+                normalDia.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //删除的操作
+                        int id = messageData.get(item_position).getMessage_id();
+                        int userId = mMyapplication.users.getUser_id();
+                        int exam_id = messageData.get(item_position).getExam_id();
+                        updateData(id,userId,exam_id);
+
+
+                    }
+                });
+                normalDia.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                normalDia.create().show();
+                //Toast.makeText(MyYugaoActivity.this,"已删除",Toast.LENGTH_LONG).show();
+                break;
+        }
+        return true;
     }
 
 }

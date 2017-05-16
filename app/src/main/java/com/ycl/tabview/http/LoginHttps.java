@@ -45,6 +45,9 @@ public interface LoginHttps {
     @GET("MyExam.action")
     Observable<ExamBean> getJson(@Query("user_id")int user_id);
 
+    @GET("UpdateMessage.action")
+    Observable<LoginBeanTest> getMessage(@Query("id")int id,@Query("user_id")int user_id,@Query("exam_id")int exam_id);
+
     @GET("Complete.action")
     Observable<ExamBean> completeJson(@Query("user_id")int user_id);
 

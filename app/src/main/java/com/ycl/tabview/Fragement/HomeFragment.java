@@ -43,6 +43,9 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
     private MyAdapter mAdapter;
     private View search;
     private View view;
+    private TextView riqi;
+    private TextView tianqi;
+    private TextView kongqi;
     private TextView qd;
 
     private static HomeFragment homeFragment =new HomeFragment();
@@ -57,6 +60,9 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
         view=inflater.inflate(R.layout.home_fragment,container,false);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
         search = view.findViewById(R.id.ll_search);
+        tianqi = (TextView) view.findViewById(R.id.tianqi);
+        riqi = (TextView) view.findViewById(R.id.riqi);
+        kongqi = (TextView) view.findViewById(R.id.kongqi);
         qd = (TextView) view.findViewById(R.id.qd);
         mAdapter = new MyAdapter(mData);
         recyclerView.setAdapter(mAdapter);
@@ -122,7 +128,10 @@ public class HomeFragment extends Fragment implements MyAdapter.OnRecycleItemCli
                 .subscribe(new Consumer<Weather>() {
                     @Override
                     public void accept(@NonNull Weather weather) throws Exception {
-                        Toast.makeText(getContext(), weather.getData().getForecast().get(0).getHigh(), Toast.LENGTH_LONG).show();
+                        riqi.setText(weather.getData().getForecast().get(0).getDate());
+                        kongqi.setText(weather.getData().getForecast().get(0).getLow()+"~"+weather.getData().getForecast().get(0).getHigh());
+                        tianqi.setText(weather.getData().getForecast().get(0).getType());
+                        //Toast.makeText(getContext(), weather.getData().getForecast().get(0).getHigh(), Toast.LENGTH_LONG).show();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
