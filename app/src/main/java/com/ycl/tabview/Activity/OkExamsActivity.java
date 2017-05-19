@@ -175,5 +175,7 @@ public class OkExamsActivity extends Activity {
                 });
 
     }
-
+    public void back(View view) {
+        this.finish();
+    }
 }

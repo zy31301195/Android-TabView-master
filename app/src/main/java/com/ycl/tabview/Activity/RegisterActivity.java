@@ -100,6 +100,7 @@ public class RegisterActivity extends Activity {
         sex = (TextView) findViewById(R.id.et_usersex);
         school = (TextView) findViewById(R.id.et_userschool);
 
+
         // 监听多个输入框
         et_username.addTextChangedListener(new TextChange());
         et_usertel.addTextChangedListener(new TextChange());
@@ -115,7 +116,7 @@ public class RegisterActivity extends Activity {
         iv_photo.setOnClickListener(new PhotoButtonClickListener());
         sex.setOnClickListener(new SexButtonClickListener());
         school.setOnClickListener(new SchoolButtonClickListener());
-
+        imageName = "user.png";
     }
 
 
@@ -176,6 +177,10 @@ public class RegisterActivity extends Activity {
                                     Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
                                     mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, et_usertel.getText().toString());
                                     mEditor.commit();
+                                    File from =new File("/storage/emulated/0/DCIM/zy/",imageName) ;
+                                    File to=new File("/storage/emulated/0/DCIM/zy/",et_usertel.getText().toString()+".png") ;
+                                    from.renameTo(to) ;
+                                    //Toast.makeText(RegisterActivity.this,imageName,Toast.LENGTH_SHORT).show();
                                     startActivity(intent);
                                 }
                                 else
@@ -388,7 +393,7 @@ public class RegisterActivity extends Activity {
             }
             switch (v.getId()) {
                 case R.id.picture_selector_take_photo_btn:
-                    imageName = et_usertel.getText().toString()+".png";
+                    //imageName = et_usertel.getText().toString()+".png";
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     // 指定调用相机拍照后照片的储存路径
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -396,7 +401,7 @@ public class RegisterActivity extends Activity {
                     startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
                     break;
                 case R.id.picture_selector_pick_picture_btn:
-                    imageName = et_usertel.getText().toString()+".png";
+                    //imageName = et_usertel.getText().toString()+".png";
                     Intent intent2 = new Intent(Intent.ACTION_PICK, null);
                     intent2.setDataAndType(
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");

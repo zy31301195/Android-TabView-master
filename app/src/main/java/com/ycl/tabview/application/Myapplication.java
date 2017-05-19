@@ -10,6 +10,9 @@ import com.ycl.tabview.Bean.Users;
 
 public class Myapplication extends Application {
     public Users users;
+    public int take;
+    public int lose;
+    public int my;
 
     @Override
     public void onCreate() {

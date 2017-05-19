@@ -269,7 +269,13 @@ public class AddgoodsActivity extends Activity {
         public void onTimeSet(TimePicker view, int hourOfDay, int mminute) {
             hour = hourOfDay;
             minute = mminute;
-            goods_endtime.setText(hour+":"+minute);
+            String line1 ="";
+            String line2 =":";
+            if(hour<10)
+                line1 = "0";
+            if(minute<10)
+                line2 = ":0";
+            goods_endtime.setText(line1+hour+line2+minute);
 
         }
 

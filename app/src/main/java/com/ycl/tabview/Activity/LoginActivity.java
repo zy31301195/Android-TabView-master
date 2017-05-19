@@ -1,10 +1,14 @@
 package com.ycl.tabview.Activity;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +30,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.Subject;
 
 import static com.ycl.tabview.Activity.RegisterActivity.KEY_SEARCH_HISTORY_KEYWORD;
+import static com.ycl.tabview.Activity.RegisterActivity.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
 
 
 /**
@@ -42,10 +47,22 @@ public class LoginActivity extends Activity {
     private Myapplication mMyapplication;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(LoginActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+            return;
+
+        }
+
         initView();
         mPref =  getSharedPreferences("register", Activity.MODE_PRIVATE);
         mEditor = mPref.edit();
@@ -71,7 +88,7 @@ public class LoginActivity extends Activity {
     private final class LoginButtonClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            String user = tel.getText().toString();
+            final String user = tel.getText().toString();
             String pwds = pwd.getText().toString();
 
             Retrofitutil.getmRetrofit().create(LoginHttps.class).getJson(user,pwds)
@@ -120,6 +137,10 @@ public class LoginActivity extends Activity {
                                 users.setUser_name(s.getUsers().getUser_name());
                                 users.setUser_school(s.getUsers().getUser_school());
                                 users.setUser_sign(s.getUsers().getUser_sign());
+                                users.setUser_date(s.getUsers().getUser_date());
+                                mMyapplication.take = s.getTake();
+                                mMyapplication.lose = s.getLose();
+                                mMyapplication.my = s.getMy();
                                 mEditor.putString(KEY_SEARCH_HISTORY_KEYWORD, tel.getText().toString());
                                 mEditor.commit();
                                 startActivity(intent);

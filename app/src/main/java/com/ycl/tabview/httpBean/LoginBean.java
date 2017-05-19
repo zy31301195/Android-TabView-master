@@ -7,12 +7,42 @@ package com.ycl.tabview.httpBean;
 public class LoginBean {
 
     /**
+     * take : 1
+     * lose : 0
+     * my : 1
      * user : 3
-     * users : {"user_id":1,"user_name":"admin","user_pwd":"999","user_tel":"15168282630","user_sex":"女","user_zgid":"31301190","user_school":"计算机","user_sign":"你好"}
+     * users : {"user_id":9,"user_name":"张瑜","user_pwd":"111","user_tel":"13773781146","user_sex":"女","user_zgid":"31301195","user_school":"计算","user_sign":"hhh","user_date":"2017-05-10"}
      */
 
+    private int take;
+    private int lose;
+    private int my;
     private String user;
     private UsersBean users;
+
+    public int getTake() {
+        return take;
+    }
+
+    public void setTake(int take) {
+        this.take = take;
+    }
+
+    public int getLose() {
+        return lose;
+    }
+
+    public void setLose(int lose) {
+        this.lose = lose;
+    }
+
+    public int getMy() {
+        return my;
+    }
+
+    public void setMy(int my) {
+        this.my = my;
+    }
 
     public String getUser() {
         return user;
@@ -32,14 +62,15 @@ public class LoginBean {
 
     public static class UsersBean {
         /**
-         * user_id : 1
-         * user_name : admin
-         * user_pwd : 999
-         * user_tel : 15168282630
+         * user_id : 9
+         * user_name : 张瑜
+         * user_pwd : 111
+         * user_tel : 13773781146
          * user_sex : 女
-         * user_zgid : 31301190
-         * user_school : 计算机
-         * user_sign : 你好
+         * user_zgid : 31301195
+         * user_school : 计算
+         * user_sign : hhh
+         * user_date : 2017-05-10
          */
 
         private int user_id;
@@ -50,6 +81,7 @@ public class LoginBean {
         private String user_zgid;
         private String user_school;
         private String user_sign;
+        private String user_date;
 
         public int getUser_id() {
             return user_id;
@@ -113,6 +145,14 @@ public class LoginBean {
 
         public void setUser_sign(String user_sign) {
             this.user_sign = user_sign;
+        }
+
+        public String getUser_date() {
+            return user_date;
+        }
+
+        public void setUser_date(String user_date) {
+            this.user_date = user_date;
         }
     }
 }

@@ -122,4 +122,7 @@ public class TakeGoodsActivity extends Activity {
                     }
                 });
     }
+    public void back(View view) {
+        this.finish();
+    }
 }

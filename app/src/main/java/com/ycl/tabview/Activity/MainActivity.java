@@ -1,10 +1,7 @@
 package com.ycl.tabview.Activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -18,13 +15,14 @@ import com.ycl.tabview.Fragement.HomeFragment;
 import com.ycl.tabview.Fragement.MyFragment;
 import com.ycl.tabview.Fragement.OrderFragment;
 import com.ycl.tabview.R;
+import com.ycl.tabview.application.Myapplication;
 import com.ycl.tabview.library.TabView;
 import com.ycl.tabview.library.TabViewChild;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import static com.ycl.tabview.Activity.RegisterActivity.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity {
     TabView tabView;
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int TYPE_WEEK_VIEW = 3;
     private WeekView mWeekView;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
+    private Myapplication mMyapplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +49,6 @@ public class MainActivity extends AppCompatActivity {
         tabViewChildList.add(tabViewChild03);
         tabViewChildList.add(tabViewChild04);
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-            return;
-
-        }
 
 
         tabView.setTabViewChild(tabViewChildList,getSupportFragmentManager());
@@ -73,7 +62,17 @@ public class MainActivity extends AppCompatActivity {
                }
             }
         });
+        Date dt=new Date();
+        SimpleDateFormat matter1=new SimpleDateFormat("yyyy-MM-dd");
+        mMyapplication= (Myapplication) getApplication();
+        if(!(mMyapplication.users.getUser_date().toString()).equals(matter1.format(dt))){
+            AlertDialog.Builder version = new AlertDialog.Builder(MainActivity.this);
+            version.setMessage("新增"+mMyapplication.my+"个监考竞拍成功；"+mMyapplication.take+"个监考被调配出去；"+mMyapplication.lose+"个监考流拍");
+            version.setPositiveButton("OK",null);
+            version.create().show();
+        }
     }
+
     private void hiddenEditMenu(){
         if(null != mMenu){
             for (int i = 0; i < mMenu.size(); i++){

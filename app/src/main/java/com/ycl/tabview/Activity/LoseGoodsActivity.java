@@ -122,4 +122,8 @@ public class LoseGoodsActivity extends Activity{
                     }
                 });
     }
+
+    public void back(View view) {
+        this.finish();
+    }
 }

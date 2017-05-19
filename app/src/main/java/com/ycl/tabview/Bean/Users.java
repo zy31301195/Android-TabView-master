@@ -16,6 +16,7 @@ public class Users {
     private String user_zgid;//职工号
     private String user_school;//所在分院
     private String user_sign;//签名
+    private String user_date;//登陆日期
 
     public int getUser_id() {
         return user_id;
@@ -79,6 +80,14 @@ public class Users {
 
     public void setUser_sign(String user_sign) {
         this.user_sign = user_sign;
+    }
+
+    public String getUser_date() {
+        return user_date;
+    }
+
+    public void setUser_date(String user_date) {
+        this.user_date = user_date;
     }
 
     public Map<String, String> createCommitParams(){
